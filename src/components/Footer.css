@@ -1,0 +1,87 @@
+.footer {
+    background-color: white;
+    /* Clean white background */
+    padding: 5rem 0 2rem;
+    color: var(--color-text);
+    border-top: 1px solid var(--color-border);
+}
+
+.footer-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4rem;
+    flex-wrap: wrap;
+    /* Responsive wrap */
+    gap: 3rem;
+}
+
+/* Left Side */
+.footer-left h3 {
+    color: var(--color-primary);
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.footer-slogan {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Right Side */
+.footer-right {
+    text-align: right;
+    /* Right align as per reference */
+}
+
+.footer-right h4 {
+    font-size: 0.9rem;
+    color: #999;
+    letter-spacing: 2px;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-end;
+    /* Align items to right */
+}
+
+.contact-row {
+    font-size: 0.95rem;
+    color: #333;
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Bottom */
+.footer-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 2rem;
+    text-align: center;
+    color: #aaa;
+    font-size: 0.8rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .footer-layout {
+        flex-direction: column;
+        text-align: left;
+        gap: 2rem;
+    }
+
+    .footer-right,
+    .contact-info {
+        text-align: left;
+        align-items: flex-start;
+    }
+}
