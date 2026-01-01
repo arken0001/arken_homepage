@@ -31,19 +31,41 @@
 .logo {
     display: flex;
     align-items: center;
+    gap: 12px;
+    cursor: pointer;
 }
 
 .logo-img {
-    height: 48px;
-    /* Adjusted size */
+    height: 70px;
     width: auto;
     object-fit: contain;
-    /* If the logo is white text, we might need to filter it when scrolled? 
-     Assuming the provided logo is the Navy one (uploaded_image_0).
-     If it's white, we need a filter. Let's assume it needs to be visible on both dark/light backgrounds or adjust.
-     Current images: uploaded_image_0 appears to be the 'Navy' version.
-     Hero background will likely be dark, so we might need a white version of the logo initially.
-     For now, let's keep it simple. */
+    transition: filter 0.3s ease;
+}
+
+/* When header is transparent (on Navy background) */
+.header:not(.scrolled) .logo-img {
+    /* If the logo has a persistent white background, multiply won't work on dark backgrounds. 
+       However, we can try to make it look like a clean badge. */
+    border-radius: 4px;
+}
+
+.logo-text {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--color-text-inverse);
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.header.scrolled .logo-text {
+    color: var(--color-primary);
+}
+
+.header.scrolled .logo-img {
+    /* On white background, multiply will effectively hide the white box of the logo */
+    mix-blend-mode: multiply;
 }
 
 .nav ul {

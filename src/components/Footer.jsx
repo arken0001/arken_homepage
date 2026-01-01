@@ -1,25 +1,30 @@
 import React from 'react';
 import './Footer.css';
+import { translations } from '../translations';
 
-const Footer = () => {
+const Footer = ({ lang }) => {
+    const t = translations[lang].footer;
     return (
         <footer className="footer" id="contact">
             <div className="container">
                 <div className="footer-layout">
                     <div className="footer-left">
-                        <h3>ARKEN Co., Ltd. <span style={{ fontSize: '0.7em', fontWeight: '400', marginLeft: '8px' }}>주식회사 아켄</span></h3>
-                        <p className="footer-slogan">Connecting Markets. Coding Future.</p>
+                        <h3>
+                            {t.companyName}
+                            {t.companyNameSub && <span className="company-sub">{t.companyNameSub}</span>}
+                        </h3>
+                        <p className="footer-slogan">{t.slogan}</p>
                     </div>
                     <div className="footer-right">
-                        <h4>CONTACT</h4>
+                        <h4>{t.contactLabel}</h4>
                         <div className="contact-info">
                             <div className="contact-row">
                                 <span className="label">E-mail:</span>
                                 <span className="value">bhwoo@arken.co.kr</span>
                             </div>
                             <div className="contact-row">
-                                <span className="label">Addr:</span>
-                                <span className="value">18468 경기도 화성시 동탄대로 643 센테라IT타워 715호</span>
+                                <span className="label">{t.addrLabel}</span>
+                                <span className="value">{t.addrValue}</span>
                             </div>
                         </div>
                     </div>

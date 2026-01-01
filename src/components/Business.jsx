@@ -1,133 +1,119 @@
 import React from 'react';
 import './Business.css';
-import subBrands from '../assets/new-sub-brands.png'; // Updated asset
+import { translations } from '../translations';
+import kosnovaBI from '../assets/kosnova_v3.png';
+import komoshnikBI from '../assets/komoshnik_v3.png';
+import ausResearchBI from '../assets/aus_research_v3.png';
+import playgroundBI from '../assets/playground-bi.png';
 
-const Business = () => {
-    const sectors = [
+const Business = ({ lang }) => {
+    const t = translations[lang].business;
+
+    // Merge technical config with translated strings
+    const sectorConfigs = [
         {
             id: '01',
-            title: 'Global Settlement',
-            subtitle: '글로벌 정착 생태계',
-            desc: '"국경 없는 삶을 위한 기술적 토대와 따뜻한 조력을 제공합니다."',
-            hasImage: true,
-            imageBg: '/src/assets/sector-bg-01.png',
+            bg: '/src/assets/sector-bg-01.png',
+            color: '#004a80', // Blue
             items: [
-                {
-                    name: 'KOSNOVA',
-                    detail: '러시아어권 사용자를 위한 한국 생활 정보 광장',
-                    status: '개발중',
-                    link: 'http://kasanova.kr',
-                    isBrand: true
-                },
-                {
-                    name: 'KOMOSHNIK',
-                    detail: 'OCR 번역, 비자, 위치 기반 스마트 정착 도우미',
-                    status: '개발중',
-                    link: 'https://www.google.com/search?q=komoshnik',
-                    isBrand: true
-                },
-                {
-                    name: '호주살이연구소',
-                    detail: '워킹홀리데이 및 현지 정착민 가이드 N카페',
-                    status: '운영중',
-                    link: 'https://cafe.naver.com/gfhdut',
-                    isBrand: true
-                }
+                { isBrand: true, link: 'http://kasanova.kr', logo: kosnovaBI },
+                { isBrand: true, link: 'https://www.google.com/search?q=komoshnik', logo: komoshnikBI },
+                { isBrand: true, link: 'https://cafe.naver.com/gfhdut', logo: ausResearchBI }
             ]
         },
         {
             id: '02',
-            title: 'E-Commerce Solution',
-            subtitle: '온라인 셀러 솔루션',
-            desc: '"실제 셀러의 경험을 코딩하여 가장 강력한 비즈니스 툴을 만듭니다."',
-            hasImage: true,
-            imageBg: '/src/assets/sector-bg-02.png',
+            bg: '/src/assets/sector-bg-02.png',
+            color: '#001f3f', // Navy
             items: [
-                {
-                    name: 'Seller Tools',
-                    detail: '마켓 통합 관리, 주문 자동화 운영 운영 소프트웨어',
-                    status: '개발중',
-                    link: 'http://sellermanager.kr',
-                    isBrand: true
-                },
-                {
-                    name: 'Playground',
-                    detail: 'N카페 운영 도우미',
-                    status: '개발중',
-                    link: 'http://playground.co.kr',
-                    isBrand: true
-                },
-                { name: 'Direct Operation', detail: '글로벌 마켓 직접 운영을 통한 데이터 축적' }
+                { isBrand: true, link: 'http://sellermanager.kr' },
+                { isBrand: true, link: 'http://playground.co.kr', logo: playgroundBI },
+                {}
             ]
         },
         {
             id: '03',
-            title: 'Custom Coding',
-            subtitle: '소프트웨어 개발 & 코딩',
-            desc: '"풍부한 레퍼런스와 자체 서비스 개발 역량으로 최적의 솔루션을 지속 공급합니다."',
-            hasImage: true,
-            imageBg: '/src/assets/sector-bg-03.png',
-            items: [
-                { name: 'Solution Portfolio', detail: '그동안 수행해온 수많은 웹사이트 제작 및 비즈니스 자동화 프로그램 개발 성과.' },
-                { name: 'Continuous Tech', detail: '자체 플랫폼(Kosnova, Komoshnik 등) 개발로 검증된 최신 기술 스택 적용.' },
-                { name: 'Custom Engineering', detail: 'AI OCR 연동, 자동화 봇, 데이터 매니지먼트 시스템 등 맞춤형 개발 및 유지보수.' }
-            ]
+            bg: '/src/assets/sector-bg-03.png',
+            color: '#1a1a1a', // Dark Grey
+            items: [{}, {}, {}]
         }
     ];
 
+    const sectors = t.sectors.map((sector, sIdx) => ({
+        ...sector,
+        ...sectorConfigs[sIdx],
+        items: sector.items.map((item, iIdx) => ({
+            ...item,
+            ...sectorConfigs[sIdx].items[iIdx]
+        }))
+    }));
+
     return (
         <section id="business" className="business">
-            <div className="container">
-                <div className="section-header">
-                    <h2>Our Business</h2>
-                    <p>Connecting Markets through Code</p>
-                </div>
-                <div className="business-grid">
-                    {sectors.map((sector) => (
-                        <div className="sector-card" key={sector.id}>
-                            {sector.hasImage && (
-                                <div className="card-image-bg" style={{ backgroundImage: `url(${sector.imageBg})` }}>
-                                    <div className="card-overlay">
-                                        <div className="card-header-overlay">
-                                            <span className="sector-num">{sector.id}</span>
-                                            <h3>{sector.title}</h3>
-                                            <h4>{sector.subtitle}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                            {!sector.hasImage && (
-                                <div className="card-header-simple">
-                                    <span className="sector-num">{sector.id}</span>
-                                    <h3>{sector.title}</h3>
-                                    <h4>{sector.subtitle}</h4>
-                                </div>
-                            )}
+            <div className="business-bg-decor">
+                <div className="business-glow-1"></div>
+                <div className="business-glow-2"></div>
+            </div>
 
-                            <div className="card-content-wrapper">
-                                <p className="sector-quote">{sector.desc}</p>
-                                <ul className="sector-list">
-                                    {sector.items.map((item, idx) => (
-                                        <li key={idx} className={item.isBrand ? 'brand-item' : ''}>
-                                            <div className="item-content">
+            <div className="section-header">
+                <h2>{t.title}</h2>
+                <p>{t.subtitle}</p>
+            </div>
+
+            <div className="container">
+                <div className="org-chart">
+                    {sectors.map((sector) => (
+                        <div className="org-sector" key={sector.id} style={{ '--sector-color': sector.color }}>
+                            <div className="org-header-card" style={{ backgroundImage: `url(${sector.bg})` }}>
+                                <div className="org-header-overlay">
+                                    <span className="org-node-tag">DIVISION {sector.id}</span>
+                                    <h3 className="org-node-title">{sector.title}</h3>
+                                    <p className="org-node-subtitle">{sector.subtitle}</p>
+                                </div>
+                            </div>
+
+                            <div className="org-connector">
+                                <div className="vertical-line"></div>
+                                <p className="org-sector-desc">{sector.desc}</p>
+                                <div className="horizontal-branch"></div>
+                            </div>
+
+                            <div className="org-children-grid">
+                                {sector.items.map((item, idx) => (
+                                    <div key={idx} className="org-child-card">
+                                        <div className="card-accent-line"></div>
+                                        {item.logo && (
+                                            <div className="org-child-logo">
+                                                <img src={item.logo} alt={item.name} />
+                                            </div>
+                                        )}
+                                        <div className="org-child-header">
+                                            <div className="title-status-group">
                                                 {item.link ? (
-                                                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="item-link">
-                                                        <strong>{item.name}</strong>
-                                                        <span className="link-icon">↗</span>
+                                                    <a href={item.link} target="_blank" rel="noopener noreferrer" className="org-child-link">
+                                                        <h4>{item.name}</h4>
+                                                        <span className="link-arrow">↗</span>
                                                     </a>
                                                 ) : (
-                                                    <strong>{item.name}</strong>
+                                                    <h4>{item.name}</h4>
                                                 )}
                                                 {item.status && (
-                                                    <span className={`status-badge ${item.status === '운영중' ? 'active' : 'dev'}`}>
+                                                    <span className={`status-node ${item.status === '운영중' || item.status === 'Active' || item.status === 'Активно' ? 'active' : 'dev'}`}>
                                                         {item.status}
                                                     </span>
                                                 )}
                                             </div>
-                                            <span>{item.detail}</span>
-                                        </li>
-                                    ))}
-                                </ul>
+                                        </div>
+                                        <p className="org-child-detail">{item.detail}</p>
+                                        {item.features && (
+                                            <div className="org-child-features">
+                                                {item.features.map((f, fIdx) => (
+                                                    <span key={fIdx} className="feature-node">{f}</span>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     ))}

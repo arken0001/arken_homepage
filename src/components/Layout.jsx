@@ -2,14 +2,14 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, lang, setLang }) => {
     return (
         <div className="layout">
-            <Header />
+            <Header lang={lang} setLang={setLang} />
             <main className="main-content">
                 {children}
             </main>
-            <Footer />
+            <Footer lang={lang} />
         </div>
     );
 };

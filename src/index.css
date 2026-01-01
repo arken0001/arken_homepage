@@ -2,21 +2,17 @@
 
 :root {
   --color-primary: #001f3f;
-  /* Deep Navy from Business Card */
   --color-secondary: #004a80;
-  /* Lighter Navy/Blue */
   --color-accent: #e6e6e6;
-  /* Silver/White accent */
   --color-text: #1a1a1a;
-  /* Dark Grey for text on white */
   --color-text-inverse: #ffffff;
-  /* White text on Navy */
   --color-bg: #ffffff;
   --color-bg-navy: #001f3f;
-  --color-border: rgba(0, 0, 0, 0.1);
-  --color-border-inverse: rgba(255, 255, 255, 0.2);
+  --color-bg-light: #f8f9fa;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-inverse: rgba(255, 255, 255, 0.15);
 
-  --font-main: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-main: 'Pretendard', -apple-system, sans-serif;
   --spacing-unit: 8px;
 }
 
@@ -32,8 +28,19 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  letter-spacing: -0.02em;
-  /* Modern tight spacing */
+  letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+.logo-name,
+.hero-title,
+.section-label {
+  font-family: var(--font-main);
+  font-weight: 800;
+  letter-spacing: -0.04em;
 }
 
 a {

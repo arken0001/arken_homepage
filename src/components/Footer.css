@@ -34,15 +34,15 @@
 
 /* Right Side */
 .footer-right {
-    text-align: right;
-    /* Right align as per reference */
+    flex: 1;
+    max-width: 500px;
 }
 
 .footer-right h4 {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #999;
     letter-spacing: 2px;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     text-transform: uppercase;
     font-weight: 600;
 }
@@ -50,25 +50,38 @@
 .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-end;
-    /* Align items to right */
+    gap: 0.8rem;
 }
 
 .contact-row {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #333;
-    display: flex;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1rem;
+    line-height: 1.5;
+}
+
+.contact-row .label {
+    color: #888;
+    font-weight: 500;
+}
+
+.company-sub {
+    font-size: 0.7em;
+    font-weight: 400;
+    margin-left: 8px;
+    color: #666;
 }
 
 /* Bottom */
 .footer-bottom {
     border-top: 1px solid rgba(0, 0, 0, 0.05);
     padding-top: 2rem;
-    text-align: center;
-    color: #aaa;
+    text-align: left;
+    color: #999;
     font-size: 0.8rem;
+    letter-spacing: -0.2px;
 }
 
 /* Mobile Responsiveness */

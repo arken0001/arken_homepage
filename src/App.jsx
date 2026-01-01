@@ -6,11 +6,13 @@ import Business from './components/Business';
 import './index.css';
 
 function App() {
+  const [lang, setLang] = React.useState('KO');
+
   return (
-    <Layout>
-      <Hero />
-      <About />
-      <Business />
+    <Layout lang={lang} setLang={setLang}>
+      <Hero lang={lang} />
+      <About lang={lang} />
+      <Business lang={lang} />
     </Layout>
   );
 }
