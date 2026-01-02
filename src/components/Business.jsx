@@ -1,8 +1,8 @@
 import React from 'react';
 import './Business.css';
 import { translations } from '../translations';
-import kosnovaBI from '../assets/kosnova_v3.png';
-import komoshnikBI from '../assets/komoshnik_v3.png';
+import kosnovaBI from '../assets/kosnova-logo.png';
+import komoshnikBI from '../assets/komoshnik-logo.png';
 import ausResearchBI from '../assets/aus_research_v3.png';
 import playgroundBI from '../assets/playground-bi.png';
 

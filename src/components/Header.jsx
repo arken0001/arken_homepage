@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../assets/arken-new-ci.png';
+import logo from '../assets/arken-logo.png';
 import './Header.css';
 import { translations } from '../translations';
 
