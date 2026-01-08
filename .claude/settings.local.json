@@ -5,7 +5,10 @@
       "Bash(git remote set-url:*)",
       "Bash(git fetch:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

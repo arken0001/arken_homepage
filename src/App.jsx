@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from './components/Layout';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -6,7 +6,7 @@ import Business from './components/Business';
 import './index.css';
 
 function App() {
-  const [lang, setLang] = React.useState('KO');
+  const [lang, setLang] = useState('KO');
 
   return (
     <Layout lang={lang} setLang={setLang}>
