@@ -116,8 +116,30 @@
 
 /* For mobile mainly */
 @media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .logo {
+        gap: 8px;
+    }
+
+    .logo-img {
+        height: 45px;
+    }
+
+    .logo-text {
+        font-size: 1rem;
+        white-space: nowrap;
+    }
+
     .nav {
         display: none;
         /* Simple hiding for now, or add hamburg */
+    }
+
+    .lang-switch {
+        gap: 0.5rem;
+        font-size: 0.75rem;
     }
 }

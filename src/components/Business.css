@@ -330,16 +330,43 @@
 }
 
 @media (max-width: 768px) {
+    .business {
+        padding: 6rem 0;
+    }
+
+    .section-header {
+        margin-bottom: 6rem;
+    }
+
+    .org-chart {
+        gap: 8rem;
+    }
+
     .org-children-grid {
         grid-template-columns: 1fr;
     }
 
+    .org-node-tag {
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        padding: 6px 16px;
+    }
+
     .org-node-title {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
+    }
+
+    .org-node-subtitle {
+        font-size: 1rem;
     }
 
     .org-header-card {
-        height: 280px;
+        height: 220px;
+        border-radius: 20px;
+    }
+
+    .org-header-overlay {
+        padding: 2rem;
     }
 
     .horizontal-branch {
@@ -347,6 +374,21 @@
     }
 
     .section-header h2 {
-        font-size: 3rem;
+        font-size: 2.2rem;
+        letter-spacing: -1px;
+    }
+
+    .section-header p {
+        font-size: 0.8rem;
+        letter-spacing: 0.3em;
+    }
+
+    .org-sector-desc {
+        font-size: 1rem;
+        padding: 2rem 0;
+    }
+
+    .vertical-line {
+        height: 60px;
     }
 }

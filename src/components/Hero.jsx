@@ -4,20 +4,42 @@ import { translations } from '../translations';
 
 const Hero = ({ lang }) => {
     const t = translations[lang].hero;
-    const [showVideo, setShowVideo] = useState(false);
     const videoRef = useRef(null);
+    const [hasPlayed, setHasPlayed] = useState(() => {
+        return sessionStorage.getItem('arken_intro_played') === 'true';
+    });
 
     useEffect(() => {
-        // 세션에서 이미 재생했는지 확인
-        const hasPlayed = sessionStorage.getItem('arken_intro_played');
-        if (!hasPlayed) {
-            setShowVideo(true);
+        const video = videoRef.current;
+        if (!video) return;
+
+        const handleLoadedMetadata = () => {
+            if (hasPlayed) {
+                // 이미 재생한 경우 마지막 프레임으로 이동
+                video.currentTime = video.duration;
+            } else {
+                // 첫 방문이면 자동재생
+                video.play().catch(() => {
+                    // 자동재생 실패 시 무시
+                });
+            }
+        };
+
+        video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+        // 이미 로드된 경우 바로 실행
+        if (video.readyState >= 1) {
+            handleLoadedMetadata();
         }
-    }, []);
+
+        return () => {
+            video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        };
+    }, [hasPlayed]);
 
     const handleVideoEnd = () => {
-        // 마지막 프레임 유지 - videoEnded만 표시하고 동영상은 그대로 둠
         sessionStorage.setItem('arken_intro_played', 'true');
+        setHasPlayed(true);
     };
 
     return (
@@ -42,18 +64,15 @@ const Hero = ({ lang }) => {
                     </div>
                 </div>
                 <div className="hero-video-wrapper">
-                    {showVideo && (
-                        <video
-                            ref={videoRef}
-                            className="hero-video"
-                            autoPlay
-                            muted
-                            playsInline
-                            onEnded={handleVideoEnd}
-                        >
-                            <source src="/arken_logo.mp4" type="video/mp4" />
-                        </video>
-                    )}
+                    <video
+                        ref={videoRef}
+                        className="hero-video"
+                        muted
+                        playsInline
+                        onEnded={handleVideoEnd}
+                    >
+                        <source src="/arken_logo.mp4" type="video/mp4" />
+                    </video>
                 </div>
             </div>
         </section>
