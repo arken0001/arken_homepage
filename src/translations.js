@@ -57,7 +57,7 @@ export const translations = {
                     subtitle: "소프트웨어 개발 & 코딩",
                     desc: "풍부한 레퍼런스와 자체 서비스 개발 역량으로 최적의 솔루션을 지속 공급합니다.",
                     items: [
-                        { name: "Solution Portfolio", detail: "웹사이트 제작 및 비즈니스 자동화 프로그램 개발 성과", status: "", features: ["반응형 웹 디자인", "업무 자동화 Bot", "API 연동 시스템"] },
+                        { name: "Dev Server Manager", detail: "로컬 개발 서버의 포트와 메모리를 효율적으로 관리하는 데스크톱 앱", status: "운영중", features: ["메모리 최적화", "Vercel 배포 연동", "원클릭 포트 정리"] },
                         { name: "Continuous Tech", detail: "자체 플랫폼 개발로 검증된 최신 기술 스택 적용", status: "", features: ["최신 React/Next.js 적용", "클라우드 인프라 구축", "보안 최적화"] },
                         { name: "Custom Engineering", detail: "AI OCR 연동, 데이터 매니지먼트 시스템 등 맞춤형 개발", status: "", features: ["AI 모델 통합", "빅데이터 매니지먼트", "기술 유지보수"] },
                     ],
@@ -131,7 +131,7 @@ export const translations = {
                     subtitle: "Software Dev & Coding",
                     desc: '"Continuously supplying optimal solutions with rich references and development capabilities."',
                     items: [
-                        { name: "Solution Portfolio", detail: "A track record of numerous websites and business automation projects.", status: "" },
+                        { name: "Dev Server Manager", detail: "Desktop app for efficient management of local development server ports and memory.", status: "Active", features: ["Memory Optimization", "Vercel Integration", "One-click Port Kill"] },
                         { name: "Continuous Tech", detail: "Applying verified tech stacks used in our own platforms (Kosnova, etc.).", status: "" },
                         { name: "Custom Engineering", detail: "AI OCR integration, bots, and data management systems.", status: "" },
                     ],
@@ -205,7 +205,7 @@ export const translations = {
                     subtitle: "Разработка ПО и кодинг",
                     desc: '"Создаем оптимальные решения, опираясь на богатый опыт разработки собственных сервисов."',
                     items: [
-                        { name: "Портфолио решений", detail: "Множество реализованных веб-сайтов и программ автоматизации бизнеса.", status: "" },
+                        { name: "Dev Server Manager", detail: "Настольное приложение для управления локальными серверами разработки.", status: "Активно", features: ["Оптимизация памяти", "Интеграция с Vercel", "Управление портами"] },
                         { name: "Современный стек", detail: "Использование проверенных технологий в наших собственных платформах.", status: "" },
                         { name: "Инжиниринг", detail: "Интеграция AI OCR, боты и системы управления данными.", status: "" },
                     ],

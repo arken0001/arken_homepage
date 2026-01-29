@@ -35,7 +35,7 @@ const Business = ({ lang }) => {
             id: '03',
             bg: '/src/assets/sector-bg-03.png',
             color: '#1a1a1a', // Dark Grey
-            items: [{}, {}, {}]
+            items: [{ link: '/dev-server-manager/manual.html', isBrand: true }, {}, {}]
         }
     ];
 

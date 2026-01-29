@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Server Manager - 공식 사용자 가이드</title>
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --danger: #f85149;
+            --success: #3fb950;
+            --warning: #d29922;
+            --border: #30363d;
+            --badge-bg: #f85149;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Header */
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            background: radial-gradient(circle at center, #1b222d 0%, #0d1117 70%);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 0 0 20px 0;
+            background: linear-gradient(135deg, #58a6ff 0%, #a371f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+            font-weight: 800;
+        }
+
+        .hero-text {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .hero-subtext {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Image Section */
+        .image-section {
+            background: var(--bg-secondary);
+            padding: 10px;
+            /* Reduced padding for cleaner look */
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .main-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .image-caption {
+            margin-top: 15px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        /* Badge Style - Smaller and Cleaner */
+        .number-badge {
+            background-color: var(--badge-bg);
+            color: white;
+            width: 24px;
+            /* Reduced size */
+            height: 24px;
+            /* Reduced size */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #fff;
+        }
+
+        h3 {
+            color: var(--accent);
+            margin: 15px 0 8px 0;
+            font-size: 1rem;
+        }
+
+        p {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 18px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        .highlight-box {
+            background: rgba(88, 166, 255, 0.08);
+            border-left: 3px solid var(--accent);
+            padding: 12px;
+            border-radius: 0 4px 4px 0;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .warning-box {
+            background: rgba(248, 81, 73, 0.08);
+            border-left: 3px solid var(--danger);
+            padding: 12px;
+            border-radius: 0 4px 4px 0;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #ff7b72;
+        }
+
+        code {
+            background: rgba(110, 118, 129, 0.4);
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85em;
+            color: #ff7b72;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Edit Modal Section */
+        .modal-guide {
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+        }
+
+        .modal-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .modal-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Dev Server Manager</h1>
+        <div class="hero-text">더 이상 터미널과 씨름하지 마세요.</div>
+        <div class="hero-subtext">
+            복잡한 로컬 서버 환경, 포트 충돌, 메모리 누수까지.<br>
+            단 하나의 대시보드로 완벽하게 제어합니다.
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Main Interface Guide -->
+        <h2 style="text-align: center; margin-bottom: 20px; font-size: 1.8rem;">대시보드 기능 한눈에 보기</h2>
+        <div class="image-section">
+            <img src="guide_image_v3.png" alt="Dashboard Interface" class="main-image">
+        </div>
+
+        <div class="features-grid">
+
+            <!-- 1. Global Settings -->
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="number-badge">1</div>
+                    <h2>Global Settings (전역 설정)</h2>
+                </div>
+                <p>앱 전체에 적용되는 설정을 관리합니다.</p>
+                <ul>
+                    <li><strong>Vercel 연동:</strong> 여기서 API Token을 한 번만 입력하면 모든 프로젝트의 배포 상태를 자동으로 감시합니다.</li>
+                    <li>매번 프로젝트마다 토큰을 넣을 필요가 없어 매우 편리합니다.</li>
+                </ul>
+            </div>
+
+            <!-- 2. System Control -->
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="number-badge">2</div>
+                    <h2>System Control (시스템 제어)</h2>
+                </div>
+                <p><strong>RAM Monitor:</strong> PC 전체 메모리가 90%를 넘으면 <span style="color:#f85149">빨간색</span>으로 경고합니다.</p>
+                <div class="warning-box">
+                    <strong>✨ Cleanup 기능 (강력 추천)</strong><br>
+                    PC가 느려지거나 포트가 꼬였을 때 누르세요. 좀비(Zombie) Node 프로세스만 찾아내어 0.5초 만에 깔끔하게 정리해줍니다.
+                </div>
+            </div>
+
+            <!-- 3. Resource Monitor -->
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="number-badge">3</div>
+                    <h2>Resource Monitor (자원 감시)</h2>
+                </div>
+                <p>각 프로젝트가 내 PC 메모리를 얼마나 먹고 있는지(MB) 실시간으로 보여줍니다.</p>
+                <p>실행 중인 <strong>Port</strong>와 윈도우 <strong>PID</strong>도 즉시 확인할 수 있습니다.</p>
+            </div>
+
+            <!-- 4. Action Buttons -->
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="number-badge">4</div>
+                    <h2>Action Controls (제어)</h2>
+                </div>
+                <ul>
+                    <li><strong>Start/Stop:</strong> 서버 실행 및 정지</li>
+                    <li><strong>🚀 Browser:</strong> 로컬호스트 바로 열기</li>
+                    <li><strong>💀 Kill Port:</strong> 포트 충돌(EADDRINUSE) 발생 시, 해당 포트를 점유한 프로세스를 강제 종료합니다.</li>
+                </ul>
+            </div>
+
+            <!-- 5. Status Indicators -->
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="number-badge">5</div>
+                    <h2>Integrations (상태 표시)</h2>
+                </div>
+                <ul>
+                    <li><strong>Git:</strong> 현재 브랜치 및 변경 사항(↑Push / ↓Pull) 표시</li>
+                    <li><strong>🌐 Vercel:</strong> 실시간 배포 상태 모니터링
+                        <br>🔵: 빌드 중 / 🟢: 성공 / 🔴: 실패
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 6. Management -->
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="number-badge">6</div>
+                    <h2>Edit & Delete (관리)</h2>
+                </div>
+                <p>연필 아이콘(✏️)을 눌러 프로젝트 경로, 실행 명령어, Vercel URL 등을 언제든 수정할 수 있습니다.</p>
+            </div>
+
+            <!-- 7. Log Console -->
+            <div class="feature-card full-width">
+                <div class="card-header">
+                    <div class="number-badge">7</div>
+                    <h2>Smart Log Console (통합 로그)</h2>
+                </div>
+                <p>모든 프로젝트의 로그가 이곳에 모입니다. 상단의 <strong>프로젝트 이름 탭</strong>을 클릭하여 보고 싶은 로그만 필터링하세요.</p>
+            </div>
+        </div>
+
+        <!-- Edit Modal Guide Section -->
+        <div class="modal-guide">
+            <h2 style="text-align: center; margin-bottom: 30px; font-size: 1.8rem;">프로젝트 설정 상세 가이드</h2>
+
+            <div class="modal-layout">
+                <div class="image-section" style="margin-bottom: 0;">
+                    <img src="edit_guide.png" alt="Edit Project Modal" class="main-image">
+                </div>
+
+                <div class="features-list">
+                    <div class="feature-card" style="margin-bottom: 20px;">
+                        <div class="card-header">
+                            <div class="number-badge">1</div>
+                            <h2>기본 정보</h2>
+                        </div>
+                        <p>프로젝트 이름과 그룹, 실제 경로를 설정합니다. Node 버전 정보를 확인할 수 있습니다.</p>
+                    </div>
+
+                    <div class="feature-card" style="margin-bottom: 20px;">
+                        <div class="card-header">
+                            <div class="number-badge">2</div>
+                            <h2>Cache Cleaning & Command</h2>
+                        </div>
+                        <p><strong>Auto-clean cache:</strong> 체크 시, 서버 시작 전에 <code>.next</code>, <code>dist</code> 등의 캐시
+                            폴더를 자동으로 지웁니다. 꼬임 방지에 탁월합니다.</p>
+                    </div>
+
+                    <div class="feature-card" style="margin-bottom: 20px;">
+                        <div class="card-header">
+                            <div class="number-badge">3</div>
+                            <h2>Vercel Auto-Detection</h2>
+                        </div>
+                        <p>별도 설정 없이도 <strong>Deploy Config URL</strong>(4번)만 있으면 프로젝트 ID를 자동으로 찾아냅니다.</p>
+                        <div class="highlight-box">
+                            Global Token(전역 설정)을 사용 중이라면 이곳에 토큰을 입력할 필요가 없습니다. (Override 할 때만 입력)
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="card-header">
+                            <div class="number-badge">4</div>
+                            <h2>Deployment URLs</h2>
+                        </div>
+                        <p>GitHub 주소와 Vercel 배포 URL을 입력해두면 원클릭 이동 및 자동 상태 감시가 활성화됩니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer
+            style="text-align: center; margin-top: 80px; padding: 40px; color: var(--text-secondary); border-top: 1px solid var(--border);">
+            <p>&copy; 2026 Dev Server Manager. Efficiency Redefined.</p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
