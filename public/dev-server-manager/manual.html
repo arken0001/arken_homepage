@@ -248,6 +248,38 @@
         </div>
     </header>
 
+    <div style="text-align: center; margin-bottom: 40px;">
+        <a href="#" class="download-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: -6px; margin-right: 8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download for Windows (v1.0.0)
+        </a>
+        <p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.9rem;">
+            * GitHub Releases 페이지로 이동하여 최신 버전을 다운로드하세요.
+        </p>
+    </div>
+
+    <style>
+        .download-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(35, 134, 54, 0.4);
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(35, 134, 54, 0.6);
+            background: linear-gradient(135deg, #2ea043 0%, #3fb950 100%);
+        }
+    </style>
+
     <div class="container">
 
         <!-- Main Interface Guide -->
