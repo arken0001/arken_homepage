@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Cafe Manager V2 - 네이버 카페 운영 자동화</title>
+<meta name="description" content="네이버 카페 운영의 모든 것을 자동화하세요. AI 콘텐츠, 검색 순위 분석, 통합 리포트까지."/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;
+  --card:#111118;
+  --card-hover:#16161f;
+  --border:#1e1e2e;
+  --text:#e2e2e8;
+  --muted:#8888a0;
+  --accent:#6366f1;
+  --accent2:#a855f7;
+  --accent3:#06b6d4;
+  --neon1:#818cf8;
+  --neon2:#c084fc;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:var(--neon1);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Nav ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:.8rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{font-size:1.1rem;font-weight:700;background:linear-gradient(135deg,var(--neon1),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:1.5rem;font-size:.85rem}
+.nav-links a{color:var(--muted);transition:color .2s}
+.nav-links a:hover{color:var(--text);text-decoration:none}
+.nav-back{font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+.nav-back:hover{color:var(--text);text-decoration:none}
+
+/* ── Hero ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 50%,rgba(99,102,241,.12) 0%,transparent 50%),radial-gradient(ellipse at 70% 50%,rgba(168,85,247,.1) 0%,transparent 50%);animation:heroGlow 8s ease-in-out infinite alternate}
+@keyframes heroGlow{0%{transform:translate(0,0)}100%{transform:translate(-3%,2%)}}
+.hero-badge{display:inline-block;padding:.4rem 1rem;border-radius:99px;font-size:.75rem;font-weight:600;color:var(--neon1);border:1px solid rgba(99,102,241,.3);background:rgba(99,102,241,.08);margin-bottom:1.5rem;letter-spacing:.05em}
+.hero h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:800;margin-bottom:1rem;background:linear-gradient(135deg,#fff 0%,var(--neon1) 50%,var(--neon2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.15}
+.hero p{font-size:clamp(1rem,2.5vw,1.25rem);color:var(--muted);max-width:600px;margin:0 auto 2.5rem}
+.hero-img{width:100%;max-width:900px;border-radius:16px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.5);margin-top:3rem;display:none}
+.hero-img.loaded{display:block}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.8rem;border-radius:10px;font-size:.9rem;font-weight:600;border:none;cursor:pointer;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 4px 20px rgba(99,102,241,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 30px rgba(99,102,241,.4);text-decoration:none;color:#fff}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--neon1);color:var(--neon1);text-decoration:none}
+
+/* ── Section Common ── */
+.section{padding:5rem 2rem;max-width:1200px;margin:0 auto}
+.section-label{font-size:.75rem;font-weight:600;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.section-title{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:700;margin-bottom:.5rem}
+.section-desc{color:var(--muted);font-size:1rem;max-width:600px;margin-bottom:3rem}
+
+/* ── 핵심 기능 3카드 ── */
+.core-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.core-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:all .3s;position:relative;overflow:hidden}
+.core-card:hover{transform:translateY(-4px);border-color:rgba(99,102,241,.3);box-shadow:0 8px 30px rgba(99,102,241,.1)}
+.core-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:opacity .3s}
+.core-card:hover::before{opacity:1}
+.core-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1.2rem}
+.core-icon.ai{background:rgba(99,102,241,.12);color:var(--neon1)}
+.core-icon.search{background:rgba(6,182,212,.12);color:var(--accent3)}
+.core-icon.report{background:rgba(168,85,247,.12);color:var(--neon2)}
+.core-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.6rem}
+.core-card p{font-size:.85rem;color:var(--muted);line-height:1.7}
+
+/* ── 전체 기능 그리드 ── */
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:all .3s;cursor:default}
+.feat-card:hover{border-color:rgba(99,102,241,.25);background:var(--card-hover)}
+.feat-card .feat-icon{font-size:1.8rem;margin-bottom:.8rem}
+.feat-card h4{font-size:.95rem;font-weight:700;margin-bottom:.5rem}
+.feat-card p{font-size:.78rem;color:var(--muted);line-height:1.6}
+.feat-card .feat-img{width:100%;border-radius:10px;border:1px solid var(--border);margin-bottom:1rem;display:none}
+.feat-card .feat-img.loaded{display:block}
+
+/* ── 기술 스택 ── */
+.tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.tech-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;text-align:center;transition:all .3s}
+.tech-card:hover{border-color:rgba(99,102,241,.25)}
+.tech-card .tech-icon{font-size:2rem;margin-bottom:.8rem}
+.tech-card h4{font-size:.9rem;font-weight:600;margin-bottom:.3rem}
+.tech-card p{font-size:.75rem;color:var(--muted)}
+
+/* ── CTA ── */
+.cta{text-align:center;padding:5rem 2rem;position:relative}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(99,102,241,.08) 0%,transparent 70%)}
+.cta h2{font-size:clamp(1.5rem,4vw,2rem);font-weight:700;margin-bottom:1rem;position:relative}
+.cta p{color:var(--muted);margin-bottom:2rem;position:relative}
+.cta .btn{position:relative}
+
+/* ── Footer ── */
+.footer{text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--muted);font-size:.75rem}
+
+/* ── 반응형 ── */
+@media(max-width:1024px){
+  .core-grid{grid-template-columns:1fr}
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+  .tech-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .nav{padding:.6rem 1rem}
+  .nav-links{display:none}
+  .section{padding:3rem 1rem}
+  .feat-grid{grid-template-columns:1fr}
+  .tech-grid{grid-template-columns:1fr}
+  .hero{padding:5rem 1.2rem 3rem}
+  .hero-btns{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/cafe-manager/" class="nav-brand">Cafe Manager V2</a>
+  <div class="nav-links">
+    <a href="#features">핵심 기능</a>
+    <a href="#all-features">전체 기능</a>
+    <a href="#tech">기술 스택</a>
+  </div>
+  <a href="/" class="nav-back">← 홈으로</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-badge">NAVER CAFE AUTOMATION</div>
+  <h1>Cafe Manager V2</h1>
+  <p>네이버 카페 운영의 모든 것을 자동화하세요.<br/>AI 콘텐츠 생성부터 검색 순위 분석, 통합 리포트까지.</p>
+  <div class="hero-btns">
+    <a class="btn btn-primary" href="#">시작하기</a>
+    <a class="btn btn-outline" href="#all-features">전체 기능 보기</a>
+  </div>
+  <img class="hero-img" id="heroImg" alt="Cafe Manager V2 메인 화면"/>
+</section>
+
+<!-- 핵심 기능 -->
+<section class="section" id="features">
+  <div class="section-label">Core Features</div>
+  <h2 class="section-title">핵심 기능</h2>
+  <p class="section-desc">Cafe Manager V2의 세 가지 핵심 축을 소개합니다.</p>
+  <div class="core-grid">
+    <div class="core-card">
+      <div class="core-icon ai">🤖</div>
+      <h3>AI 콘텐츠 자동화</h3>
+      <p>AI 글쓰기, 자동 댓글, 페르소나 관리까지. Claude, GPT, Gemini 등 다중 AI 모델을 활용하여 카페 콘텐츠를 자동으로 생성하고 관리합니다.</p>
+    </div>
+    <div class="core-card">
+      <div class="core-icon search">🔍</div>
+      <h3>검색 순위 분석</h3>
+      <p>키워드 순위 추적, 리랭킹 키워드 발굴, 글 품질 체크. 네이버 검색 알고리즘에 최적화된 분석 도구로 카페 노출을 극대화합니다.</p>
+    </div>
+    <div class="core-card">
+      <div class="core-icon report">📊</div>
+      <h3>통합 리포트</h3>
+      <p>격주 자동 리포트, 등급 계산, 경쟁사 추적. 카페 운영 성과를 한눈에 파악하고 데이터 기반의 의사결정을 지원합니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 전체 기능 -->
+<section class="section" id="all-features">
+  <div class="section-label">All Features</div>
+  <h2 class="section-title">전체 기능 목록</h2>
+  <p class="section-desc">8개 핵심 모듈로 구성된 올인원 카페 관리 솔루션</p>
+  <div class="feat-grid">
+
+    <div class="feat-card" id="feat-ai-write">
+      <img class="feat-img" id="img-ai-write" alt="AI 글쓰기 자동화"/>
+      <div class="feat-icon">✍️</div>
+      <h4>AI 글쓰기 자동화</h4>
+      <p>다중 AI 모델(Claude, GPT, Gemini)을 활용한 고품질 카페 글 자동 생성. 페르소나별 어투 설정, 이미지 자동 삽입, 예약 발행까지 한 번에 처리합니다. 키워드 기반 주제 추천으로 SEO에 최적화된 콘텐츠를 만들어냅니다.</p>
+    </div>
+
+    <div class="feat-card" id="feat-keyword">
+      <img class="feat-img" id="img-keyword" alt="키워드 순위 관리"/>
+      <div class="feat-icon">📈</div>
+      <h4>키워드 순위 관리</h4>
+      <p>등록된 키워드의 네이버 검색 순위를 실시간 추적합니다. 순위 변동 알림, 일별·주별 트렌드 차트, 경쟁 카페와의 순위 비교 분석을 통해 검색 노출 전략을 최적화합니다.</p>
+    </div>
+
+    <div class="feat-card" id="feat-reranking">
+      <img class="feat-img" id="img-reranking" alt="리랭킹 키워드 추출"/>
+      <div class="feat-icon">🎯</div>
+      <h4>리랭킹 키워드 추출</h4>
+      <p>네이버 검색 알고리즘의 리랭킹 패턴을 분석하여 상위 노출 가능성이 높은 키워드를 자동 발굴합니다. 경쟁강도, 검색량, 노출 가능성을 종합 평가하여 최적의 키워드를 추천합니다.</p>
+    </div>
+
+    <div class="feat-card" id="feat-quality">
+      <img class="feat-img" id="img-quality" alt="카페글 품질 체크"/>
+      <div class="feat-icon">✅</div>
+      <h4>카페글 품질 체크</h4>
+      <p>작성된 카페 글의 SEO 점수, 가독성, 키워드 밀도, 이미지 비율 등을 종합 분석합니다. 네이버 검색 알고리즘 기준에 맞는 개선 포인트를 실시간으로 제안하여 글의 품질을 높입니다.</p>
+    </div>
+
+    <div class="feat-card" id="feat-report">
+      <img class="feat-img" id="img-report" alt="카페 리포트"/>
+      <div class="feat-icon">📋</div>
+      <h4>카페 리포트</h4>
+      <p>격주 자동 리포트 생성으로 카페 운영 현황을 한눈에 파악합니다. 방문자 통계, 게시글 성과, 회원 활동도, 등급 변화, 경쟁사 대비 포지션까지 데이터 기반의 인사이트를 제공합니다.</p>
+    </div>
+
+    <div class="feat-card" id="feat-member">
+      <img class="feat-img" id="img-member" alt="회원 수집 & 분석"/>
+      <div class="feat-icon">👥</div>
+      <h4>회원 수집 &amp; 분석</h4>
+      <p>카페 회원의 활동 패턴, 가입 경로, 참여도를 분석합니다. 활성 회원과 이탈 위험 회원을 분류하고, 타겟 맞춤 콘텐츠 전략으로 회원 유지율을 높입니다.</p>
+    </div>
+
+    <div class="feat-card" id="feat-nebot">
+      <img class="feat-img" id="img-nebot" alt="네봇 AI 챗봇"/>
+      <div class="feat-icon">💬</div>
+      <h4>네봇 (AI 챗봇)</h4>
+      <p>AI 기반 자동 댓글 및 답글 시스템. 게시글 내용을 분석하여 맥락에 맞는 자연스러운 댓글을 자동 생성합니다. 페르소나별 어투 설정으로 다양한 캐릭터의 커뮤니케이션이 가능합니다.</p>
+    </div>
+
+    <div class="feat-card" id="feat-v2r">
+      <img class="feat-img" id="img-v2r" alt="V2R 글쓰기 현황"/>
+      <div class="feat-icon">📊</div>
+      <h4>V2R 글쓰기 현황</h4>
+      <p>글쓰기 작업의 전체 진행 상황을 실시간 대시보드로 모니터링합니다. 발행 예정, 진행 중, 완료된 글의 상태를 한눈에 확인하고, 발행 스케줄을 효율적으로 관리합니다.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 기술 스택 -->
+<section class="section" id="tech">
+  <div class="section-label">Tech Stack</div>
+  <h2 class="section-title">기술 스택</h2>
+  <p class="section-desc">안정성과 확장성을 갖춘 기술 기반</p>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="tech-icon">🧠</div>
+      <h4>다중 AI 모델</h4>
+      <p>Claude · GPT · Gemini</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🗄️</div>
+      <h4>하이브리드 DB</h4>
+      <p>MySQL + Supabase</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">⚡</div>
+      <h4>실시간 모니터링</h4>
+      <p>SSE 기반 실시간 스트림</p>
+    </div>
+    <div class="tech-card">
+      <div class="tech-icon">🖥️</div>
+      <h4>데스크톱 앱</h4>
+      <p>Electron + Next.js</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <h2>지금 시작하세요</h2>
+  <p>네이버 카페 운영의 새로운 기준, Cafe Manager V2</p>
+  <a class="btn btn-primary" href="#">시작하기</a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>© 2025 Cafe Manager V2 · <a href="/">ARKEN Co., Ltd.</a></p>
+</footer>
+
+<script>
+/* 이미지 슬롯: 나중에 src를 채워넣으면 자동으로 표시됨 */
+document.querySelectorAll('.feat-img, .hero-img').forEach(img => {
+  if (img.src && img.src !== location.href) {
+    img.classList.add('loaded');
+  }
+  img.addEventListener('load', () => img.classList.add('loaded'));
+});
+</script>
+</body>
+</html>

@@ -28,6 +28,14 @@
       "dest": "/public/dev-server-manager/$1"
     },
     {
+      "src": "/cafe-manager/(.*)",
+      "dest": "/public/cafe-manager/$1"
+    },
+    {
+      "src": "/cafe-manager",
+      "dest": "/public/cafe-manager/index.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
