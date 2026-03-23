@@ -36,6 +36,14 @@
       "dest": "/public/cafe-manager/index.html"
     },
     {
+      "src": "/komoshnik",
+      "dest": "/public/komoshnik/index.html"
+    },
+    {
+      "src": "/komoshnik/(.*)",
+      "dest": "/public/komoshnik/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }

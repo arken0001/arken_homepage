@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KOSNOVA & KOMOSHNIK — Первая инфраструктура адаптации для русскоязычных в Корее</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy: #003049;
+      --orange: #F77F00;
+      --amber: #FCBF49;
+      --red: #D62828;
+      --cream: #EAE2B7;
+      --cream-light: #FDF8F0;
+      --glass: rgba(255,255,255,0.65);
+      --glass-border: rgba(234,226,183,0.4);
+    }
+    body { font-family: 'Inter', sans-serif; color: var(--navy); background: var(--cream-light); overflow-x: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.25; pointer-events: none; z-index: 0; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(253,248,240,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); padding: 0 2rem; }
+    .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .nav-logo { font-weight: 800; font-size: 1.3rem; color: var(--navy); }
+    .nav-links { display: flex; gap: 1.8rem; align-items: center; }
+    .nav-links a { text-decoration: none; color: var(--navy); font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta { background: linear-gradient(135deg, var(--orange), #e06f00); color: white !important; padding: 10px 24px; border-radius: 99px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(247,127,0,0.3); transition: transform 0.2s; }
+    .nav-cta:hover { transform: translateY(-2px); }
+    .lang-switch { font-size: 0.85rem; padding: 6px 14px; border-radius: 99px; border: 1.5px solid var(--glass-border); background: var(--glass); font-weight: 600; transition: all 0.2s; }
+    .lang-switch:hover { border-color: var(--orange); color: var(--orange) !important; }
+
+    /* HERO */
+    .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 2rem 80px; overflow: hidden; }
+    .hero-content { max-width: 1200px; width: 100%; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; position: relative; z-index: 1; }
+    .hero-text h1 { font-size: 3rem; font-weight: 900; line-height: 1.18; margin-bottom: 20px; }
+    .hero-text h1 .highlight { background: linear-gradient(135deg, var(--orange), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-text .subtitle { font-size: 1.1rem; color: var(--navy); opacity: 0.7; margin-bottom: 12px; line-height: 1.7; }
+    .hero-text .subtitle-bold { font-size: 1.05rem; color: var(--navy); font-weight: 600; margin-bottom: 32px; line-height: 1.6; opacity: 0.85; }
+    .hero-stats { display: flex; gap: 28px; margin-bottom: 32px; }
+    .hero-stat { text-align: center; }
+    .hero-stat .num { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, var(--orange), var(--red)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-stat .label { font-size: 0.75rem; color: var(--navy); opacity: 0.6; margin-top: 2px; }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary { background: linear-gradient(135deg, var(--orange), #e06f00); color: white; padding: 16px 36px; border-radius: 99px; font-weight: 700; text-decoration: none; font-size: 1.05rem; box-shadow: 0 8px 30px rgba(247,127,0,0.3); transition: all 0.3s; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(247,127,0,0.4); }
+    .btn-secondary { background: var(--glass); backdrop-filter: blur(10px); border: 2px solid var(--glass-border); color: var(--navy); padding: 16px 36px; border-radius: 99px; font-weight: 600; text-decoration: none; font-size: 1.05rem; transition: all 0.3s; }
+    .btn-secondary:hover { background: rgba(255,255,255,0.85); transform: translateY(-2px); }
+
+    /* Phone */
+    .hero-phone { display: flex; justify-content: center; align-items: center; }
+    .phone-frame { width: 280px; height: 580px; background: linear-gradient(145deg, #e8e3db, #ddd8d0); border-radius: 20px; padding: 6px; box-shadow: 0 30px 60px rgba(0,48,73,0.15), 0 0 0 1px rgba(0,0,0,0.08); }
+    .phone-screen { width: 100%; height: 100%; border-radius: 16px; overflow: hidden; background: var(--cream-light); }
+    .phone-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+    /* PAIN */
+    .pain-section { padding: 100px 2rem; position: relative; background: linear-gradient(180deg, transparent, rgba(234,226,183,0.15)); }
+    .pain-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .pain-badge { display: inline-block; background: rgba(214,40,40,0.1); color: var(--red); padding: 8px 20px; border-radius: 99px; font-weight: 700; font-size: 0.85rem; margin-bottom: 24px; }
+    .pain-inner h2 { font-size: 2.2rem; font-weight: 800; line-height: 1.35; margin-bottom: 16px; }
+    .pain-inner .pain-sub { font-size: 1rem; opacity: 0.6; margin-bottom: 40px; line-height: 1.7; max-width: 700px; margin-left: auto; margin-right: auto; }
+    .pain-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; text-align: center; }
+    .pain-chip { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 16px; padding: 20px 12px; transition: transform 0.3s; }
+    .pain-chip:hover { transform: translateY(-4px); }
+    .pain-chip .emoji { font-size: 1.8rem; margin-bottom: 8px; }
+    .pain-chip p { font-size: 0.78rem; font-weight: 600; line-height: 1.3; }
+
+    /* INTRO BANNER */
+    .intro-banner { padding: 60px 2rem; position: relative; }
+    .intro-inner { max-width: 900px; margin: 0 auto; text-align: center; background: linear-gradient(135deg, var(--navy), #004a6e); border-radius: 28px; padding: 48px 40px; color: white; position: relative; overflow: hidden; }
+    .intro-inner::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: var(--orange); border-radius: 50%; opacity: 0.1; }
+    .intro-inner h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 12px; line-height: 1.4; position: relative; z-index: 1; }
+    .intro-inner h2 .accent { color: var(--amber); }
+    .intro-inner p { font-size: 1rem; opacity: 0.8; line-height: 1.7; position: relative; z-index: 1; }
+
+    /* FEATURES */
+    .features-section { padding: 100px 2rem; position: relative; }
+    .features-inner { max-width: 1100px; margin: 0 auto; }
+    .section-badge { display: inline-block; background: linear-gradient(135deg, rgba(247,127,0,0.15), rgba(252,191,73,0.15)); color: var(--orange); padding: 8px 20px; border-radius: 99px; font-weight: 700; font-size: 0.85rem; margin-bottom: 16px; }
+    .features-inner > h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+    .features-inner > .sub { font-size: 1rem; opacity: 0.6; margin-bottom: 48px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .feature-card { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 32px 28px; transition: all 0.3s; position: relative; overflow: hidden; }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,48,73,0.08); }
+    .feature-card .num-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 10px; font-size: 0.85rem; font-weight: 800; color: white; margin-bottom: 14px; }
+    .num-orange { background: linear-gradient(135deg, var(--orange), var(--amber)); }
+    .num-navy { background: linear-gradient(135deg, var(--navy), #004a6e); }
+    .num-red { background: linear-gradient(135deg, var(--red), #e83e3e); }
+    .num-amber { background: linear-gradient(135deg, var(--amber), var(--orange)); }
+    .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .feature-card p { font-size: 0.88rem; opacity: 0.7; line-height: 1.6; }
+    .feature-card.highlight-card { background: linear-gradient(135deg, var(--navy), #004a6e); color: white; border: none; }
+    .feature-card.highlight-card p { opacity: 0.85; }
+
+    /* DUAL APP */
+    .dual-section { padding: 100px 2rem; position: relative; }
+    .dual-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+    .dual-inner > h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+    .dual-inner > .sub { font-size: 1rem; opacity: 0.6; margin-bottom: 48px; }
+    .app-row { display: flex; align-items: center; gap: 36px; background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 28px; padding: 36px; margin-bottom: 28px; text-align: left; transition: all 0.3s; }
+    .app-row:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,48,73,0.08); }
+    .app-row .app-info { flex: 1; }
+    .app-row .app-info .app-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+    .app-row .app-info .app-header img { width: 64px; height: 64px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .app-row .app-info .app-header h3 { font-size: 1.5rem; font-weight: 800; }
+    .app-row .app-info .tagline { font-size: 0.95rem; opacity: 0.65; margin-bottom: 16px; }
+    .app-row .app-info ul { list-style: none; padding: 0; }
+    .app-row .app-info ul li { padding: 7px 0; font-size: 0.9rem; border-bottom: 1px solid rgba(0,48,73,0.06); }
+    .app-row .app-info ul li::before { content: "\2713  "; color: var(--orange); font-weight: 700; }
+    .app-screenshot { width: 220px; min-width: 220px; height: 440px; background: linear-gradient(145deg, #e8e3db, #ddd8d0); border-radius: 16px; padding: 5px; box-shadow: 0 16px 40px rgba(0,48,73,0.12); }
+    .app-screenshot .screen-inner { width: 100%; height: 100%; border-radius: 12px; overflow: hidden; }
+    .app-screenshot .screen-inner img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+    /* PRICING */
+    .pricing-section { padding: 100px 2rem; position: relative; }
+    .pricing-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .pricing-inner h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+    .pricing-inner .sub { font-size: 1rem; opacity: 0.6; margin-bottom: 48px; }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .price-card { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 40px 32px; text-align: left; transition: all 0.3s; position: relative; }
+    .price-card.popular { background: linear-gradient(145deg, var(--navy), #004a6e); color: white; border: 2px solid var(--orange); }
+    .price-card.popular .feature-list li { border-color: rgba(255,255,255,0.1); }
+    .popular-badge { position: absolute; top: -14px; right: 24px; background: linear-gradient(135deg, var(--orange), var(--amber)); color: white; padding: 6px 18px; border-radius: 99px; font-weight: 700; font-size: 0.8rem; }
+    .price-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; }
+    .price-amount { font-size: 2.8rem; font-weight: 900; margin-bottom: 4px; }
+    .price-amount .original { font-size: 1.1rem; text-decoration: line-through; opacity: 0.4; font-weight: 400; margin-right: 8px; }
+    .price-amount .period { font-size: 0.9rem; font-weight: 400; opacity: 0.6; }
+    .price-note { font-size: 0.8rem; opacity: 0.5; margin-bottom: 20px; }
+    .feature-list { list-style: none; padding: 0; margin-bottom: 28px; }
+    .feature-list li { padding: 10px 0; font-size: 0.9rem; border-bottom: 1px solid rgba(0,48,73,0.06); display: flex; align-items: center; gap: 10px; }
+    .feature-list li .check { color: var(--orange); font-weight: 700; }
+    .price-btn { display: block; width: 100%; text-align: center; padding: 14px; border-radius: 99px; font-weight: 700; text-decoration: none; font-size: 0.95rem; transition: all 0.3s; }
+    .price-btn.outline { border: 2px solid var(--navy); color: var(--navy); background: transparent; }
+    .price-btn.filled { background: linear-gradient(135deg, var(--orange), #e06f00); color: white; border: none; box-shadow: 0 6px 20px rgba(247,127,0,0.3); }
+
+    /* CTA CLOSING */
+    .closing-section { padding: 80px 2rem; }
+    .closing-inner { max-width: 900px; margin: 0 auto; text-align: center; background: var(--cream-light); border: 2px solid var(--orange); border-radius: 28px; padding: 48px 40px; color: var(--navy); position: relative; overflow: hidden; }
+    .closing-inner::before { content: ''; position: absolute; bottom: -40px; left: -40px; width: 160px; height: 160px; background: rgba(247,127,0,0.06); border-radius: 50%; }
+    .closing-inner h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; position: relative; z-index: 1; }
+    .closing-inner p { font-size: 1rem; opacity: 0.7; margin-bottom: 28px; position: relative; z-index: 1; }
+    .closing-inner .btn-white { display: inline-block; background: linear-gradient(135deg, var(--orange), #e06f00); color: white; padding: 14px 36px; border-radius: 99px; font-weight: 700; text-decoration: none; font-size: 1rem; transition: all 0.3s; position: relative; z-index: 1; box-shadow: 0 6px 20px rgba(247,127,0,0.3); }
+    .closing-inner .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(247,127,0,0.4); }
+
+    /* DOWNLOAD */
+    .download-section { padding: 100px 2rem; position: relative; }
+    .download-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .download-inner h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
+    .download-inner .sub { font-size: 1rem; opacity: 0.6; margin-bottom: 48px; }
+    .qr-grid { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
+    .qr-app { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .qr-app img.app-logo { width: 64px; height: 64px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .qr-app h4 { font-size: 1.1rem; font-weight: 700; }
+    .qr-stores { display: flex; gap: 24px; }
+    .qr-box { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .qr-placeholder { width: 140px; height: 140px; background: white; border: 2px dashed rgba(0,48,73,0.2); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--navy); opacity: 0.5; }
+    .qr-placeholder .qr-icon { font-size: 2rem; margin-bottom: 4px; }
+    .qr-label { font-size: 0.8rem; font-weight: 600; color: var(--navy); opacity: 0.7; }
+
+    /* FOOTER */
+    footer { background: var(--navy); color: white; padding: 60px 2rem 32px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand p { font-size: 0.85rem; opacity: 0.6; line-height: 1.6; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; opacity: 0.4; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+    .footer-col a { display: block; color: white; text-decoration: none; font-size: 0.9rem; opacity: 0.7; margin-bottom: 10px; transition: opacity 0.2s; }
+    .footer-col a:hover { opacity: 1; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; opacity: 0.4; }
+
+    @media (max-width: 768px) {
+      .hero-content { grid-template-columns: 1fr; text-align: center; }
+      .hero-text h1 { font-size: 2.2rem; }
+      .hero-stats { justify-content: center; }
+      .hero-buttons { justify-content: center; }
+      .hero-phone { margin-top: 40px; }
+      .pain-grid { grid-template-columns: repeat(3, 1fr); }
+      .feature-grid, .pricing-grid { grid-template-columns: 1fr; }
+      .app-row { flex-direction: column; }
+      .app-screenshot { width: 100%; min-width: unset; height: 360px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .qr-grid { flex-direction: column; align-items: center; }
+      .qr-stores { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo">ARKEN</div>
+      <div class="nav-links">
+        <a href="#features">Возможности</a>
+        <a href="#apps">Приложения</a>
+        <a href="#pricing">Тарифы</a>
+        <a href="#download">Скачать</a>
+        <a href="kr.html" class="lang-switch">한국어</a>
+        <a href="#download" class="nav-cta">Начать бесплатно</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="blob" style="width:500px;height:500px;top:-100px;right:-100px;background:var(--orange);"></div>
+    <div class="blob" style="width:400px;height:400px;bottom:0;left:-150px;background:var(--amber);"></div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Вы приехали в Корею, потому что любите эту страну.<br>Но <span class="highlight">с чего начать?</span></h1>
+        <p class="subtitle">Несовершенный язык, сложные визы, непонятная медицина, незнакомая культура, даже сортировка мусора... Знакомо?</p>
+        <p class="subtitle-bold">Мы поможем вам адаптироваться полностью — от первого дня до полной уверенности.</p>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num">3,000+</div><div class="label">Учреждений</div></div>
+          <div class="hero-stat"><div class="num">11</div><div class="label">Типов виз</div></div>
+          <div class="hero-stat"><div class="num">AI</div><div class="label">24/7</div></div>
+          <div class="hero-stat"><div class="num">2</div><div class="label">Языка</div></div>
+        </div>
+        <div class="hero-buttons">
+          <a href="#download" class="btn-primary">Скачать бесплатно</a>
+          <a href="#features" class="btn-secondary">Все возможности</a>
+        </div>
+      </div>
+      <div class="hero-phone">
+        <div class="phone-frame">
+          <div class="phone-screen"><img src="./KOMOSHNIK_Home.png" alt="KOMOSHNIK"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN POINTS -->
+  <section class="pain-section">
+    <div class="pain-inner">
+      <div class="pain-badge">⚡ Знакомые проблемы?</div>
+      <h2>Незнакомая Корея — 100 вопросов с первого дня</h2>
+      <p class="pain-sub">Языковой барьер, сложная бюрократия, непонятная медицина, культурный шок — всё это мешает вам чувствовать себя как дома.</p>
+      <div class="pain-grid">
+        <div class="pain-chip"><div class="emoji">🗣️</div><p>Языковой<br>барьер</p></div>
+        <div class="pain-chip"><div class="emoji">📋</div><p>Сложные<br>визы</p></div>
+        <div class="pain-chip"><div class="emoji">🏥</div><p>Непонятная<br>медицина</p></div>
+        <div class="pain-chip"><div class="emoji">🏠</div><p>Культурная<br>адаптация</p></div>
+        <div class="pain-chip"><div class="emoji">♻️</div><p>Даже<br>мусор...</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTRO BANNER -->
+  <section class="intro-banner">
+    <div class="intro-inner">
+      <h2>Первая в Корее инфраструктура адаптации<br>специально для <span class="accent">русскоязычных</span></h2>
+      <p>KOSNOVA & KOMOSHNIK — созданы, чтобы разрушить языковой барьер, который стоял между вами и комфортной жизнью в Корее.</p>
+    </div>
+  </section>
+
+  <!-- 8 FEATURES -->
+  <section id="features" class="features-section">
+    <div class="features-inner">
+      <div class="section-badge">✨ 8 ключевых возможностей</div>
+      <h2>Не просто переводчик — ваш партнёр по адаптации</h2>
+      <p class="sub">Каждая функция решает реальную проблему иммигранта в Корее</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="num-badge num-orange">1</div>
+          <h3>Двуязычная поддержка КО↔РУ</h3>
+          <p>Весь контент доступен одновременно на корейском и русском. Переключайте язык одним нажатием — или читайте оба сразу.</p>
+        </div>
+        <div class="feature-card highlight-card">
+          <div class="num-badge num-amber">2</div>
+          <h3>Быстрый перевод + Smart OCR</h3>
+          <p>Срочный перевод — за секунду. Медицинские, юридические, административные документы? Сфотографируйте — получите перевод уровнем выше Google и Papago. С автосохранением истории.</p>
+        </div>
+        <div class="feature-card">
+          <div class="num-badge num-navy">3</div>
+          <h3>Учреждения рядом с вами</h3>
+          <p>GPS-поиск больниц, иммиграционных офисов, районных центров и других жизненно важных учреждений. Всё на одной карте — с расстоянием и контактами.</p>
+        </div>
+        <div class="feature-card">
+          <div class="num-badge num-red">4</div>
+          <h3>Визовый гид по 11 типам виз</h3>
+          <p>F-4, H-2, D-2, E-7 и ещё 7 типов. От подготовки к въезду до полной адаптации — пошаговый чеклист и управление расписанием для каждого этапа.</p>
+        </div>
+        <div class="feature-card highlight-card">
+          <div class="num-badge num-amber">5</div>
+          <h3>Сообщество адаптации</h3>
+          <p>Живые отзывы тех, кто уже прошёл этот путь. Автоматический перевод между русским и корейским — общение без границ. Баллы и уровни за активность.</p>
+        </div>
+        <div class="feature-card">
+          <div class="num-badge num-orange">6</div>
+          <h3>Рейтинг учреждений на основе опыта</h3>
+          <p>Не просто список — реальные оценки и отзывы пользователей + открытые данные. Узнайте качество учреждения до визита.</p>
+        </div>
+        <div class="feature-card">
+          <div class="num-badge num-navy">7</div>
+          <h3>AI-ассистент по адаптации</h3>
+          <p>Искусственный интеллект, обученный на данных сообщества и публичных источниках. Задайте вопрос — получите точный ответ на русском, 24/7.</p>
+        </div>
+        <div class="feature-card highlight-card">
+          <div class="num-badge num-red">8</div>
+          <h3>Вся информация о жизни в Корее</h3>
+          <p>Жильё, транспорт, фестивали, K-Culture, налоги, страховка — всё на двух языках. Полная энциклопедия корейской жизни у вас в кармане.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BONUS FEATURES -->
+  <section class="bonus-section" style="padding:80px 2rem;position:relative;">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="section-badge">🎁 И это ещё не всё</div>
+      <h2 style="font-size:2.2rem;font-weight:800;margin-bottom:8px;">Больше, чем вы ожидали</h2>
+      <p style="font-size:1rem;opacity:0.6;margin-bottom:40px;">KOMOSHNIK — это целая экосистема для комфортной жизни в Корее</p>
+
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;">
+        <div style="background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:18px;padding:20px 16px;text-align:center;">
+          <div style="font-size:1.6rem;margin-bottom:8px;">🌤️</div>
+          <div style="font-size:0.88rem;font-weight:700;margin-bottom:4px;">Погода</div>
+          <div style="font-size:0.75rem;opacity:0.6;">Прогноз по вашему городу</div>
+        </div>
+        <div style="background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:18px;padding:20px 16px;text-align:center;">
+          <div style="font-size:1.6rem;margin-bottom:8px;">💱</div>
+          <div style="font-size:0.88rem;font-weight:700;margin-bottom:4px;">Курс валют</div>
+          <div style="font-size:0.75rem;opacity:0.6;">RUB, KZT, UZS, USD и другие</div>
+        </div>
+        <div style="background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:18px;padding:20px 16px;text-align:center;">
+          <div style="font-size:1.6rem;margin-bottom:8px;">💸</div>
+          <div style="font-size:0.88rem;font-weight:700;margin-bottom:4px;">Переводы</div>
+          <div style="font-size:0.75rem;opacity:0.6;">Денежные переводы на родину</div>
+        </div>
+        <div style="background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:18px;padding:20px 16px;text-align:center;">
+          <div style="font-size:1.6rem;margin-bottom:8px;">🧮</div>
+          <div style="font-size:0.88rem;font-weight:700;margin-bottom:4px;">Калькулятор</div>
+          <div style="font-size:0.75rem;opacity:0.6;">Расчёт выходного пособия</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div style="background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--glass-border);border-radius:20px;padding:28px 24px;">
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:14px;">📚 Гид по жизни в Корее</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🏠 Жильё</span>
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🏥 Медицина</span>
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">💳 Финансы</span>
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">📱 Связь</span>
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">💼 Работа</span>
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🚌 Транспорт</span>
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🎓 Образование</span>
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🚗 Вождение</span>
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">⚖️ Право</span>
+            <span style="background:rgba(0,48,73,0.06);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🏛️ Администрация</span>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,var(--navy),#004a6e);color:white;border-radius:20px;padding:28px 24px;">
+          <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:14px;">🎭 K-Culture & Развлечения</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span style="background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🎵 K-POP новости</span>
+            <span style="background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">📺 K-Drama</span>
+            <span style="background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🎬 Локации съёмок</span>
+            <span style="background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🎪 Фестивали</span>
+            <span style="background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🏯 Культурный опыт</span>
+            <span style="background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">🗺️ Туризм</span>
+            <span style="background:rgba(255,255,255,0.12);padding:6px 14px;border-radius:99px;font-size:0.8rem;font-weight:500;">📍 Посещение регионов</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DUAL APP -->
+  <section id="apps" class="dual-section">
+    <div class="dual-inner">
+      <h2>Два приложения — одна экосистема</h2>
+      <p class="sub">Инструменты + сообщество = полная адаптация</p>
+
+      <div class="app-row">
+        <div class="app-info">
+          <div class="app-header">
+            <img src="./KOMOSHNIK_1024.png" alt="KOMOSHNIK">
+            <h3>KOMOSHNIK</h3>
+          </div>
+          <div class="tagline">Персональный помощник для адаптации в Корее</div>
+          <ul>
+            <li>AI OCR-перевод документов за 3 секунды</li>
+            <li>3,000+ учреждений на интерактивной карте</li>
+            <li>AI-консультант 24/7 на русском</li>
+            <li>Визовый гид (11 типов) + чеклист + расписание</li>
+            <li>Погода, курс валют (RUB/KZT/UZS...), переводы</li>
+            <li>Гид по жизни: жильё, медицина, финансы, работа, транспорт, право...</li>
+            <li>K-POP/Drama/Фестивали/Съёмки/Туризм</li>
+            <li>Калькулятор выходного пособия, посещение регионов и др.</li>
+          </ul>
+        </div>
+        <div class="app-screenshot">
+          <div class="screen-inner"><img src="./KOMOSHNIK_Home.png" alt="KOMOSHNIK App"></div>
+        </div>
+      </div>
+
+      <div class="app-row">
+        <div class="app-info">
+          <div class="app-header">
+            <img src="./KOSNOVA_1024.png" alt="KOSNOVA">
+            <h3>KOSNOVA</h3>
+          </div>
+          <div class="tagline">Русскоязычное сообщество в Корее</div>
+          <ul>
+            <li>Свободный форум с автопереводом КО↔РУ</li>
+            <li>Истории переезда и адаптации</li>
+            <li>Жизнь и культура Кореи</li>
+            <li>Работа, вакансии, подработки</li>
+            <li>Маркетплейс — купля/продажа</li>
+          </ul>
+        </div>
+        <div class="app-screenshot">
+          <div class="screen-inner"><img src="./KOSNOVA_Home.png" alt="KOSNOVA App"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing-section">
+    <div class="pricing-inner">
+      <div class="section-badge">💎 Тарифы</div>
+      <h2>Бесплатной версии более чем достаточно.</h2>
+      <p class="sub">Хотите больше возможностей? Обновитесь до Pro.</p>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>Free</h3>
+          <div class="price-amount">₩0</div>
+          <div class="price-note">Навсегда бесплатно</div>
+          <ul class="feature-list">
+            <li><span class="check">✓</span> OCR: 3,000 символов/мес</li>
+            <li><span class="check">✓</span> AI-чат: 30 вопросов/мес (до 100 символов)</li>
+            <li><span class="check">✓</span> 3,000+ учреждений на карте</li>
+            <li><span class="check">✓</span> Визовый гид (11 типов, базовый)</li>
+            <li><span class="check">✓</span> Погода · Курс валют · Переводы</li>
+            <li><span class="check">✓</span> Гид по жизни · K-Culture · Новости</li>
+          </ul>
+          <a href="#download" class="price-btn outline">Начать бесплатно</a>
+        </div>
+        <div class="price-card popular">
+          <div class="popular-badge">🔥 Рекомендуем</div>
+          <h3>Pro</h3>
+          <div class="price-amount"><span class="original">₩14,900</span>₩9,900<span class="period">/мес</span></div>
+          <div class="price-note">Скидка до конца августа · ≈$7.4/мес</div>
+          <ul class="feature-list">
+            <li><span class="check">✓</span> OCR: 150,000 символов/мес</li>
+            <li><span class="check">✓</span> AI-чат: 100 вопросов (безлимит текст)</li>
+            <li><span class="check">✓</span> Избранное и отзывы</li>
+            <li><span class="check">✓</span> AI-рекомендации</li>
+            <li><span class="check">✓</span> Полный чеклист + расписание</li>
+            <li><span class="check">✓</span> Приоритетная поддержка</li>
+          </ul>
+          <a href="#download" class="price-btn filled">Попробовать Pro</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section class="closing-section">
+    <div class="closing-inner">
+      <h2>Не просто переводчик — ваш партнёр по адаптации<br>до самого конца.</h2>
+      <p>KOSNOVA & KOMOSHNIK — скачайте бесплатно и начните новую жизнь в Корее уже сегодня.</p>
+      <a href="#download" class="btn-white">Скачать бесплатно</a>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD / QR -->
+  <section id="download" class="download-section">
+    <div class="download-inner">
+      <div class="section-badge">📲 Скачать</div>
+      <h2>Скачайте прямо сейчас</h2>
+      <p class="sub">Бесплатно. Без регистрации для базовых функций.</p>
+      <div class="qr-grid">
+        <div class="qr-app">
+          <img class="app-logo" src="./KOMOSHNIK_1024.png" alt="KOMOSHNIK">
+          <h4>KOMOSHNIK</h4>
+          <div class="qr-stores">
+            <div class="qr-box">
+              <div class="qr-placeholder"><div class="qr-icon">▶</div>QR-код<br>Google Play</div>
+              <span class="qr-label">Google Play</span>
+            </div>
+            <div class="qr-box">
+              <div class="qr-placeholder"><div class="qr-icon">🍎</div>QR-код<br>App Store</div>
+              <span class="qr-label">App Store</span>
+            </div>
+          </div>
+        </div>
+        <div class="qr-app">
+          <img class="app-logo" src="./KOSNOVA_1024.png" alt="KOSNOVA">
+          <h4>KOSNOVA</h4>
+          <div class="qr-stores">
+            <div class="qr-box">
+              <div class="qr-placeholder"><div class="qr-icon">▶</div>QR-код<br>Google Play</div>
+              <span class="qr-label">Google Play</span>
+            </div>
+            <div class="qr-box">
+              <div class="qr-placeholder"><div class="qr-icon">🍎</div>QR-код<br>App Store</div>
+              <span class="qr-label">App Store</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:32px;font-size:0.85rem;opacity:0.5;">
+        Также доступно как веб-приложение:
+        <a href="https://www.komoshnik.kr" style="color:var(--orange);">komoshnik.kr</a> ·
+        <a href="https://www.kosnova.kr" style="color:var(--orange);">kosnova.kr</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <p style="font-size:1.2rem;font-weight:800;margin-bottom:12px;">ARKEN</p>
+          <p>ARKEN Co., Ltd. (주식회사 아켄)<br>
+          Директор: Ву Бёнхо<br>
+          Рег. номер: 825-87-03407<br>
+          Онлайн-торговля: 제2026-화성동탄-1826호<br>
+          Адрес: Кёнги-до, Хвасон-си, Тондан-дэро 643,<br>Сентера IT Tower 715</p>
+        </div>
+        <div class="footer-col">
+          <h4>Продукты</h4>
+          <a href="#">KOMOSHNIK</a>
+          <a href="#">KOSNOVA</a>
+          <a href="#pricing">Тарифы Pro</a>
+        </div>
+        <div class="footer-col">
+          <h4>Поддержка</h4>
+          <a href="#">Условия использования</a>
+          <a href="#">Политика конфиденциальности</a>
+          <a href="mailto:bhwoo@arken.co.kr">bhwoo@arken.co.kr</a>
+          <a href="tel:010-7561-0346">010-7561-0346</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ARKEN Co., Ltd. All rights reserved.</span>
+        <span>Сделано с ❤️ для русскоязычных в Корее</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
