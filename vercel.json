@@ -44,6 +44,14 @@
       "dest": "/public/komoshnik/$1"
     },
     {
+      "src": "/ai-news",
+      "dest": "/public/ai-news/index.html"
+    },
+    {
+      "src": "/ai-news/(.*)",
+      "dest": "/public/ai-news/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }

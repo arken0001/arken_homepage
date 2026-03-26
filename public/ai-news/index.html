@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI뉴스 — ARKEN</title>
+  <meta name="description" content="ARKEN이 매일 수집하는 AI 뉴스 요약 게시판입니다."/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <style>
+    :root {
+      --bg:#020b1a;--bg2:#060f22;--bg3:#0a142e;
+      --blue:#4a96cd;--cyan:#5bbdff;--glow:#7dd4ff;--gold:#e9a84a;
+      --text:#ddeeff;--muted:#6889aa;
+      --border:rgba(74,150,205,0.15);--card:rgba(6,15,34,0.92);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Pretendard',sans-serif;font-weight:300;min-height:100vh}
+
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 4rem;background:rgba(2,11,26,0.88);backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+    .nav-logo-text{
+      font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;letter-spacing:.18em;
+      background:linear-gradient(90deg,var(--glow),var(--blue));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .nav-back{
+      color:var(--muted);font-size:.85rem;text-decoration:none;
+      border:1px solid var(--border);padding:.4rem 1rem;border-radius:4px;transition:all .25s;
+    }
+    .nav-back:hover{color:var(--cyan);border-color:var(--blue)}
+
+    .page-header{
+      padding:8rem 2rem 2.5rem;text-align:center;
+      border-bottom:1px solid var(--border);
+    }
+    .page-header h1{
+      font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;letter-spacing:.05em;margin-bottom:.5rem;
+      background:linear-gradient(90deg,var(--glow),var(--cyan));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .page-header p{color:var(--muted);font-size:.95rem}
+
+    .container{max-width:900px;margin:0 auto;padding:1.5rem 1.5rem 4rem}
+
+    /* 글쓰기 버튼 */
+    .toolbar{display:flex;justify-content:flex-end;margin-bottom:1rem}
+    .btn-write{
+      background:linear-gradient(135deg,var(--blue),#3578a8);color:#fff;
+      border:none;padding:.55rem 1.4rem;border-radius:5px;font-size:.85rem;
+      font-weight:600;cursor:pointer;font-family:inherit;transition:all .25s;
+    }
+    .btn-write:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(74,150,205,0.3)}
+
+    /* 게시판 테이블 */
+    .board-table{width:100%;border-collapse:collapse}
+    .board-table thead{border-bottom:2px solid var(--blue)}
+    .board-table th{
+      padding:.8rem 1rem;font-size:.75rem;font-weight:700;color:var(--cyan);
+      text-transform:uppercase;letter-spacing:.1em;text-align:left;
+    }
+    .board-table th.col-no{width:60px;text-align:center}
+    .board-table th.col-date{width:190px;text-align:center}
+    .board-table tbody tr{border-bottom:1px solid var(--border);transition:background .2s;cursor:pointer}
+    .board-table tbody tr:hover{background:rgba(74,150,205,0.06)}
+    .board-table td{padding:.85rem 1rem;font-size:.9rem}
+    .board-table td.col-no{text-align:center;color:var(--muted);font-size:.8rem}
+    .board-table td.col-title{font-weight:500}
+    .board-table td.col-title .new-badge{
+      display:inline-block;background:var(--gold);color:var(--bg);font-size:.6rem;
+      font-weight:800;padding:1px 6px;border-radius:3px;margin-left:8px;vertical-align:middle;
+    }
+    .board-table td.col-date{text-align:center;color:var(--muted);font-size:.8rem}
+
+    /* 페이지네이션 */
+    .pagination{display:flex;justify-content:center;align-items:center;gap:.4rem;margin-top:2rem}
+    .pagination button{
+      background:transparent;border:1px solid var(--border);color:var(--muted);
+      padding:.4rem .8rem;border-radius:4px;font-size:.8rem;cursor:pointer;
+      font-family:inherit;transition:all .25s;
+    }
+    .pagination button:hover{border-color:var(--blue);color:var(--cyan)}
+    .pagination button.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+    .pagination button:disabled{opacity:.3;cursor:default}
+
+    /* 상세 뷰 */
+    .detail-view{display:none}
+    .sub-back{
+      display:inline-flex;align-items:center;gap:.4rem;
+      color:var(--muted);font-size:.85rem;text-decoration:none;cursor:pointer;
+      margin-bottom:1.5rem;transition:color .2s;
+    }
+    .sub-back:hover{color:var(--cyan)}
+    .detail-header{margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
+    .detail-header .date{font-size:.78rem;color:var(--gold);font-weight:600;letter-spacing:.08em;margin-bottom:.5rem}
+    .detail-header .title{font-size:1.5rem;font-weight:700;line-height:1.4}
+    .detail-body{font-size:.95rem;line-height:1.9;color:var(--text);opacity:.92}
+    .detail-body h2{font-size:1.1rem;font-weight:700;color:var(--cyan);margin:1.5rem 0 .6rem}
+    .detail-body h3{font-size:1rem;font-weight:600;color:var(--glow);margin:1.2rem 0 .5rem}
+    .detail-body ul,.detail-body ol{margin:.5rem 0 .8rem 1.4rem}
+    .detail-body li{margin-bottom:.4rem}
+    .detail-body a{color:var(--cyan);text-decoration:underline}
+    .detail-body p{margin-bottom:.8rem}
+    .detail-body blockquote{border-left:3px solid var(--blue);padding-left:1rem;margin:1rem 0;color:var(--muted);font-style:italic}
+    .detail-body img{max-width:100%;border-radius:6px;margin:.8rem 0}
+    .detail-body table{width:100%;border-collapse:collapse;margin:.8rem 0}
+    .detail-body th,.detail-body td{border:1px solid var(--border);padding:.5rem .8rem;font-size:.85rem;text-align:left}
+    .detail-body th{background:var(--bg3);color:var(--cyan);font-weight:600}
+    .detail-body code{background:var(--bg3);padding:.15rem .4rem;border-radius:3px;font-size:.85rem}
+    .detail-body pre{background:var(--bg3);padding:1rem;border-radius:6px;overflow-x:auto;margin:.8rem 0}
+    .detail-body pre code{background:none;padding:0}
+
+    /* 글쓰기 폼 */
+    .write-view{display:none}
+    .form-group{margin-bottom:1.2rem}
+    .form-group label{display:block;font-size:.8rem;font-weight:600;color:var(--cyan);margin-bottom:.4rem;letter-spacing:.05em}
+    .form-group input[type="text"]{
+      width:100%;padding:.7rem 1rem;background:var(--bg2);border:1px solid var(--border);
+      border-radius:5px;color:var(--text);font-size:1rem;font-family:inherit;
+      outline:none;transition:border-color .25s;
+    }
+    .form-group input[type="text"]:focus{border-color:var(--blue)}
+    .form-group textarea{
+      width:100%;height:400px;padding:1rem;background:var(--bg2);border:1px solid var(--border);
+      border-radius:5px;color:var(--text);font-size:.88rem;font-family:'Consolas','Courier New',monospace;
+      line-height:1.6;outline:none;resize:vertical;transition:border-color .25s;
+    }
+    .form-group textarea:focus{border-color:var(--blue)}
+    .form-hint{font-size:.72rem;color:var(--muted);margin-top:.3rem}
+    .btn-example{
+      background:rgba(233,168,74,0.15);color:var(--gold);border:1px solid rgba(233,168,74,0.3);
+      padding:.2rem .7rem;border-radius:3px;font-size:.7rem;font-weight:600;
+      cursor:pointer;font-family:inherit;margin-left:.6rem;transition:all .2s;
+    }
+    .btn-example:hover{background:rgba(233,168,74,0.25)}
+    .form-actions{display:flex;gap:.8rem;margin-top:1.5rem}
+    .btn-save{
+      background:linear-gradient(135deg,var(--blue),#3578a8);color:#fff;
+      border:none;padding:.65rem 2rem;border-radius:5px;font-size:.9rem;
+      font-weight:600;cursor:pointer;font-family:inherit;transition:all .25s;
+    }
+    .btn-save:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(74,150,205,0.3)}
+    .btn-cancel{
+      background:transparent;color:var(--muted);border:1px solid var(--border);
+      padding:.65rem 1.5rem;border-radius:5px;font-size:.9rem;cursor:pointer;
+      font-family:inherit;transition:all .25s;
+    }
+    .btn-cancel:hover{color:var(--text);border-color:var(--muted)}
+    .btn-preview{
+      background:transparent;color:var(--cyan);border:1px solid var(--cyan);
+      padding:.65rem 1.5rem;border-radius:5px;font-size:.9rem;cursor:pointer;
+      font-family:inherit;transition:all .25s;margin-left:auto;
+    }
+    .btn-preview:hover{background:rgba(91,189,255,0.1)}
+
+    .preview-box{
+      display:none;background:var(--card);border:1px solid var(--border);
+      border-radius:8px;padding:1.5rem 1.8rem;margin-top:1.2rem;
+    }
+    .preview-box .preview-label{font-size:.7rem;color:var(--gold);font-weight:700;letter-spacing:.1em;margin-bottom:1rem;text-transform:uppercase}
+
+    .detail-actions{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);display:flex;justify-content:flex-end}
+    .btn-delete{
+      background:transparent;color:#e05555;border:1px solid rgba(224,85,85,0.3);
+      padding:.5rem 1.4rem;border-radius:5px;font-size:.82rem;font-weight:600;
+      cursor:pointer;font-family:inherit;transition:all .2s;
+    }
+    .btn-delete:hover{background:rgba(224,85,85,0.12);border-color:#e05555}
+
+    .empty-state{text-align:center;padding:4rem 1rem;color:var(--muted)}
+
+    footer{text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--muted);font-size:.75rem}
+
+    @media(max-width:768px){
+      nav{padding:1rem 1.5rem}
+      .page-header{padding:6rem 1.5rem 2rem}
+      .page-header h1{font-size:1.6rem}
+      .container{padding:1rem .8rem 3rem}
+      .board-table th,.board-table td{padding:.7rem .6rem}
+      .board-table th.col-no,.board-table td.col-no{display:none}
+      .detail-header .title{font-size:1.2rem}
+      .form-group textarea{height:280px}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo"><span class="nav-logo-text">ARKEN</span></a>
+  <a href="/" class="nav-back" id="navBack">&larr; 홈으로</a>
+</nav>
+
+<header class="page-header" id="pageHeader">
+  <h1>AI NEWS</h1>
+  <p>매일 수집되는 AI 업계 주요 뉴스를 한눈에 확인하세요.</p>
+</header>
+
+<!-- ===== 목록 뷰 ===== -->
+<main class="container" id="listView">
+  <div class="toolbar">
+    <button class="btn-write" onclick="showWrite()">+ 글쓰기</button>
+  </div>
+  <table class="board-table">
+    <thead>
+      <tr>
+        <th class="col-no">No.</th>
+        <th class="col-title">제목</th>
+        <th class="col-date">날짜</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+  <div class="pagination" id="pagination"></div>
+</main>
+
+<!-- ===== 상세 뷰 ===== -->
+<div class="container detail-view" id="detailView">
+  <span class="sub-back" onclick="showList()">&larr; 목록으로</span>
+  <div class="detail-header">
+    <div class="date" id="detailDate"></div>
+    <div class="title" id="detailTitle"></div>
+  </div>
+  <div class="detail-body" id="detailBody"></div>
+  <div class="detail-actions">
+    <button class="btn-delete" onclick="deletePost()">삭제</button>
+  </div>
+</div>
+
+<!-- ===== 글쓰기 뷰 ===== -->
+<div class="container write-view" id="writeView">
+  <span class="sub-back" onclick="showList()">&larr; 목록으로</span>
+  <div class="form-group">
+    <label>제목</label>
+    <input type="text" id="inputTitle" placeholder="뉴스 제목을 입력하세요"/>
+  </div>
+  <div class="form-group">
+    <label>본문 (HTML) <button type="button" class="btn-example" onclick="loadExample()">예제 불러오기</button></label>
+    <textarea id="inputBody" placeholder="HTML 태그를 사용하여 본문을 작성하세요."></textarea>
+    <div class="form-hint">사용 가능 태그: h2, h3, p, ul, ol, li, blockquote, a, img, table, strong, em, code, pre 등</div>
+  </div>
+  <div class="form-actions">
+    <button class="btn-save" onclick="savePost()">저장</button>
+    <button class="btn-cancel" onclick="showList()">취소</button>
+    <button class="btn-preview" onclick="togglePreview()">미리보기</button>
+  </div>
+  <div class="preview-box" id="previewBox">
+    <div class="preview-label">미리보기</div>
+    <div class="detail-body" id="previewBody"></div>
+  </div>
+</div>
+
+<footer>&copy; 2025 ARKEN Co., Ltd. All rights reserved.</footer>
+
+<script>
+const PER_PAGE = 10;
+const STORAGE_KEY = 'arken-ai-news';
+
+// 로컬 저장소에서 게시글 불러오기
+function getPosts() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  } catch { return []; }
+}
+
+function savePosts(posts) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+}
+
+let allPosts = [];
+let currentPage = 1;
+let currentDetailIdx = -1;
+
+function init() {
+  allPosts = getPosts();
+  if (!allPosts.length) {
+    document.getElementById('tableBody').innerHTML =
+      '<tr><td colspan="3" class="empty-state">아직 등록된 뉴스가 없습니다.</td></tr>';
+    return;
+  }
+  renderPage(1);
+}
+
+const DAYS = ['일','월','화','수','목','금','토'];
+
+function nowStr() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  const day = DAYS[d.getDay()];
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mi = String(d.getMinutes()).padStart(2,'0');
+  return yyyy + '-' + mm + '-' + dd + ' (' + day + ') ' + hh + ':' + mi;
+}
+
+function todayDate() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function renderPage(page) {
+  currentPage = page;
+  const total = allPosts.length;
+  const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+  const start = (page - 1) * PER_PAGE;
+  const items = allPosts.slice(start, start + PER_PAGE);
+  const today = todayDate();
+
+  document.getElementById('tableBody').innerHTML = items.map((p, i) => {
+    const no = total - start - i;
+    const isToday = p.date && p.date.startsWith(today);
+    const badge = isToday ? '<span class="new-badge">NEW</span>' : '';
+    return `<tr onclick="showDetail(${start + i})">
+      <td class="col-no">${no}</td>
+      <td class="col-title">${escHtml(p.title)}${badge}</td>
+      <td class="col-date">${p.date}</td>
+    </tr>`;
+  }).join('');
+
+  if (totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+  let btns = `<button onclick="renderPage(${page-1})" ${page<=1?'disabled':''}>&laquo;</button>`;
+  for (let i = 1; i <= totalPages; i++) btns += `<button onclick="renderPage(${i})" class="${i===page?'active':''}">${i}</button>`;
+  btns += `<button onclick="renderPage(${page+1})" ${page>=totalPages?'disabled':''}>&raquo;</button>`;
+  document.getElementById('pagination').innerHTML = btns;
+}
+
+function escHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// ── nav 버튼 전환 ──
+const navBack = document.getElementById('navBack');
+
+function setNavHome() {
+  navBack.textContent = '\u2190 홈으로';
+  navBack.href = '/';
+  navBack.onclick = null;
+}
+function setNavList() {
+  navBack.textContent = '\u2190 목록으로';
+  navBack.href = '#';
+  navBack.onclick = function(e){ e.preventDefault(); showList(); };
+}
+
+// ── 뷰 전환 ──
+function showList() {
+  document.getElementById('listView').style.display = '';
+  document.getElementById('pageHeader').style.display = '';
+  document.getElementById('detailView').style.display = 'none';
+  document.getElementById('writeView').style.display = 'none';
+  setNavHome();
+  init();
+  window.scrollTo(0, 0);
+}
+
+function showDetail(idx) {
+  currentDetailIdx = idx;
+  const post = allPosts[idx];
+  document.getElementById('detailDate').textContent = post.date;
+  document.getElementById('detailTitle').textContent = post.title;
+  document.getElementById('detailBody').innerHTML = post.body;
+
+  document.getElementById('listView').style.display = 'none';
+  document.getElementById('pageHeader').style.display = 'none';
+  document.getElementById('writeView').style.display = 'none';
+  document.getElementById('detailView').style.display = 'block';
+  setNavList();
+  window.scrollTo(0, 0);
+}
+
+function showWrite() {
+  document.getElementById('inputTitle').value = '';
+  document.getElementById('inputBody').value = '';
+  document.getElementById('previewBox').style.display = 'none';
+
+  document.getElementById('listView').style.display = 'none';
+  document.getElementById('pageHeader').style.display = 'none';
+  document.getElementById('detailView').style.display = 'none';
+  document.getElementById('writeView').style.display = 'block';
+  setNavList();
+  window.scrollTo(0, 0);
+  document.getElementById('inputTitle').focus();
+}
+
+// ── 삭제 ──
+function deletePost() {
+  if (!confirm('이 글을 삭제하시겠습니까?')) return;
+  const posts = getPosts();
+  posts.splice(currentDetailIdx, 1);
+  savePosts(posts);
+  showList();
+}
+
+// ── HTML 예제 불러오기 ──
+function loadExample() {
+  document.getElementById('inputTitle').value = 'OpenAI, GPT-5 공개 — 멀티모달 에이전트 시대 본격화';
+  document.getElementById('inputBody').value = `<h2>GPT-5, 무엇이 달라졌나</h2>
+<p>OpenAI가 차세대 모델 <strong>GPT-5</strong>를 공식 발표했습니다. 텍스트·이미지·음성·비디오를 하나의 모델에서 처리하는 <strong>네이티브 멀티모달</strong> 아키텍처를 채택했습니다.</p>
+
+<h3>핵심 변경 사항</h3>
+<ul>
+  <li><strong>네이티브 멀티모달</strong> — 텍스트, 이미지, 음성, 비디오를 단일 모델에서 통합 처리</li>
+  <li><strong>에이전트 모드</strong> — 웹 브라우징, 코드 실행, API 호출을 자율적으로 수행</li>
+  <li><strong>200만 토큰</strong> — 컨텍스트 윈도우가 2배 확장</li>
+  <li><strong>추론 속도 3배 향상</strong> — 기존 GPT-4o 대비 응답 지연시간 대폭 감소</li>
+</ul>
+
+<h3>업계 영향</h3>
+<p>AI 에이전트가 단순 챗봇을 넘어 <em>실제 업무를 수행하는 도구</em>로 진화하고 있습니다. 기업용 AI 시장에서 Anthropic, Google과의 경쟁이 더욱 심화될 전망입니다.</p>
+
+<blockquote>"GPT-5는 AI가 도구에서 동료로 전환되는 전환점이 될 것" — Sam Altman, OpenAI CEO</blockquote>
+
+<h3>관련 링크</h3>
+<p><a href="https://openai.com" target="_blank">OpenAI 공식 발표</a></p>`;
+}
+
+// ── 저장 ──
+function savePost() {
+  const title = document.getElementById('inputTitle').value.trim();
+  const body = document.getElementById('inputBody').value.trim();
+  if (!title) { alert('제목을 입력하세요.'); return; }
+  if (!body) { alert('본문을 입력하세요.'); return; }
+
+  const posts = getPosts();
+  posts.unshift({ date: nowStr(), title, body });
+  savePosts(posts);
+  showList();
+}
+
+// ── 미리보기 ──
+function togglePreview() {
+  const box = document.getElementById('previewBox');
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    return;
+  }
+  document.getElementById('previewBody').innerHTML = document.getElementById('inputBody').value;
+  box.style.display = 'block';
+}
+
+init();
+</script>
+</body>
+</html>
