@@ -2,6 +2,10 @@
   "version": 2,
   "builds": [
     {
+      "src": "api/ai-news.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "index.html",
       "use": "@vercel/static"
     },
@@ -11,6 +15,10 @@
     }
   ],
   "routes": [
+    {
+      "src": "/api/ai-news",
+      "dest": "/api/ai-news.js"
+    },
     {
       "src": "/robots.txt",
       "dest": "/public/robots.txt"
