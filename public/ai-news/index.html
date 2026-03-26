@@ -7,6 +7,7 @@
   <meta name="description" content="ARKEN이 매일 수집하는 AI 뉴스 요약 게시판입니다."/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
   <style>
     :root {
       --bg:#020b1a;--bg2:#060f22;--bg3:#0a142e;
@@ -367,7 +368,7 @@ function showDetail(idx) {
   const post = allPosts[idx];
   document.getElementById('detailDate').textContent = post.date;
   document.getElementById('detailTitle').textContent = post.title;
-  document.getElementById('detailBody').innerHTML = post.body;
+  document.getElementById('detailBody').innerHTML = DOMPurify.sanitize(post.body);
 
   document.getElementById('listView').style.display = 'none';
   document.getElementById('pageHeader').style.display = 'none';
@@ -474,7 +475,7 @@ function togglePreview() {
     box.style.display = 'none';
     return;
   }
-  document.getElementById('previewBody').innerHTML = document.getElementById('inputBody').value;
+  document.getElementById('previewBody').innerHTML = DOMPurify.sanitize(document.getElementById('inputBody').value);
   box.style.display = 'block';
 }
 
