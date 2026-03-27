@@ -36,7 +36,7 @@
     .nav-links a:hover{color:var(--cyan)}
     .nav-links a.current{color:var(--cyan)}
 
-    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:.5rem;z-index:200}
+    .hamburger{display:none;background:rgba(6,15,34,0.8);border:1px solid var(--border);border-radius:6px;cursor:pointer;padding:.55rem .5rem;z-index:200}
     .hamburger span{display:block;width:22px;height:2px;background:var(--cyan);margin:5px 0;transition:all .3s}
     .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
     .hamburger.active span:nth-child(2){opacity:0}
@@ -185,7 +185,7 @@
       .hamburger{display:block}
       .nav-links{
         display:none;position:fixed;top:0;left:0;right:0;bottom:0;
-        background:rgba(2,11,26,0.97);flex-direction:column;
+        background:#020b1a;flex-direction:column;
         justify-content:center;align-items:center;gap:2rem;z-index:150;
       }
       .nav-links.open{display:flex}
