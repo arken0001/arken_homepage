@@ -31,11 +31,16 @@
       background:linear-gradient(90deg,var(--glow),var(--blue));
       -webkit-background-clip:text;-webkit-text-fill-color:transparent;
     }
-    .nav-back{
-      color:var(--muted);font-size:.85rem;text-decoration:none;
-      border:1px solid var(--border);padding:.4rem 1rem;border-radius:4px;transition:all .25s;
-    }
-    .nav-back:hover{color:var(--cyan);border-color:var(--blue)}
+    .nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+    .nav-links a{color:var(--muted);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-decoration:none;transition:color .25s;text-transform:uppercase}
+    .nav-links a:hover{color:var(--cyan)}
+    .nav-links a.current{color:var(--cyan)}
+
+    .hamburger{display:none;background:none;border:none;cursor:pointer;padding:.5rem;z-index:200}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--cyan);margin:5px 0;transition:all .3s}
+    .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+    .hamburger.active span:nth-child(2){opacity:0}
+    .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
     .page-header{
       padding:8rem 2rem 2.5rem;text-align:center;
@@ -177,6 +182,14 @@
 
     @media(max-width:768px){
       nav{padding:1rem 1.5rem}
+      .hamburger{display:block}
+      .nav-links{
+        display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+        background:rgba(2,11,26,0.97);flex-direction:column;
+        justify-content:center;align-items:center;gap:2rem;z-index:150;
+      }
+      .nav-links.open{display:flex}
+      .nav-links a{font-size:1.1rem;letter-spacing:.15em}
       .page-header{padding:6rem 1.5rem 2rem}
       .page-header h1{font-size:1.6rem}
       .container{padding:1rem .8rem 3rem}
@@ -191,7 +204,18 @@
 
 <nav>
   <a href="/" class="nav-logo"><span class="nav-logo-text">ARKEN</span></a>
-  <a href="/" class="nav-back" id="navBack">&larr; 홈으로</a>
+  <ul class="nav-links">
+    <li><a href="/#about">회사소개</a></li>
+    <li><a href="/#develop">서비스</a></li>
+    <li><a href="/#projects">포트폴리오</a></li>
+    <li><a href="/#tech">기술스택</a></li>
+    <li><a href="/komoshnik/kr.html">KOMOSHNIK</a></li>
+    <li><a href="/cafe-manager/">Cafe Manager</a></li>
+    <li><a href="/ai-news/" class="current">AI뉴스</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <header class="page-header" id="pageHeader">
@@ -338,19 +362,17 @@ function escHtml(str) {
   return d.innerHTML;
 }
 
-// ── nav 버튼 전환 ──
-const navBack = document.getElementById('navBack');
-
-function setNavHome() {
-  navBack.textContent = '\u2190 홈으로';
-  navBack.href = '/';
-  navBack.onclick = null;
+// ── 햄버거 메뉴 ──
+function toggleMenu(){
+  document.querySelector('.nav-links').classList.toggle('open');
+  document.querySelector('.hamburger').classList.toggle('active');
 }
-function setNavList() {
-  navBack.textContent = '\u2190 목록으로';
-  navBack.href = '#';
-  navBack.onclick = function(e){ e.preventDefault(); showList(); };
-}
+document.querySelectorAll('.nav-links a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.querySelector('.nav-links').classList.remove('open');
+    document.querySelector('.hamburger').classList.remove('active');
+  });
+});
 
 // ── 뷰 전환 ──
 function showList() {
@@ -358,7 +380,6 @@ function showList() {
   document.getElementById('pageHeader').style.display = '';
   document.getElementById('detailView').style.display = 'none';
   document.getElementById('writeView').style.display = 'none';
-  setNavHome();
   loadPosts();
   window.scrollTo(0, 0);
 }
@@ -374,7 +395,7 @@ function showDetail(idx) {
   document.getElementById('pageHeader').style.display = 'none';
   document.getElementById('writeView').style.display = 'none';
   document.getElementById('detailView').style.display = 'block';
-  setNavList();
+  // 뷰 전환
   window.scrollTo(0, 0);
 }
 
@@ -389,7 +410,7 @@ function showWrite() {
   document.getElementById('pageHeader').style.display = 'none';
   document.getElementById('detailView').style.display = 'none';
   document.getElementById('writeView').style.display = 'block';
-  setNavList();
+  // 뷰 전환
   window.scrollTo(0, 0);
   document.getElementById('inputTitle').focus();
 }
