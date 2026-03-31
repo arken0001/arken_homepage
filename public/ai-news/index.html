@@ -185,15 +185,14 @@
       .nav-logo-text{font-size:1rem;letter-spacing:.12em}
       .hamburger{display:block;flex-shrink:0}
       .nav-links{
-        position:fixed;top:0;right:-280px;width:260px;height:100%;
+        display:none;position:fixed;top:0;right:0;width:260px;height:100vh;
         background:#020b1a;flex-direction:column;
         padding:5rem 2rem 2rem;gap:1.8rem;z-index:200;
         border-left:1px solid var(--blue);
         box-shadow:-4px 0 30px rgba(0,0,0,0.8);
-        transition:right .3s ease;
         overflow-y:auto;
       }
-      .nav-links.open{right:0;display:flex}
+      .nav-links.open{display:flex}
       .nav-links a{font-size:1rem;letter-spacing:.1em;color:var(--text)}
       .nav-overlay{display:none;position:fixed;inset:0;background:transparent;z-index:190}
       .nav-overlay.open{display:block}
