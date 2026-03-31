@@ -185,12 +185,17 @@
       .nav-logo-text{font-size:1rem;letter-spacing:.12em}
       .hamburger{display:block;flex-shrink:0}
       .nav-links{
-        display:none;position:fixed;top:0;left:0;right:0;bottom:0;
-        background:#020b1a;flex-direction:column;
-        justify-content:center;align-items:center;gap:2rem;z-index:150;
+        position:fixed;top:0;right:-280px;width:260px;height:100%;
+        background:#0a142e;flex-direction:column;
+        padding:5rem 2rem 2rem;gap:1.5rem;z-index:150;
+        border-left:1px solid var(--border);
+        box-shadow:-4px 0 20px rgba(0,0,0,0.5);
+        transition:right .3s ease;
       }
-      .nav-links.open{display:flex}
-      .nav-links a{font-size:1.1rem;letter-spacing:.15em}
+      .nav-links.open{right:0;display:flex}
+      .nav-links a{font-size:1rem;letter-spacing:.1em}
+      .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:140}
+      .nav-overlay.open{display:block}
       .page-header{padding:6rem 1.5rem 2rem}
       .page-header h1{font-size:1.6rem}
       .container{padding:1rem .8rem 3rem}
@@ -218,6 +223,7 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
+<div class="nav-overlay" onclick="toggleMenu()"></div>
 
 <header class="page-header" id="pageHeader">
   <h1>AI NEWS</h1>
@@ -367,12 +373,15 @@ function escHtml(str) {
 function toggleMenu(){
   document.querySelector('.nav-links').classList.toggle('open');
   document.querySelector('.hamburger').classList.toggle('active');
+  document.querySelector('.nav-overlay').classList.toggle('open');
+}
+function closeMenu(){
+  document.querySelector('.nav-links').classList.remove('open');
+  document.querySelector('.hamburger').classList.remove('active');
+  document.querySelector('.nav-overlay').classList.remove('open');
 }
 document.querySelectorAll('.nav-links a').forEach(a=>{
-  a.addEventListener('click',()=>{
-    document.querySelector('.nav-links').classList.remove('open');
-    document.querySelector('.hamburger').classList.remove('active');
-  });
+  a.addEventListener('click', closeMenu);
 });
 
 // ── 뷰 전환 ──
