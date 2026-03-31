@@ -193,8 +193,7 @@
       }
       .nav-links.open{display:flex}
       .nav-links a{font-size:1rem;letter-spacing:.1em;color:var(--text)}
-      .nav-overlay{display:none;position:fixed;inset:0;background:transparent;z-index:190}
-      .nav-overlay.open{display:block}
+      /* nav-overlay 제거 — document click으로 대체 */
       .page-header{padding:6rem 1.5rem 2rem}
       .page-header h1{font-size:1.6rem}
       .container{padding:1rem .8rem 3rem}
@@ -222,7 +221,6 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
-<div class="nav-overlay" onclick="toggleMenu()"></div>
 
 <header class="page-header" id="pageHeader">
   <h1>AI NEWS</h1>
@@ -372,30 +370,33 @@ function escHtml(str) {
 function toggleMenu(){
   document.querySelector('.nav-links').classList.toggle('open');
   document.querySelector('.hamburger').classList.toggle('active');
-  document.querySelector('.nav-overlay').classList.toggle('open');
 }
 function closeMenu(){
   document.querySelector('.nav-links').classList.remove('open');
   document.querySelector('.hamburger').classList.remove('active');
-  document.querySelector('.nav-overlay').classList.remove('open');
 }
+// 메뉴 외부 클릭 시 닫기
+document.addEventListener('click', function(e){
+  const navLinks = document.querySelector('.nav-links');
+  const hamburger = document.querySelector('.hamburger');
+  if(navLinks.classList.contains('open') &&
+     !navLinks.contains(e.target) &&
+     !hamburger.contains(e.target)){
+    closeMenu();
+  }
+});
+// 메뉴 링크 클릭 처리
 document.querySelectorAll('.nav-links a').forEach(a=>{
   a.addEventListener('click', function(e){
     if(!document.querySelector('.nav-links').classList.contains('open')) return;
-    e.preventDefault();
     const href = this.getAttribute('href');
-    const target = this.getAttribute('target');
-    closeMenu();
-    setTimeout(()=>{
-      if(href && href.startsWith('#')){
-        const el = document.querySelector(href);
-        if(el) el.scrollIntoView({behavior:'smooth'});
-      } else if(target === '_blank'){
-        window.open(href, '_blank');
-      } else {
-        window.location.href = href;
-      }
-    }, 100);
+    if(href && href.startsWith('#')){
+      e.preventDefault();
+      closeMenu();
+      const el = document.querySelector(href);
+      if(el) el.scrollIntoView({behavior:'smooth'});
+    }
+    // 페이지 이동 링크는 브라우저 기본 동작으로 이동
   });
 });
 
