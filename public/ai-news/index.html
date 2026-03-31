@@ -380,7 +380,17 @@ function closeMenu(){
   document.querySelector('.nav-overlay').classList.remove('open');
 }
 document.querySelectorAll('.nav-links a').forEach(a=>{
-  a.addEventListener('click', function(){ setTimeout(closeMenu, 100); });
+  a.addEventListener('click', function(e){
+    const href = this.getAttribute('href');
+    closeMenu();
+    if(!href.startsWith('#')){
+      // 외부 링크는 그대로 이동
+    } else {
+      e.preventDefault();
+      const el = document.querySelector(href);
+      if(el) el.scrollIntoView({behavior:'smooth'});
+    }
+  });
 });
 
 // ── 뷰 전환 ──
