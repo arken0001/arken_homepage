@@ -382,18 +382,16 @@ function closeMenu(){
 document.querySelectorAll('.nav-links a').forEach(a=>{
   a.addEventListener('click', function(e){
     if(!document.querySelector('.nav-links').classList.contains('open')) return;
-    e.preventDefault();
-    const href = this.getAttribute('href');
-    const target = this.getAttribute('target');
     closeMenu();
-    if(href.startsWith('#')){
-      const el = document.querySelector(href);
-      if(el) el.scrollIntoView({behavior:'smooth'});
-    } else if(target === '_blank'){
-      window.open(href, '_blank');
-    } else {
-      window.location.href = href;
+    const href = this.getAttribute('href');
+    if(href && href.startsWith('#')){
+      e.preventDefault();
+      setTimeout(()=>{
+        const el = document.querySelector(href);
+        if(el) el.scrollIntoView({behavior:'smooth'});
+      }, 50);
     }
+    // 일반 링크와 target="_blank" 링크는 브라우저 기본 동작으로 처리
   });
 });
 
