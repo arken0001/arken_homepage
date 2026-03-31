@@ -381,6 +381,7 @@ function closeMenu(){
 }
 document.querySelectorAll('.nav-links a').forEach(a=>{
   a.addEventListener('click', function(e){
+    if(!document.querySelector('.nav-links').classList.contains('open')) return;
     e.preventDefault();
     const href = this.getAttribute('href');
     const target = this.getAttribute('target');
