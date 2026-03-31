@@ -380,7 +380,7 @@ function closeMenu(){
   document.querySelector('.nav-overlay').classList.remove('open');
 }
 document.querySelectorAll('.nav-links a').forEach(a=>{
-  a.addEventListener('click', closeMenu);
+  a.addEventListener('click', function(){ setTimeout(closeMenu, 100); });
 });
 
 // ── 뷰 전환 ──
