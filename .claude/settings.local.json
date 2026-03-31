@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx serve:*)",
+      "Bash(npx vercel:*)",
+      "Bash(python -c \":*)",
+      "WebFetch(domain:arken.co.kr)",
+      "WebFetch(domain:www.arken.co.kr)",
+      "Bash(netstat -ano)",
+      "WebFetch(domain:kosnova.co.kr)"
+    ]
+  }
+}
