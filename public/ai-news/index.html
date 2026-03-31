@@ -186,14 +186,15 @@
       .hamburger{display:block;flex-shrink:0}
       .nav-links{
         position:fixed;top:0;right:-280px;width:260px;height:100%;
-        background:#0a142e;flex-direction:column;
-        padding:5rem 2rem 2rem;gap:1.5rem;z-index:150;
-        border-left:1px solid var(--border);
-        box-shadow:-4px 0 20px rgba(0,0,0,0.5);
+        background:#000;flex-direction:column;
+        padding:5rem 2rem 2rem;gap:1.8rem;z-index:150;
+        border-left:1px solid var(--blue);
+        box-shadow:-4px 0 30px rgba(0,0,0,0.8);
         transition:right .3s ease;
+        overflow-y:auto;
       }
       .nav-links.open{right:0;display:flex}
-      .nav-links a{font-size:1rem;letter-spacing:.1em}
+      .nav-links a{font-size:1rem;letter-spacing:.1em;color:var(--text)}
       .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:140}
       .nav-overlay.open{display:block}
       .page-header{padding:6rem 1.5rem 2rem}
