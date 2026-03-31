@@ -381,14 +381,17 @@ function closeMenu(){
 }
 document.querySelectorAll('.nav-links a').forEach(a=>{
   a.addEventListener('click', function(e){
+    e.preventDefault();
     const href = this.getAttribute('href');
+    const target = this.getAttribute('target');
     closeMenu();
-    if(!href.startsWith('#')){
-      // 외부 링크는 그대로 이동
-    } else {
-      e.preventDefault();
+    if(href.startsWith('#')){
       const el = document.querySelector(href);
       if(el) el.scrollIntoView({behavior:'smooth'});
+    } else if(target === '_blank'){
+      window.open(href, '_blank');
+    } else {
+      window.location.href = href;
     }
   });
 });
