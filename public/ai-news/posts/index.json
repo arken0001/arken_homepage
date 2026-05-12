@@ -1,4 +1,4 @@
-[
-  {
-    "date": "2026-05-12 (화) 09:16",
-    "title": "AI 뉴스 브리핑 - 2026년 05월 12일"
+$(python3 -c "
+with open('/tmp/full_content_46.json', 'r', encoding='utf-8') as f:
+    print(f.read(), end='')
+")
