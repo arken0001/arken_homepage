@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background:#f4f6f9; margin:0; padding:0; color:#1a2332; }
+  .wrapper { max-width:880px; margin:0 auto; padding:24px 16px; }
+
+  /* HEADER */
+  .header { background:linear-gradient(135deg,#020b1a 0%,#0a142e 100%); border-radius:12px; padding:32px 36px; margin-bottom:24px; }
+  .header h1 { color:#7dd4ff; font-size:1.5rem; margin:0 0 6px 0; }
+  .header p { color:#6889aa; font-size:0.9rem; margin:0; }
+  .header .date { color:#e9a84a; font-weight:700; }
+  .header .delta { color:#34d399; font-size:0.82rem; margin-top:6px; }
+
+  /* SECTION */
+  .section { background:#fff; border-radius:10px; padding:28px 32px; margin-bottom:20px; border:1px solid #e2e8f0; }
+  .section-title { font-size:1.1rem; font-weight:700; color:#020b1a; margin:0 0 16px 0; display:flex; align-items:center; gap:10px; border-bottom:2px solid #e9a84a; padding-bottom:10px; }
+  .site-badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:0.78rem; font-weight:700; margin-right:4px; }
+  .badge-arken { background:#e8f4ff; color:#0a6ec4; }
+  .badge-komoshnik { background:#fff3e0; color:#e65100; }
+  .badge-kosnova { background:#fce4ec; color:#c62828; }
+
+  /* SUMMARY GRID */
+  .summary-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:14px; }
+  .summary-card { border-radius:8px; padding:16px; text-align:center; }
+  .card-arken { background:linear-gradient(135deg,#e8f4ff,#dbeeff); border:1px solid #bfdbfe; }
+  .card-komoshnik { background:linear-gradient(135deg,#fff3e0,#ffe9c8); border:1px solid #fed7aa; }
+  .card-kosnova { background:linear-gradient(135deg,#fce4ec,#ffd6e0); border:1px solid #fecdd3; }
+  .card-title { font-size:0.8rem; font-weight:700; color:#4a5568; margin-bottom:6px; }
+  .card-score { font-size:2.2rem; font-weight:800; }
+  .score-a { color:#22c55e; }
+  .score-b { color:#f59e0b; }
+  .score-c { color:#ef4444; }
+  .card-change { font-size:0.72rem; margin-top:4px; }
+  .up { color:#22c55e; font-weight:700; }
+  .flat { color:#94a3b8; }
+  .down { color:#ef4444; font-weight:700; }
+
+  /* TABLE */
+  table { width:100%; border-collapse:collapse; font-size:0.87rem; margin-top:10px; }
+  th { background:#f7f9fc; padding:9px 12px; text-align:left; font-weight:600; color:#4a5568; border-bottom:2px solid #e2e8f0; }
+  td { padding:9px 12px; border-bottom:1px solid #f0f2f5; vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  .ok   { color:#22c55e; font-weight:700; }
+  .warn { color:#f59e0b; font-weight:700; }
+  .bad  { color:#ef4444; font-weight:700; }
+  .new  { color:#8b5cf6; font-weight:700; }
+
+  /* RANK BADGES */
+  .rank-badge { display:inline-block; padding:2px 9px; border-radius:10px; font-size:0.8rem; font-weight:700; }
+  .rank-none { background:#fee2e2; color:#b91c1c; }
+  .rank-low  { background:#fef3c7; color:#92400e; }
+  .rank-ok   { background:#d1fae5; color:#065f46; }
+
+  /* COMPETITOR CHIPS */
+  .competitor-chip { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.78rem; background:#f3f4f6; color:#4b5563; margin:2px; border:1px solid #e5e7eb; }
+  .chip-new { background:#ede9fe; color:#5b21b6; border-color:#c4b5fd; }
+  .chip-bad { background:#fee2e2; color:#991b1b; border-color:#fecaca; }
+
+  /* PRIORITY BOXES */
+  .priority-box { border-radius:8px; padding:14px 18px; margin:8px 0; display:flex; align-items:flex-start; gap:12px; }
+  .p1 { background:#fef2f2; border-left:4px solid #ef4444; }
+  .p2 { background:#fffbeb; border-left:4px solid #f59e0b; }
+  .p3 { background:#f0fdf4; border-left:4px solid #22c55e; }
+  .priority-num { font-weight:800; font-size:1rem; min-width:28px; }
+  .priority-text { font-size:0.87rem; line-height:1.65; }
+  .priority-title { font-weight:700; margin-bottom:4px; }
+
+  /* CHANGE LOG */
+  .changelog { background:#f8fafc; border-radius:8px; padding:14px 16px; font-size:0.85rem; line-height:1.8; border:1px solid #e2e8f0; }
+  .changelog .chg-new   { color:#22c55e; font-weight:700; }
+  .changelog .chg-warn  { color:#f59e0b; font-weight:700; }
+  .changelog .chg-bad   { color:#ef4444; font-weight:700; }
+
+  /* COMPETITION */
+  .comp-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:10px; }
+  .comp-card { background:#f8fafc; border-radius:8px; padding:14px; border:1px solid #e2e8f0; }
+  .comp-card h4 { font-size:0.82rem; font-weight:700; margin-bottom:8px; color:#374151; }
+  .comp-card p  { font-size:0.78rem; color:#6b7280; line-height:1.6; }
+  .strength { color:#22c55e; }
+  .weakness { color:#ef4444; }
+
+  /* ALERT BOX */
+  .alert-box { background:#fff1f2; border:1.5px solid #fca5a5; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:0.87rem; }
+  .alert-box strong { color:#b91c1c; }
+
+  .footer { text-align:center; color:#9ca3af; font-size:0.8rem; padding:20px; }
+  .note { font-size:0.8rem; color:#9ca3af; margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ══════════════════════════ HEADER ══════════════════════════ -->
+  <div class="header">
+    <h1>📊 ARKEN 그룹 SEO 주간 보고서</h1>
+    <p>arken.co.kr &nbsp;|&nbsp; komoshnik.kr &nbsp;|&nbsp; kosnova.kr</p>
+    <p class="date" style="margin-top:8px;">보고서 기준일: <strong>2026-05-18 (KST)</strong> &nbsp;|&nbsp; 직전 보고서: 2026-05-04</p>
+    <p class="delta">▲ 이번 주 주요 변화: AI 뉴스 브리핑 누적 51건 (전주 10건 → +41건) · kosnova.kr 커뮤니티 포스트 1건 추가 색인 · P1 기술 SEO 미처리 6주 경과 (긴급)</p>
+  </div>
+
+  <!-- ══════════════════════════ 🚨 긴급 알림 ══════════════════════════ -->
+  <div class="alert-box">
+    <strong>🚨 P1 긴급 경고:</strong> komoshnik.kr · kosnova.kr의 meta description / OG태그 / canonical / robots.txt / sitemap.xml 미처리가 <strong>6주째 지속</strong>되고 있습니다. 두 사이트 모두 구글 색인 0건(komoshnik) · 2건(kosnova)으로 실질적인 SEO 효과가 전무한 상태입니다. 이번 주 내 처리가 필요합니다.
+  </div>
+
+  <!-- ══════════════════════════ 핵심 요약 ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title">📌 핵심 요약 (주간 스코어카드)</div>
+    <div class="summary-grid">
+      <div class="summary-card card-arken">
+        <div class="card-title">arken.co.kr</div>
+        <div class="card-score score-b">B+</div>
+        <div class="card-change flat">→ 유지 (전주 동일)</div>
+        <div style="font-size:0.72rem;color:#6b7280;margin-top:4px;">기술 SEO 양호<br>키워드 노출 0/5<br>AI뉴스 +41건 (누적 51건)</div>
+      </div>
+      <div class="summary-card card-komoshnik">
+        <div class="card-title">komoshnik.kr</div>
+        <div class="card-score score-c">D</div>
+        <div class="card-change flat">→ 유지 (P1 6주 미처리)</div>
+        <div style="font-size:0.72rem;color:#6b7280;margin-top:4px;">기술 SEO 위험<br>키워드 노출 0/5<br>구글 색인 0건</div>
+      </div>
+      <div class="summary-card card-kosnova">
+        <div class="card-title">kosnova.kr</div>
+        <div class="card-score score-c">D+</div>
+        <div class="card-change up">▲ 미세 상승 (커뮤니티 포스트 색인)</div>
+        <div style="font-size:0.72rem;color:#6b7280;margin-top:4px;">구글 색인 2건<br>키워드 노출 1/5<br>기술 SEO 위험</div>
+      </div>
+    </div>
+    <p class="note">※ komoshnik/kosnova P1 항목(meta description·canonical·OG·robots.txt·sitemap.xml)이 <strong>6주째 미처리</strong> 상태. arken.co.kr AI뉴스 콘텐츠 급증(+41건)은 중장기 organic 유입에 긍정적이나 단기 색인은 여전히 0.</p>
+  </div>
+
+  <!-- ══════════════════════════ 이번 주 변경사항 ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title">📋 전주 대비 변경사항 (2026-05-04 → 2026-05-18)</div>
+    <div class="changelog">
+      <span class="chg-new">✅ 추가</span> &nbsp;arken.co.kr AI 뉴스 브리핑 일일 발행 지속 — 누적 10건 → <strong>51건</strong> (+41건, 5/5~5/17 발행 확인)<br>
+      <span class="chg-new">✅ 추가</span> &nbsp;kosnova.kr 커뮤니티 포스트 1건 추가 색인 확인 — 카자흐스탄 영사관 여권 문의 (4/10 작성)<br>
+      <span class="chg-warn">⚠️ 미처리</span> &nbsp;sitemap.xml lastmod <strong>2026-03-12 (10주 경과)</strong> — AI뉴스 51건 URL 전혀 미반영<br>
+      <span class="chg-bad">❌ 미처리</span> &nbsp;komoshnik.kr / kosnova.kr — meta description / OG태그 / canonical / hreflang / robots.txt / sitemap (<strong>P1 6주 연속 미처리</strong>)<br>
+      <span class="chg-bad">❌ 미처리</span> &nbsp;arken.co.kr meta description — 160자 초과 + 말미 URL 텍스트 잔류 (4주 경과)<br>
+      <span class="chg-bad">❌ 미처리</span> &nbsp;H1 태그 키워드 강화 — "디지털의 경계를 다시 설계합니다." 키워드 미포함 상태 유지
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ ARKEN 키워드 ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="site-badge badge-arken">arken.co.kr</span> 키워드 검색 노출 현황</div>
+    <table>
+      <tr><th>키워드</th><th>노출 순위</th><th>전주 대비</th><th>상위 점유 사이트</th></tr>
+      <tr>
+        <td>아켄 / ARKEN</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">포켓몬 아켄 (fandom)</span><span class="competitor-chip">namu.wiki</span><span class="competitor-chip">akron.kr</span></td>
+      </tr>
+      <tr>
+        <td>커뮤니티 자동화</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">jetteon.com</span><span class="competitor-chip">allganize.ai</span><span class="competitor-chip">aigee.ai</span></td>
+      </tr>
+      <tr>
+        <td>AI 솔루션 한국</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">kmac.co.kr</span><span class="competitor-chip">saltlux.com</span><span class="competitor-chip">aifrica.co.kr</span></td>
+      </tr>
+      <tr>
+        <td>이커머스 데이터 솔루션</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">datarize.ai</span><span class="competitor-chip">bitnala.co.kr</span><span class="competitor-chip">sotatek.com</span></td>
+      </tr>
+      <tr>
+        <td>네이버 카페 자동화</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">mixon.io</span><span class="competitor-chip">블로그 포스팅 多</span></td>
+      </tr>
+    </table>
+    <p class="note">※ AI 뉴스 누적 51건 — 관련 키워드(Anthropic, Claude, AI 투자 등)에서 간접 노출 가능성 존재. 직접 서비스 키워드 노출은 0/5 유지 중. 콘텐츠 축적이 중장기 organic 유입의 씨앗이 되는 단계.</p>
+  </div>
+
+  <!-- ══════════════════════════ ARKEN 기술 SEO ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="site-badge badge-arken">arken.co.kr</span> 기술 SEO 체크</div>
+    <table>
+      <tr><th>항목</th><th>상태</th><th>내용</th></tr>
+      <tr><td>title 태그</td><td class="ok">✅ 양호</td><td>ARKEN(아켄) — 네이버 카페 자동화 · AI 콘텐츠 솔루션 · 스마트스토어 데이터 분석 | 주식회사 아켄 (63자)</td></tr>
+      <tr><td>meta description</td><td class="warn">⚠️ 개선필요</td><td>말미 "arken.co.kr" URL 텍스트 포함 (부자연스러운 스니펫), 약 185자 → 160자 이내 권장. <strong>4주 미처리</strong></td></tr>
+      <tr><td>OG 태그</td><td class="ok">✅ 완비</td><td>og:title, description, image(1200×630), url, site_name, locale 전부 설정</td></tr>
+      <tr><td>Twitter Card</td><td class="ok">✅ 완비</td><td>summary_large_image 설정</td></tr>
+      <tr><td>canonical</td><td class="ok">✅ 정상</td><td>https://arken.co.kr/</td></tr>
+      <tr><td>hreflang</td><td class="warn">⚠️ 미설정</td><td>JS i18n(ko/en/ru) 처리 중이나 HTML hreflang 미선언 — 구글 언어별 타겟팅 불명확</td></tr>
+      <tr><td>H1 태그</td><td class="warn">⚠️ 개선필요</td><td>"디지털의 경계를 다시 설계합니다." — 감성 카피는 좋으나 핵심 키워드 미포함</td></tr>
+      <tr><td>구조화 데이터</td><td class="ok">✅ 풍부</td><td>Organization, Product(×2), WebSite, LocalBusiness — JSON-LD 4종 완비</td></tr>
+      <tr><td>Google/Naver/Yandex 인증</td><td class="ok">✅ 완비</td><td>3개 검색엔진 메타 인증 태그 존재 (google, naver, yandex 각 1종)</td></tr>
+      <tr><td>모바일 viewport</td><td class="ok">✅ 정상</td><td>width=device-width, initial-scale=1.0</td></tr>
+      <tr><td>GA 추적</td><td class="ok">✅ 설치</td><td>G-FFRENK1FQE (gtag.js) — 전 페이지 데이터 수집 중</td></tr>
+      <tr><td>robots.txt</td><td class="ok">✅ 정상</td><td>Googlebot/Yeti/YandexBot/Bingbot 명시 허용, Sitemap 경로 포함</td></tr>
+      <tr><td>sitemap.xml</td><td class="warn">⚠️ 구식</td><td>lastmod <strong>2026-03-12 (10주 경과)</strong>. AI뉴스 51건 URL 미반영. #about 등 fragment URL 4개 포함 → 삭제 필요</td></tr>
+      <tr><td>구글 색인</td><td class="bad">❌ 0건</td><td>site:arken.co.kr 검색 결과 없음 — 크롤링은 허용되나 색인 지연. Search Console 확인 필요</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════ KOMOSHNIK 키워드 ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="site-badge badge-komoshnik">komoshnik.kr</span> 키워드 검색 노출 현황</div>
+    <table>
+      <tr><th>키워드</th><th>노출 순위</th><th>전주 대비</th><th>상위 점유 사이트</th></tr>
+      <tr>
+        <td>komoshnik</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">Wikipedia (Kokoshnik 혼재)</span><span class="competitor-chip">kosnova.kr/terms ↗간접</span><span class="competitor-chip">Etsy</span></td>
+      </tr>
+      <tr>
+        <td>코모쉬닉</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">게임 커뮤니티</span><span class="competitor-chip">쇼핑몰</span></td>
+      </tr>
+      <tr>
+        <td>러시아어 한국 정착</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">vseokoree.com</span><span class="competitor-chip">eu-residence.com</span><span class="competitor-chip">liveinkorea.kr</span></td>
+      </tr>
+      <tr>
+        <td>иммиграция в корею</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">zagranportal.ru</span><span class="competitor-chip">ksorskorea.org</span><span class="competitor-chip">visasam.ru</span></td>
+      </tr>
+      <tr>
+        <td>помощь иностранцам в корее</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">vseokoree.com</span><span class="competitor-chip">ksorskorea.org</span><span class="competitor-chip">liveinkorea.kr(다누리)</span></td>
+      </tr>
+    </table>
+    <p class="note">※ kosnova.kr/ko/terms 에서 "komoshnik" 텍스트 간접 노출 — komoshnik.kr 자체 색인 0건. meta description/canonical/robots.txt 부재로 구글 크롤링 신호 없음. Yandex는 arken.co.kr komoshnik/index.html에서 간접 인식 가능성.</p>
+  </div>
+
+  <!-- ══════════════════════════ KOMOSHNIK 기술 SEO ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="site-badge badge-komoshnik">komoshnik.kr</span> 기술 SEO 체크</div>
+    <table>
+      <tr><th>항목</th><th>상태</th><th>내용</th></tr>
+      <tr><td>title 태그 (RU)</td><td class="warn">⚠️ 개선필요</td><td>"KOSNOVA &amp; KOMOSHNIK — Первая инфраструктура адаптации для русскоязычных в Корее" — KOSNOVA·KOMOSHNIK 두 브랜드 혼재. 도메인별 단독 title 필요</td></tr>
+      <tr><td>title 태그 (KO)</td><td class="warn">⚠️ 개선필요</td><td>"KOSNOVA &amp; KOMOSHNIK — 대한민국 최초 러시아어권 특화 정착 인프라" — 혼재</td></tr>
+      <tr><td>meta description</td><td class="bad">❌ 미설정</td><td>ru/ko/en 3개 파일 모두 없음 — 구글 임의 스니펫 생성. <strong>6주째 미처리</strong></td></tr>
+      <tr><td>OG 태그</td><td class="bad">❌ 미설정</td><td>og:title·description·image 전부 없음 — 텔레그램/VK/카카오 공유 미리보기 불가</td></tr>
+      <tr><td>canonical</td><td class="bad">❌ 미설정</td><td>komoshnik.kr ↔ arken.co.kr/komoshnik/ 중복 콘텐츠 위험 (구글 패널티 가능성)</td></tr>
+      <tr><td>hreflang</td><td class="bad">❌ 미설정</td><td>ru/ko/en 파일 상호 참조 없음 — Yandex 다국어 색인 불가</td></tr>
+      <tr><td>구조화 데이터</td><td class="bad">❌ 없음</td><td>JSON-LD 미설정 — 앱 리치 스니펫 불가</td></tr>
+      <tr><td>H1 태그</td><td class="ok">✅ 있음</td><td>각 언어 버전 H1 1개씩 존재 (RU: "Вы приехали в Корею...")</td></tr>
+      <tr><td>모바일 viewport</td><td class="ok">✅ 정상</td><td>width=device-width, initial-scale=1.0</td></tr>
+      <tr><td>GA 추적</td><td class="ok">✅ 설치</td><td>G-FFRENK1FQE (gtag.js) — ru/ko/en 3개 파일 모두 적용</td></tr>
+      <tr><td>robots.txt</td><td class="bad">❌ 없음</td><td>komoshnik.kr 전용 없음 — 크롤 제어 불가. <strong>6주째 미처리</strong></td></tr>
+      <tr><td>sitemap.xml</td><td class="bad">❌ 없음</td><td>komoshnik.kr 전용 없음 — Search Console 수동 제출도 어려운 상태. <strong>6주째 미처리</strong></td></tr>
+      <tr><td>구글 색인</td><td class="bad">❌ 0건</td><td>site:komoshnik.kr 검색 결과 없음 — 실질적 SEO 효과 전무</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════ KOSNOVA 키워드 ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="site-badge badge-kosnova">kosnova.kr</span> 키워드 검색 노출 현황</div>
+    <table>
+      <tr><th>키워드</th><th>노출 순위</th><th>전주 대비</th><th>상위 점유 사이트</th></tr>
+      <tr>
+        <td>kosnova / 코스노바</td>
+        <td><span class="rank-badge rank-ok">브랜드 노출 ✅</span></td>
+        <td class="flat">→ 유지</td>
+        <td><span class="competitor-chip chip-new">kosnova.kr 노출 유지</span><span class="competitor-chip">독일 화장품 코스노바 혼재</span></td>
+      </tr>
+      <tr>
+        <td>러시아어 한국 커뮤니티</td>
+        <td><span class="rank-badge rank-low">간접 노출</span></td>
+        <td class="flat">→ 유지</td>
+        <td><span class="competitor-chip">kosnova.kr/ko/terms</span><span class="competitor-chip">vseokoree.com</span><span class="competitor-chip">koruss.org</span></td>
+      </tr>
+      <tr>
+        <td>русская община в корее</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">ru.wikipedia.org</span><span class="competitor-chip">ksorskorea.org</span><span class="competitor-chip">vnz.su</span></td>
+      </tr>
+      <tr>
+        <td>한러 커뮤니티</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">koruss.org</span><span class="competitor-chip">ekrd.or.kr</span><span class="competitor-chip">koreaforum.co.kr</span></td>
+      </tr>
+      <tr>
+        <td>иммиграция в корею</td>
+        <td><span class="rank-badge rank-none">미노출</span></td>
+        <td class="flat">→</td>
+        <td><span class="competitor-chip">vseokoree.com</span><span class="competitor-chip">ksorskorea.org</span><span class="competitor-chip">liveinkorea.kr</span></td>
+      </tr>
+    </table>
+    <p class="note">※ 이번 주 Google 색인 확인 페이지: (1) kosnova.kr/ko/terms [약관], (2) 카자흐스탄 영사관 여권 커뮤니티 포스트 (4/10). 메인 페이지(/ko, /ru)는 아직 미색인 상태로 추정 — Search Console에서 URL 검사 후 수동 색인 요청 필수.</p>
+  </div>
+
+  <!-- ══════════════════════════ KOSNOVA 기술 SEO ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title"><span class="site-badge badge-kosnova">kosnova.kr</span> 기술 SEO 체크</div>
+    <table>
+      <tr><th>항목</th><th>상태</th><th>내용</th></tr>
+      <tr><td>title 태그</td><td class="warn">⚠️ 개선필요</td><td>komoshnik.kr과 동일 랜딩 HTML 공유 — "KOSNOVA &amp; KOMOSHNIK" 혼재. kosnova.kr 단독 title 미설정</td></tr>
+      <tr><td>meta description</td><td class="bad">❌ 미설정</td><td>없음 — terms 페이지 텍스트가 스니펫으로 발췌되고 있을 가능성. <strong>6주째 미처리</strong></td></tr>
+      <tr><td>OG 태그</td><td class="bad">❌ 미설정</td><td>없음 — SNS 공유 미리보기 불가</td></tr>
+      <tr><td>canonical</td><td class="bad">❌ 미설정</td><td>두 도메인 콘텐츠 중복 위험 — 구글 패널티 가능성. <strong>6주째 미처리</strong></td></tr>
+      <tr><td>hreflang</td><td class="bad">❌ 미설정</td><td>ru/ko/en 상호 참조 없음 — Yandex 다국어 처리 불가</td></tr>
+      <tr><td>구조화 데이터</td><td class="bad">❌ 없음</td><td>JSON-LD 미설정</td></tr>
+      <tr><td>H1 태그</td><td class="ok">✅ 있음</td><td>각 언어별 H1 존재</td></tr>
+      <tr><td>모바일 viewport</td><td class="ok">✅ 정상</td><td>width=device-width, initial-scale=1.0</td></tr>
+      <tr><td>GA 추적</td><td class="ok">✅ 설치</td><td>G-FFRENK1FQE (gtag.js) — 데이터 수집 중</td></tr>
+      <tr><td>robots.txt</td><td class="bad">❌ 없음</td><td>kosnova.kr 전용 없음. <strong>6주째 미처리</strong></td></tr>
+      <tr><td>sitemap.xml</td><td class="bad">❌ 없음</td><td>kosnova.kr 전용 없음. <strong>6주째 미처리</strong></td></tr>
+      <tr><td>구글 색인</td><td class="warn">⚠️ 2건</td><td>/ko/terms + 커뮤니티 포스트 1건 — 메인 페이지 미색인 상태. 커뮤니티 UGC는 자연 색인 시작 신호 (긍정적)</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════ 경쟁 환경 분석 ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title">🏁 경쟁 환경 분석</div>
+    <div class="comp-grid">
+      <div class="comp-card">
+        <h4>arken.co.kr 경쟁사</h4>
+        <p>
+          <strong>datarize.ai</strong> — AI 이커머스 CRM No.1. SEO 콘텐츠 풍부, 블로그 활발<br><br>
+          <strong>bitnala.co.kr</strong> — AI 기반 이커머스 자동화 SaaS. 유사 포지션<br><br>
+          <strong>jetteon.com</strong> — "커뮤니티 자동화" 키워드 블로그로 선점 중<br><br>
+          <span class="strength">▲ ARKEN 강점:</span> 구조화 데이터 완비, 3개 검색엔진 인증, AI뉴스 콘텐츠 급성장(51건)<br>
+          <span class="weakness">▼ 약점:</span> 색인 0건, 단일 랜딩 구조, 롱테일 콘텐츠 부재
+        </p>
+      </div>
+      <div class="comp-card">
+        <h4>komoshnik.kr 경쟁사</h4>
+        <p>
+          <strong>vseokoree.com</strong> — 방대한 러시아어 한국정보 포털. SEO 최강자<br><br>
+          <strong>ksorskorea.org</strong> — 재한 러시아 동포 공식 기관. 2026년 3월 이벤트 개최로 활발<br><br>
+          <strong>liveinkorea.kr (다누리)</strong> — 정부 공식 포털. 다국어 지원<br><br>
+          <span class="strength">▲ KOMOSHNIK 강점:</span> 앱 기반, OCR·비자가이드·기관찾기 실용 도구 특화<br>
+          <span class="weakness">▼ 약점:</span> 구글 색인 0건, 기술 SEO 전무
+        </p>
+      </div>
+      <div class="comp-card">
+        <h4>kosnova.kr 경쟁사</h4>
+        <p>
+          <strong>vseokoree.com</strong> — 가장 강력. 러시아어 한국정보 No.1<br><br>
+          <strong>ksorskorea.org</strong> — 공식 동포 기관. 이벤트 기반 커뮤니티 운영<br><br>
+          <strong>Telegram/Facebook 그룹</strong> — "러시아인 in 서울" 등 SNS 커뮤니티가 실질 경쟁자<br><br>
+          <span class="strength">▲ KOSNOVA 강점:</span> 커뮤니티 UGC 시작 (색인 신호), 앱 연동, 구직·정착 특화<br>
+          <span class="weakness">▼ 약점:</span> 기술 SEO 거의 전무, Yandex 미등록
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ 우선순위 개선 과제 ══════════════════════════ -->
+  <div class="section">
+    <div class="section-title">🚨 이번 주 핵심 개선 과제 (우선순위순)</div>
+
+    <div class="priority-box p1">
+      <div class="priority-num" style="color:#ef4444;">P1</div>
+      <div class="priority-text">
+        <div class="priority-title">[komoshnik.kr · kosnova.kr] robots.txt + sitemap.xml 즉시 생성 — ⚡ 6주 미처리, 최우선</div>
+        두 도메인 모두 robots.txt와 sitemap.xml이 없어 Googlebot·YandexBot이 크롤링 신호를 받지 못하는 상태. 각 도메인 루트에 robots.txt(Allow: /, Sitemap 참조) 생성하고, komoshnik.kr/sitemap.xml · kosnova.kr/sitemap.xml 생성 후 Google Search Console + Yandex.Webmaster에 수동 제출. kosnova.kr은 이미 커뮤니티 포스트 1건 자연 색인 시작 — sitemap 제출 시 메인 페이지 색인 대폭 가속 가능.
+      </div>
+    </div>
+
+    <div class="priority-box p1">
+      <div class="priority-num" style="color:#ef4444;">P1</div>
+      <div class="priority-text">
+        <div class="priority-title">[komoshnik.kr · kosnova.kr] meta description + OG 태그 전 언어 파일 추가 — ⚡ 6주 미처리</div>
+        ru/ko/en 3개 파일 모두 &lt;head&gt;에 meta description(120~160자)과 og:title, og:description, og:image 추가 필수. 현재 텔레그램·VK·카카오톡 공유 시 미리보기가 전혀 나오지 않아 바이럴 유입 차단 상태.<br>
+        예시 (RU): <em>"KOMOSHNIK — ваш помощник в Корее: OCR-перевод, поиск учреждений, визовый гид. Бесплатно."</em><br>
+        예시 (KO komoshnik): <em>"코모쉬닉 — 한국의 러시아어권 정착 도우미 앱. OCR 번역·기관 찾기·비자 가이드 무료 제공."</em>
+      </div>
+    </div>
+
+    <div class="priority-box p1">
+      <div class="priority-num" style="color:#ef4444;">P1</div>
+      <div class="priority-text">
+        <div class="priority-title">[komoshnik.kr · kosnova.kr] canonical 태그 + hreflang 설정 — ⚡ 6주 미처리</div>
+        komoshnik.kr ↔ arken.co.kr/komoshnik/ 경로 간 중복 콘텐츠로 인한 구글 패널티 위험이 6주째 방치 중. 각 도메인에 자기 참조 canonical 추가. ru/ko/en 파일에 hreflang 상호 참조(x-default 포함) 추가 → Yandex 다국어 색인 필수.<br>
+        예시: &lt;link rel="alternate" hreflang="ru" href="https://komoshnik.kr/"&gt; 등
+      </div>
+    </div>
+
+    <div class="priority-box p2">
+      <div class="priority-num" style="color:#f59e0b;">P2</div>
+      <div class="priority-text">
+        <div class="priority-title">[arken.co.kr] sitemap.xml 긴급 갱신 — lastmod 10주 경과, AI뉴스 51건 미반영</div>
+        sitemap.xml의 lastmod가 2026-03-12로 고정된 채 10주 경과. 매일 발행 중인 AI뉴스(51건 누적) URL이 전혀 반영되지 않아 구글봇 크롤 빈도가 낮게 유지되고 있을 가능성 높음. #about, #develop, #projects, #tech, #contact fragment URL 5개 삭제하고 /ai-news/ lastmod를 오늘 날짜로 갱신. 가능하면 AI 뉴스 개별 포스트 URL도 추가.
+      </div>
+    </div>
+
+    <div class="priority-box p2">
+      <div class="priority-num" style="color:#f59e0b;">P2</div>
+      <div class="priority-text">
+        <div class="priority-title">[kosnova.kr] Search Console — 메인 페이지(/ko, /ru) URL 검사 + 수동 색인 요청</div>
+        현재 색인된 2건이 /ko/terms (약관)과 커뮤니티 포스트로, 메인 진입 페이지는 미색인 상태로 추정. Search Console에서 코어 URL 검사 후 "색인 요청" 버튼 클릭. robots.txt·sitemap 생성과 병행해야 효과 극대화.
+      </div>
+    </div>
+
+    <div class="priority-box p2">
+      <div class="priority-num" style="color:#f59e0b;">P2</div>
+      <div class="priority-text">
+        <div class="priority-title">[arken.co.kr] meta description 개선 — 160자 이내로 정리 + URL 텍스트 제거</div>
+        현재 description 말미에 "arken.co.kr" URL 텍스트가 포함되어 구글 스니펫에 부자연스럽게 노출. 160자 이내로 압축하고 "네이버 카페 자동화", "스마트스토어 데이터 분석" 키워드를 앞쪽에 배치. 4주 경과 미처리.
+      </div>
+    </div>
+
+    <div class="priority-box p3">
+      <div class="priority-num" style="color:#22c55e;">P3</div>
+      <div class="priority-text">
+        <div class="priority-title">[전체] Yandex.Webmaster 등록 — komoshnik·kosnova 러시아어권 유입 필수 채널</div>
+        komoshnik.kr · kosnova.kr의 핵심 타겟 사용자(러시아어권 CIS 국가 출신)는 Yandex 검색 비중이 Google과 비슷하거나 높음. 세 도메인 모두 webmaster.yandex.ru 등록 + sitemap 제출. arken.co.kr은 Yandex 인증 메타태그 존재하나 실제 Webmaster 등록 여부 불명확 — 확인 및 등록 필요.
+      </div>
+    </div>
+
+    <div class="priority-box p3">
+      <div class="priority-num" style="color:#22c55e;">P3</div>
+      <div class="priority-text">
+        <div class="priority-title">[arken.co.kr] H1 키워드 강화 + 롱테일 콘텐츠 전략</div>
+        현재 H1 "디지털의 경계를 다시 설계합니다."는 브랜드 감성은 있으나 핵심 키워드 없음. H2에라도 "네이버 카페 자동화", "스마트스토어 데이터 분석" 명시적 배치 권장. AI뉴스 51건 누적 달성 — 매주 1~2건의 정착 가이드 or 이커머스 자동화 실전 포스트 추가하면 타겟 키워드 롱테일 유입 기대. "아켄 네이버 카페 자동화", "코모쉬닉 비자 가이드" 등 복합 키워드 전략 병행.
+      </div>
+    </div>
+
+    <div class="priority-box p3">
+      <div class="priority-num" style="color:#22c55e;">P3</div>
+      <div class="priority-text">
+        <div class="priority-title">[kosnova.kr] 커뮤니티 포스트 색인 가속 — UGC 활성화로 자연 색인 확대</div>
+        카자흐스탄 영사관 여권 포스트가 구글에 색인된 것은 커뮤니티 UGC(사용자 생성 콘텐츠)의 SEO 잠재력을 보여줌. 실생활 주제(비자, 의료, 주거, 취업 등)의 포스트를 활성화하면 자연 색인 페이지 수 증가 예상. sitemap 제출 후 효과 배가 가능.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+  <div class="footer">
+    <p>본 보고서는 ARKEN SEO 자동화 시스템에 의해 생성되었습니다.</p>
+    <p style="margin-top:4px;">© 2026 ARKEN Co., Ltd. (주식회사 아켄) · arken.co.kr</p>
+    <p style="margin-top:4px;font-size:0.75rem;">다음 보고서 예정: 2026-05-25</p>
+  </div>
+
+</div>
+</body>
+</html>
