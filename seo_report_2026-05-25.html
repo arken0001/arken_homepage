@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO 주간 보고서 - 2026-05-25</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', 'Apple SD Gothic Neo', sans-serif; background: #f0f2f5; color: #1a1a2e; }
+  .wrapper { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 36px 32px; border-radius: 16px; margin-bottom: 24px; }
+  .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+  .header .sub { font-size: 13px; opacity: 0.7; }
+  .header .date { margin-top: 12px; font-size: 13px; background: rgba(255,255,255,0.12); display: inline-block; padding: 4px 14px; border-radius: 20px; }
+
+  .summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  .summary-card { background: #fff; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .summary-card .score { font-size: 36px; font-weight: 800; }
+  .summary-card .label { font-size: 12px; color: #666; margin-top: 4px; }
+  .summary-card .site-name { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #444; }
+  .score-red { color: #e74c3c; }
+  .score-orange { color: #e67e22; }
+  .score-green { color: #27ae60; }
+
+  .site-section { background: #fff; border-radius: 16px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+  .site-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #f0f2f5; }
+  .site-badge { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; color: #fff; flex-shrink: 0; }
+  .badge-arken { background: linear-gradient(135deg, #667eea, #764ba2); }
+  .badge-komosh { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .badge-kosnova { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+  .site-header h2 { font-size: 17px; font-weight: 700; }
+  .site-header .url { font-size: 12px; color: #888; }
+
+  .metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+  .metric { background: #f8f9fa; border-radius: 10px; padding: 14px 16px; }
+  .metric .m-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .metric .m-value { font-size: 14px; font-weight: 600; }
+  .metric .m-value.bad { color: #e74c3c; }
+  .metric .m-value.warn { color: #e67e22; }
+  .metric .m-value.good { color: #27ae60; }
+
+  h3 { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 12px; margin-top: 18px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table th { background: #f0f2f5; padding: 10px 12px; text-align: left; font-size: 11px; text-transform: uppercase; color: #666; letter-spacing: 0.5px; }
+  table td { padding: 10px 12px; border-bottom: 1px solid #f5f5f5; }
+  table tr:last-child td { border-bottom: none; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+  .tag-red { background: #fde8e8; color: #c0392b; }
+  .tag-orange { background: #fef3e2; color: #d35400; }
+  .tag-green { background: #e8f8f0; color: #1e8449; }
+  .tag-blue { background: #e8f0fe; color: #1a73e8; }
+
+  .alert { border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; font-size: 13px; }
+  .alert-red { background: #fde8e8; border-left: 4px solid #e74c3c; }
+  .alert-orange { background: #fef3e2; border-left: 4px solid #e67e22; }
+  .alert-green { background: #e8f8f0; border-left: 4px solid #27ae60; }
+  .alert strong { display: block; margin-bottom: 3px; }
+
+  .action-list { list-style: none; }
+  .action-list li { padding: 10px 14px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; display: flex; align-items: flex-start; gap: 10px; }
+  .action-list li.p1 { background: #fde8e8; }
+  .action-list li.p2 { background: #fef3e2; }
+  .action-list li.p3 { background: #e8f0fe; }
+  .priority-badge { flex-shrink: 0; width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #fff; }
+  .pb1 { background: #e74c3c; }
+  .pb2 { background: #e67e22; }
+  .pb3 { background: #3498db; }
+
+  .competition-table th:nth-child(1) { width: 22%; }
+  .competition-table th:nth-child(2) { width: 25%; }
+  .footer { text-align: center; font-size: 12px; color: #999; padding: 24px 0; }
+
+  .insight-box { background: linear-gradient(135deg, #667eea10, #764ba220); border: 1px solid #667eea40; border-radius: 12px; padding: 18px 20px; margin-top: 24px; }
+  .insight-box h3 { color: #5a4fcf; margin-top: 0; }
+  .insight-box ul { padding-left: 18px; font-size: 13px; line-height: 1.9; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>📊 ARKEN SEO 주간 보고서</h1>
+    <div class="sub">arken.co.kr · komoshnik.kr · kosnova.kr</div>
+    <div class="date">보고 기준일: 2026-05-25 (KST)</div>
+  </div>
+
+  <!-- SUMMARY SCORES -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="site-name">arken.co.kr</div>
+      <div class="score score-red">12<span style="font-size:18px">/100</span></div>
+      <div class="label">SEO 종합 점수</div>
+    </div>
+    <div class="summary-card">
+      <div class="site-name">komoshnik.kr</div>
+      <div class="score score-red">8<span style="font-size:18px">/100</span></div>
+      <div class="label">SEO 종합 점수</div>
+    </div>
+    <div class="summary-card">
+      <div class="site-name">kosnova.kr</div>
+      <div class="score score-orange">28<span style="font-size:18px">/100</span></div>
+      <div class="label">SEO 종합 점수</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SITE 1: arken.co.kr
+       ============================================================ -->
+  <div class="site-section">
+    <div class="site-header">
+      <div class="site-badge badge-arken">A</div>
+      <div>
+        <h2>arken.co.kr</h2>
+        <div class="url">https://arken.co.kr — AI·커뮤니티 자동화·이커머스 데이터 솔루션</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="m-label">Google 색인 수</div>
+        <div class="m-value bad">0 페이지</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">서버 응답</div>
+        <div class="m-value bad">403 Forbidden (전체 경로)</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">브랜드 키워드 노출</div>
+        <div class="m-value bad">미노출 (ARKON과 혼동)</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">robots.txt / sitemap</div>
+        <div class="m-value bad">접근 불가 (403)</div>
+      </div>
+    </div>
+
+    <h3>🔍 키워드 검색 노출 현황</h3>
+    <table>
+      <tr>
+        <th>키워드</th>
+        <th>노출 여부</th>
+        <th>경쟁 강도</th>
+        <th>비고</th>
+      </tr>
+      <tr>
+        <td>아켄 / ARKEN</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>낮음</td>
+        <td>덴마크 미술관 arken.dk가 상위 점령</td>
+      </tr>
+      <tr>
+        <td>커뮤니티 자동화</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>중간</td>
+        <td>jetteon.com, AWS 등 경쟁사 노출</td>
+      </tr>
+      <tr>
+        <td>AI 솔루션 한국</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>높음</td>
+        <td>KT, KMAC 등 대기업 독점</td>
+      </tr>
+      <tr>
+        <td>이커머스 데이터 솔루션</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>높음</td>
+        <td>데이터라이즈(115억 투자), godo.co.kr 등 선점</td>
+      </tr>
+    </table>
+
+    <h3>⚙️ 기술 SEO 현황</h3>
+    <div class="alert alert-red">
+      <strong>🚨 치명적: 서버 전체 403 Forbidden</strong>
+      메인 페이지, /robots.txt, /sitemap.xml 포함 모든 경로에서 403 응답. Googlebot 크롤링 차단 가능성 높음. 현재 Google 색인이 0페이지로 확인됨.
+    </div>
+    <div class="alert alert-red">
+      <strong>🚨 치명적: Google 완전 미색인</strong>
+      site:arken.co.kr 검색 결과 0개. 검색 엔진에 존재하지 않는 상태. 브랜드명 "ARKON(아콘)"과 혼동되어 경쟁 불리.
+    </div>
+    <div class="alert alert-orange">
+      <strong>⚠️ 브랜드명 혼동 리스크</strong>
+      "ARKON(아콘)"은 차량용 거치대 브랜드로 한국에 이미 인지도 보유. "ARKEN"과 1글자 차이로 검색 희석 발생.
+    </div>
+
+    <h3>🏆 경쟁 환경 분석</h3>
+    <table class="competition-table">
+      <tr>
+        <th>경쟁사</th>
+        <th>포지션</th>
+        <th>강점</th>
+        <th>약점</th>
+      </tr>
+      <tr>
+        <td>데이터라이즈</td>
+        <td>이커머스 데이터</td>
+        <td>115억 투자, 브랜드 인지도</td>
+        <td>중소쇼핑몰 한정</td>
+      </tr>
+      <tr>
+        <td>KT A'Cen Cloud</td>
+        <td>AI 컨택센터</td>
+        <td>대기업 신뢰도, 인프라</td>
+        <td>중소기업 접근성 낮음</td>
+      </tr>
+      <tr>
+        <td>jetteon.com</td>
+        <td>커뮤니티 자동화</td>
+        <td>가이드 콘텐츠 SEO 최적화</td>
+        <td>B2C 중심</td>
+      </tr>
+    </table>
+
+    <h3>📋 개선 제안</h3>
+    <ul class="action-list">
+      <li class="p1"><span class="priority-badge pb1">P1</span><div><strong>서버 403 원인 즉시 진단</strong> — Cloudflare 설정, IP 화이트리스트, 서버 방화벽 확인. Googlebot User-Agent 허용 여부 검토. 이것이 해결되지 않으면 나머지 SEO 작업이 모두 무의미함.</div></li>
+      <li class="p1"><span class="priority-badge pb1">P1</span><div><strong>Google Search Console 등록 및 색인 요청</strong> — 서버 문제 해결 후 즉시 sitemap.xml 제출 및 수동 색인 요청.</div></li>
+      <li class="p2"><span class="priority-badge pb2">P2</span><div><strong>브랜드 차별화 콘텐츠 생성</strong> — "아켄(ARKEN)" 브랜드 정체성을 명확히 하는 블로그/보도자료 작성. ARKON과의 혼동 방지를 위한 브랜드 SEO 전략 수립.</div></li>
+      <li class="p2"><span class="priority-badge pb2">P2</span><div><strong>롱테일 키워드 공략</strong> — "스타트업 커뮤니티 운영 자동화 도구", "쇼핑몰 데이터 분석 솔루션 중소기업" 등 경쟁이 낮은 틈새 키워드 타겟팅.</div></li>
+      <li class="p3"><span class="priority-badge pb3">P3</span><div><strong>구조화 데이터(Schema.org) 마크업 적용</strong> — Organization, SoftwareApplication 스키마 적용으로 리치 결과 노출 기반 마련.</div></li>
+    </ul>
+  </div>
+
+  <!-- ============================================================
+       SITE 2: komoshnik.kr
+       ============================================================ -->
+  <div class="site-section">
+    <div class="site-header">
+      <div class="site-badge badge-komosh">K</div>
+      <div>
+        <h2>komoshnik.kr</h2>
+        <div class="url">https://komoshnik.kr — 러시아어권 한국 정착 도우미 서비스</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="m-label">Google 색인 수</div>
+        <div class="m-value bad">0 페이지</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">서버 응답</div>
+        <div class="m-value bad">403 Forbidden (전체 경로)</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">브랜드 키워드 노출</div>
+        <div class="m-value bad">미노출</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">robots.txt / sitemap</div>
+        <div class="m-value bad">접근 불가 (403)</div>
+      </div>
+    </div>
+
+    <h3>🔍 키워드 검색 노출 현황</h3>
+    <table>
+      <tr>
+        <th>키워드</th>
+        <th>노출 여부</th>
+        <th>경쟁 강도</th>
+        <th>비고</th>
+      </tr>
+      <tr>
+        <td>komoshnik / 코모쉬닉</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>낮음 (신규)</td>
+        <td>kosnova.kr 검색 시 komoshnik 서비스 언급됨</td>
+      </tr>
+      <tr>
+        <td>러시아어 한국 정착</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>중간</td>
+        <td>vseokoree.com, ksorskorea.org 등 선점</td>
+      </tr>
+      <tr>
+        <td>иммиграция в корею</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>높음</td>
+        <td>eu-residence.com, visa-investora.ru 등 경쟁</td>
+      </tr>
+      <tr>
+        <td>помощь иностранцам в корее</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>중간</td>
+        <td>정부 공식사이트(moj.go.kr) 등 권위사이트 강세</td>
+      </tr>
+    </table>
+
+    <h3>⚙️ 기술 SEO 현황</h3>
+    <div class="alert alert-red">
+      <strong>🚨 치명적: 서버 전체 403 + Google 완전 미색인</strong>
+      site:komoshnik.kr 검색 결과 0개. 서비스가 이미 존재하나 웹 상에서 완전히 불가시 상태. kosnova.kr 검색에서 간접 언급만 됨.
+    </div>
+    <div class="alert alert-orange">
+      <strong>⚠️ 다국어 SEO 전략 부재</strong>
+      러시아어권 타겟임에도 러시아어 키워드(кириллица)로의 검색 노출이 전무. hreflang 태그, 러시아어 콘텐츠 최적화 필요.
+    </div>
+    <div class="alert alert-orange">
+      <strong>⚠️ 독립 도메인 인지도 없음</strong>
+      komoshnik는 kosnova의 하위 서비스로만 인식됨. 독립 브랜드 SEO 구축이 필요하거나, kosnova.kr 서브도메인 전략으로 전환 검토 필요.
+    </div>
+
+    <h3>🏆 경쟁 환경 분석</h3>
+    <table class="competition-table">
+      <tr>
+        <th>경쟁사</th>
+        <th>포지션</th>
+        <th>강점</th>
+        <th>약점</th>
+      </tr>
+      <tr>
+        <td>vseokoree.com</td>
+        <td>한국 정보 종합 포털</td>
+        <td>광범위한 콘텐츠, 러시아어</td>
+        <td>업데이트 빈도 불규칙</td>
+      </tr>
+      <tr>
+        <td>ksorskorea.org</td>
+        <td>재한 러시아 동포 공식 기관</td>
+        <td>공식 기관 신뢰도</td>
+        <td>실용 정보 부족</td>
+      </tr>
+      <tr>
+        <td>visa-investora.ru</td>
+        <td>비자/이민 정보</td>
+        <td>상세 이민 가이드</td>
+        <td>한국 현지 서비스 없음</td>
+      </tr>
+      <tr>
+        <td>russiankorea.com</td>
+        <td>재한 러시아인 커뮤니티</td>
+        <td>오래된 커뮤니티, 색인 다수</td>
+        <td>구형 UX, 모바일 취약</td>
+      </tr>
+    </table>
+
+    <h3>📋 개선 제안</h3>
+    <ul class="action-list">
+      <li class="p1"><span class="priority-badge pb1">P1</span><div><strong>서버 403 즉시 해결 + Google 색인 요청</strong> — arken.co.kr과 동일한 서버 설정 문제로 추정. 일괄 해결 필요.</div></li>
+      <li class="p1"><span class="priority-badge pb1">P1</span><div><strong>도메인 전략 재검토</strong> — komoshnik.kr 독립 운영 vs. kosnova.kr/tools/komoshnik 서브페이지 전략 중 선택. 독립 도메인은 별도 SEO 투자 필요; 코스노바의 기존 DA(도메인 권위)를 활용하는 통합 전략이 단기적으로 더 효율적.</div></li>
+      <li class="p2"><span class="priority-badge pb2">P2</span><div><strong>러시아어 SEO 최적화</strong> — 키릴 문자 키워드 타겟팅, hreflang(ru/ko) 태그 적용, Google Russia 색인 전략 수립.</div></li>
+      <li class="p2"><span class="priority-badge pb2">P2</span><div><strong>실용 콘텐츠 마케팅</strong> — "한국 비자 연장 방법 (러시아어)", "외국인등록증 발급 가이드" 등 실용 롱테일 콘텐츠로 자연 유입 확보.</div></li>
+      <li class="p3"><span class="priority-badge pb3">P3</span><div><strong>Telegram/VK 커뮤니티 연동</strong> — 러시아어권 사용자는 Telegram 채널 활성화. 외부 링크 구축을 통한 도메인 권위 향상.</div></li>
+    </ul>
+  </div>
+
+  <!-- ============================================================
+       SITE 3: kosnova.kr
+       ============================================================ -->
+  <div class="site-section">
+    <div class="site-header">
+      <div class="site-badge badge-kosnova">N</div>
+      <div>
+        <h2>kosnova.kr</h2>
+        <div class="url">https://kosnova.kr — 한국의 러시아어권 커뮤니티 플랫폼 (by ARKEN)</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric">
+        <div class="m-label">Google 색인 수</div>
+        <div class="m-value warn">2 페이지 (최소)</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">서버 응답</div>
+        <div class="m-value bad">403 Forbidden (외부 IP)</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">브랜드 키워드 노출</div>
+        <div class="m-value warn">부분 노출</div>
+      </div>
+      <div class="metric">
+        <div class="m-label">robots.txt / sitemap</div>
+        <div class="m-value bad">접근 불가 (403)</div>
+      </div>
+    </div>
+
+    <h3>🔍 키워드 검색 노출 현황</h3>
+    <table>
+      <tr>
+        <th>키워드</th>
+        <th>노출 여부</th>
+        <th>경쟁 강도</th>
+        <th>비고</th>
+      </tr>
+      <tr>
+        <td>kosnova / 코스노바</td>
+        <td><span class="tag tag-orange">부분노출</span></td>
+        <td>낮음</td>
+        <td>terms 페이지, 게시물 페이지 색인됨</td>
+      </tr>
+      <tr>
+        <td>러시아어 한국 커뮤니티</td>
+        <td><span class="tag tag-orange">간접노출</span></td>
+        <td>중간</td>
+        <td>"komoshnik 러시아어 한국 정착" 검색 시 1위 노출</td>
+      </tr>
+      <tr>
+        <td>русская община в корее</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>중간</td>
+        <td>russiankorea.com, vseokoree.com 선점</td>
+      </tr>
+      <tr>
+        <td>한러 커뮤니티</td>
+        <td><span class="tag tag-red">미노출</span></td>
+        <td>낮음</td>
+        <td>틈새 키워드, 공략 가능</td>
+      </tr>
+    </table>
+
+    <h3>⚙️ 기술 SEO 현황</h3>
+    <div class="alert alert-green">
+      <strong>✅ 경쟁사 키워드 검색 시 1위 노출 확인</strong>
+      "komoshnik 코모쉬닉 러시아어 한국 정착" 검색 결과 1위에 kosnova.kr/ko/terms 노출. 실질적인 SEO 가치 있는 트래픽 잠재력 확인.
+    </div>
+    <div class="alert alert-orange">
+      <strong>⚠️ 색인된 페이지가 Terms 페이지 + 단일 게시물</strong>
+      홈페이지와 주요 콘텐츠 페이지가 미색인. Terms 페이지가 대표 URL이 되는 것은 SEO적으로 매우 불리. 메인/커뮤니티 페이지 우선 색인 필요.
+    </div>
+    <div class="alert alert-orange">
+      <strong>⚠️ www vs non-www 혼재 가능성</strong>
+      검색 결과에 www.kosnova.kr로 노출됨. canonical 설정과 리다이렉트 일관성 확인 필요.
+    </div>
+    <div class="alert alert-red">
+      <strong>🚨 서버 403 동일 문제</strong>
+      /robots.txt, /sitemap.xml 포함 전 경로 403. 다만 Googlebot은 일부 크롤링 성공한 것으로 보임 (2페이지 색인).
+    </div>
+
+    <h3>🏆 경쟁 환경 분석</h3>
+    <table class="competition-table">
+      <tr>
+        <th>경쟁사</th>
+        <th>포지션</th>
+        <th>강점</th>
+        <th>약점</th>
+      </tr>
+      <tr>
+        <td>russiankorea.com</td>
+        <td>재한 러시아인 커뮤니티</td>
+        <td>오래된 도메인, 다수 색인</td>
+        <td>구형 UX, 모바일 미최적화</td>
+      </tr>
+      <tr>
+        <td>vseokoree.com</td>
+        <td>한국 정보 종합 포털</td>
+        <td>광범위한 러시아어 콘텐츠</td>
+        <td>커뮤니티 기능 취약</td>
+      </tr>
+      <tr>
+        <td>ksorskorea.org</td>
+        <td>공식 동포 단체</td>
+        <td>공식 기관 권위</td>
+        <td>실용 정보/커뮤니티 미흡</td>
+      </tr>
+    </table>
+
+    <h3>📋 개선 제안</h3>
+    <ul class="action-list">
+      <li class="p1"><span class="priority-badge pb1">P1</span><div><strong>홈페이지 및 주요 콘텐츠 페이지 Google 색인 요청</strong> — Terms 페이지가 아닌 홈, 커뮤니티, 게시판 페이지가 색인되도록 sitemap.xml 제출 및 Search Console URL 검사 실행.</div></li>
+      <li class="p1"><span class="priority-badge pb1">P1</span><div><strong>www 정규화 (canonical)</strong> — www.kosnova.kr과 kosnova.kr 중 하나를 canonical로 통일하고, 301 리다이렉트 설정. 현재 중복 URL로 Link Equity 분산 우려.</div></li>
+      <li class="p2"><span class="priority-badge pb2">P2</span><div><strong>러시아어·한국어 이중 콘텐츠 전략</strong> — hreflang(ko/ru) 태그 적용. "한국 생활 정보 (러시아어)" 카테고리 블로그 운영으로 롱테일 트래픽 확보.</div></li>
+      <li class="p2"><span class="priority-badge pb2">P2</span><div><strong>backlink 구축</strong> — ksorskorea.org, 한국 이민자 지원 기관, 러시아 대사관 관련 사이트에서 kosnova.kr 링크 획득 추진.</div></li>
+      <li class="p3"><span class="priority-badge pb3">P3</span><div><strong>커뮤니티 게시물 SEO 최적화</strong> — 각 게시물에 적절한 메타 태그, 구조화된 URL 슬러그, OG 태그 자동 생성 시스템 구현.</div></li>
+    </ul>
+  </div>
+
+  <!-- ============================================================
+       이번 주 핵심 개선 사항 (우선순위순)
+       ============================================================ -->
+  <div class="site-section">
+    <h2 style="font-size:17px; font-weight:700; margin-bottom:20px;">🎯 이번 주 핵심 개선 사항 (전사 우선순위)</h2>
+
+    <ul class="action-list">
+      <li class="p1">
+        <span class="priority-badge pb1">🔥1</span>
+        <div>
+          <strong>[공통] 3개 사이트 서버 403 원인 진단 및 해결</strong><br>
+          <span style="font-size:12px; color:#666;">모든 SEO 작업의 전제조건. Cloudflare 지역 차단, WAF 설정, nginx/Apache 접근 제어 확인. Googlebot User-Agent에 대한 차단 여부 반드시 확인. 이번 주 내 해결 목표.</span>
+        </div>
+      </li>
+      <li class="p1">
+        <span class="priority-badge pb1">🔥2</span>
+        <div>
+          <strong>[공통] Google Search Console 3개 도메인 등록 및 소유권 인증</strong><br>
+          <span style="font-size:12px; color:#666;">서버 해결 즉시 sitemap.xml 제출. arken.co.kr과 komoshnik.kr은 0페이지 상태이므로 수동 색인 요청 필수. kosnova.kr은 추가 URL 색인 요청.</span>
+        </div>
+      </li>
+      <li class="p2">
+        <span class="priority-badge pb2">⚡3</span>
+        <div>
+          <strong>[kosnova.kr] www 정규화 및 canonical 태그 설정</strong><br>
+          <span style="font-size:12px; color:#666;">검색결과에 www.kosnova.kr로 노출되므로 도메인 정규화 우선 처리. 비교적 간단한 작업으로 즉시 실행 가능.</span>
+        </div>
+      </li>
+      <li class="p2">
+        <span class="priority-badge pb2">⚡4</span>
+        <div>
+          <strong>[arken.co.kr] 브랜드 SEO 콘텐츠 작성</strong><br>
+          <span style="font-size:12px; color:#666;">"ARKEN"과 "ARKON" 혼동 문제 해결을 위한 브랜드 블로그 포스트, 보도자료 작성. 네이버 블로그/브런치 활용한 브랜드 콘텐츠 배포.</span>
+        </div>
+      </li>
+      <li class="p2">
+        <span class="priority-badge pb2">⚡5</span>
+        <div>
+          <strong>[komoshnik.kr] 독립 도메인 vs 통합 전략 의사결정</strong><br>
+          <span style="font-size:12px; color:#666;">komoshnik.kr 독립 SEO 투자 vs. kosnova.kr 서브페이지 통합 중 방향 결정. 단기 ROI는 통합 전략이 우수; 장기 브랜딩은 독립 전략.</span>
+        </div>
+      </li>
+      <li class="p3">
+        <span class="priority-badge pb3">📌6</span>
+        <div>
+          <strong>[kosnova.kr + komoshnik.kr] hreflang 태그 적용 및 러시아어 SEO 전략</strong><br>
+          <span style="font-size:12px; color:#666;">러시아어권 타겟 서비스임에도 러시아어 키워드 SEO 전무. hreflang(ko, ru) 태그와 키릴 문자 키워드 타겟팅 콘텐츠 마련.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Insight Box -->
+  <div class="insight-box">
+    <h3>💡 분석가 종합 인사이트</h3>
+    <ul>
+      <li><strong>공통 근본 문제:</strong> 3개 사이트 모두 외부에서 접근 시 403 응답. 이는 한국 외 IP 차단 정책이거나 Cloudflare Bot Fight Mode 활성화로 추정됨. Googlebot이 한국 IP를 사용하더라도 일부 경우 차단될 수 있어 <strong>즉시 확인 필수</strong>.</li>
+      <li><strong>색인 현황:</strong> arken.co.kr = 0페이지, komoshnik.kr = 0페이지, kosnova.kr = 2페이지. 세 사이트 합산 2페이지 색인은 서비스 규모 대비 <strong>심각한 수준</strong>.</li>
+      <li><strong>기회 포인트:</strong> kosnova.kr은 "komoshnik 러시아어 한국 정착" 검색 1위 노출 확인. 이 키워드 기반으로 관련 콘텐츠 확장 시 빠른 성과 가능.</li>
+      <li><strong>경쟁사 약점 활용:</strong> russiankorea.com 등 기존 경쟁사는 UX·모바일 취약. kosnova.kr이 콘텐츠+모바일 최적화에 집중하면 6개월 내 주요 러시아어 한국 커뮤니티 키워드 공략 가능.</li>
+      <li><strong>이번 주 최우선 액션:</strong> 서버 403 문제 해결 → Google Search Console 등록 → sitemap 제출. 이 3단계가 현재 모든 SEO 노력의 선행 조건.</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>ARKEN SEO 주간 보고서 · 보고 기준일: 2026-05-25 · 작성: Claude SEO 분석 시스템</p>
+    <p style="margin-top:4px;">문의: bhwoo@arken.co.kr</p>
+  </div>
+
+</div>
+</body>
+</html>
