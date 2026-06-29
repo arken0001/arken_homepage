@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FFRENK1FQE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FFRENK1FQE');
+  </script>
+
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>개인정보 처리방침 | ARKEN</title>
+  <meta name="description" content="주식회사 아켄(ARKEN Co., Ltd.)의 개인정보 처리방침. arken.co.kr 사이트 이용과 관련해 수집되는 개인정보의 처리 방침을 안내합니다."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://arken.co.kr/privacy"/>
+
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="개인정보 처리방침 | ARKEN"/>
+  <meta property="og:description" content="주식회사 아켄의 개인정보 처리방침"/>
+  <meta property="og:url" content="https://arken.co.kr/privacy"/>
+  <meta property="og:locale" content="ko_KR"/>
+
+  <meta name="theme-color" content="#020b1a"/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+
+  <style>
+    :root {
+      --bg:      #020b1a;
+      --bg2:     #060f22;
+      --bg3:     #0a142e;
+      --blue:    #4a96cd;
+      --cyan:    #5bbdff;
+      --glow:    #7dd4ff;
+      --gold:    #e9a84a;
+      --text:    #ddeeff;
+      --muted:   #6889aa;
+      --border:  rgba(74,150,205,0.15);
+      --card:    rgba(6,15,34,0.92);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Pretendard',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.7}
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px}
+
+    /* GRID BG */
+    .grid-bg{
+      position:fixed;inset:0;
+      background-image:linear-gradient(rgba(74,150,205,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(74,150,205,.05) 1px,transparent 1px);
+      background-size:56px 56px;pointer-events:none;z-index:-1;
+    }
+
+    /* NAV */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 4rem;
+      background:rgba(2,11,26,0.88);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+    .nav-logo-text{
+      font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;
+      letter-spacing:.18em;
+      background:linear-gradient(90deg,var(--glow),var(--blue));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .nav-back{
+      padding:.5rem 1.4rem;border:1px solid var(--blue);
+      color:var(--cyan);font-size:.78rem;letter-spacing:.1em;
+      text-decoration:none;border-radius:2px;transition:all .25s;text-transform:uppercase;
+    }
+    .nav-back:hover{background:var(--blue);color:#fff}
+
+    /* LEGAL PAGE */
+    .legal-wrap{max-width:860px;margin:0 auto;padding:8rem 2rem 4rem}
+    .legal-head{text-align:center;margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+    .legal-eyebrow{font-family:'Syne',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.35em;color:var(--cyan);text-transform:uppercase;margin-bottom:1rem}
+    .legal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:2.2rem;letter-spacing:.02em;color:var(--text);margin-bottom:1rem}
+    .legal-effective{font-size:.85rem;color:var(--muted);letter-spacing:.05em}
+    .legal-body{font-size:.95rem;color:var(--text)}
+    .legal-body > p{margin:1rem 0;color:#c5d9ee}
+    .legal-body h2{
+      font-family:'Syne',sans-serif;font-weight:600;font-size:1.1rem;
+      color:var(--cyan);margin-top:2.8rem;margin-bottom:1rem;
+      padding-bottom:.6rem;border-bottom:1px solid var(--border);letter-spacing:.02em;
+    }
+    .legal-body h3{
+      font-weight:600;font-size:1rem;color:var(--glow);
+      margin-top:1.8rem;margin-bottom:.6rem;
+    }
+    .legal-body ul{list-style:none;padding:0;margin:1rem 0}
+    .legal-body ul li{
+      position:relative;padding-left:1.3rem;margin:.5rem 0;color:#c5d9ee;
+    }
+    .legal-body ul li::before{
+      content:"";position:absolute;left:0;top:.75em;
+      width:6px;height:6px;border-radius:50%;background:var(--blue);
+    }
+    .legal-body strong{color:var(--glow);font-weight:500}
+    .legal-body a{color:var(--cyan);text-decoration:none}
+    .legal-body a:hover{text-decoration:underline}
+    .legal-updated{
+      margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);
+      text-align:center;font-size:.78rem;color:var(--muted);letter-spacing:.05em;
+    }
+
+    /* FOOTER */
+    footer{
+      background:var(--bg2);border-top:1px solid var(--border);
+      padding:1.8rem 4rem;
+      display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+    }
+    .ft-logo span{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;letter-spacing:.2em;color:var(--blue)}
+    .ft-copy{font-size:.68rem;color:var(--muted)}
+    .ft-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+    .ft-links a{font-size:.68rem;color:var(--muted);text-decoration:none;transition:color .2s;letter-spacing:.05em}
+    .ft-links a:hover{color:var(--cyan)}
+
+    @media(max-width:900px){
+      nav{padding:.9rem 1.25rem}
+      .nav-back{padding:.4rem 1rem;font-size:.68rem}
+      .legal-wrap{padding:7rem 1.25rem 3rem}
+      .legal-title{font-size:1.65rem}
+      .legal-body{font-size:.9rem}
+      .legal-body h2{font-size:1rem}
+      footer{padding:1.5rem 1.25rem;justify-content:center;text-align:center;flex-direction:column;gap:.9rem}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <nav aria-label="메인 내비게이션" role="navigation">
+    <a href="/" class="nav-logo" aria-label="ARKEN 홈으로">
+      <span class="nav-logo-text">ARKEN</span>
+    </a>
+    <a href="/" class="nav-back">홈으로</a>
+  </nav>
+
+  <main>
+    <article class="legal-wrap">
+      <header class="legal-head">
+        <p class="legal-eyebrow">Privacy Policy</p>
+        <h1 class="legal-title">개인정보 처리방침</h1>
+        <p class="legal-effective">시행일: 2026년 4월 20일</p>
+      </header>
+
+      <section class="legal-body">
+        <p>ARKEN(이하 "회사")은 이용자의 개인정보를 중요시하며, 「개인정보 보호법」 및 관련 법령을 준수하기 위해 노력하고 있습니다. 본 방침은 회사가 운영하는 웹사이트 arken.co.kr(이하 "사이트") 이용과 관련하여 수집되는 개인정보의 처리 방침을 설명합니다.</p>
+
+        <h2>1. 수집하는 개인정보 항목</h2>
+        <p>회사는 서비스 제공을 위해 다음과 같은 정보를 수집할 수 있습니다.</p>
+        <ul>
+          <li>문의 접수 시: 이름, 이메일 주소, 연락처, 문의 내용</li>
+          <li>자동 수집 항목: IP 주소(익명화), 브라우저 종류, 운영체제, 방문 기록, 쿠키</li>
+        </ul>
+
+        <h2>2. 개인정보의 수집 및 이용 목적</h2>
+        <ul>
+          <li>사용자 문의에 대한 응답 및 고객 지원</li>
+          <li>웹사이트 이용 통계 분석 및 서비스 개선</li>
+          <li>법령에 따른 의무 이행</li>
+        </ul>
+
+        <h2>3. 개인정보의 보유 및 이용 기간</h2>
+        <p>회사는 이용자의 개인정보를 수집 및 이용 목적이 달성된 후에는 지체 없이 파기합니다. 단, 관계 법령에 의해 보존할 필요가 있는 경우 해당 법령에서 정한 기간 동안 보관합니다.</p>
+        <ul>
+          <li>문의 기록: 처리 완료 후 3년</li>
+          <li>법령에 따른 보관: 해당 법령에서 정한 기간</li>
+        </ul>
+
+        <h2>4. 쿠키 및 분석 도구</h2>
+        <p>본 웹사이트는 Google Analytics 4(GA4)를 통해 방문자의 사이트 이용 패턴을 익명으로 분석합니다. 수집되는 정보는 IP 주소(익명화 처리), 브라우저 유형, 방문 페이지 경로, 방문 시간, 디바이스 유형 등이며, 개인을 식별할 수 있는 정보는 수집하지 않습니다.</p>
+        <p>방문자는 다음 방법으로 데이터 수집을 거부할 수 있습니다.</p>
+        <ul>
+          <li>브라우저 설정에서 쿠키 차단</li>
+          <li>Google Analytics 옵트아웃 브라우저 확장 프로그램 설치 (<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">https://tools.google.com/dlpage/gaoptout</a>)</li>
+        </ul>
+
+        <h2>5. 개인정보의 제3자 제공</h2>
+        <p>회사는 이용자의 개인정보를 원칙적으로 외부에 제공하지 않습니다. 다만 다음의 경우는 예외로 합니다.</p>
+        <ul>
+          <li>이용자가 사전에 동의한 경우</li>
+          <li>법령의 규정에 의거하거나 수사 목적으로 법령에서 정한 절차와 방법에 따라 수사기관의 요구가 있는 경우</li>
+        </ul>
+
+        <h2>6. 개인정보 처리의 위탁</h2>
+        <p>회사는 원활한 서비스 제공을 위해 다음과 같이 개인정보 처리 업무를 외부에 위탁할 수 있습니다.</p>
+        <ul>
+          <li>Google Analytics 4 (Google LLC): 웹사이트 이용 통계 분석</li>
+          <li>기타 서비스 제공에 필요한 경우 별도 고지 후 위탁</li>
+        </ul>
+
+        <h2>7. 이용자의 권리</h2>
+        <p>이용자는 언제든지 다음 권리를 행사할 수 있습니다.</p>
+        <ul>
+          <li>개인정보 열람, 정정, 삭제, 처리 정지 요구</li>
+          <li>권리 행사는 이메일(<a href="mailto:bhwoo@arken.co.kr">bhwoo@arken.co.kr</a>)로 연락 시 지체 없이 조치</li>
+        </ul>
+
+        <h2>8. 개인정보 보호책임자</h2>
+        <ul>
+          <li><strong>성명</strong>: 우병희</li>
+          <li><strong>연락처</strong>: <a href="mailto:bhwoo@arken.co.kr">bhwoo@arken.co.kr</a></li>
+        </ul>
+        <p>이용자는 본 사이트 서비스 이용 중 발생한 모든 개인정보 보호 관련 문의, 불만 처리, 피해 구제 등에 관한 사항을 위 연락처로 문의하실 수 있습니다.</p>
+
+        <h2>9. 방침의 변경</h2>
+        <p>본 개인정보 처리방침은 법령, 정책 또는 보안 기술의 변경에 따라 내용의 추가, 삭제 및 수정이 있을 수 있으며, 변경 시에는 본 페이지를 통해 변경 사항을 공지합니다.</p>
+
+        <p class="legal-updated">마지막 업데이트: 2026년 4월 20일</p>
+      </section>
+    </article>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="ft-logo">
+      <span>ARKEN</span>
+    </div>
+    <span class="ft-copy">© 2025 ARKEN Co., Ltd. All rights reserved.</span>
+    <div class="ft-links">
+      <a href="/privacy">개인정보 처리방침</a>
+      <a href="/terms">서비스 이용약관</a>
+      <a href="http://komoshnik.kr" target="_blank" rel="noopener">KOMOSHNIK</a>
+      <a href="http://kosnova.kr" target="_blank" rel="noopener">KOSNOVA</a>
+      <a href="http://jackostore.co.kr" target="_blank" rel="noopener">JACKOSTORE</a>
+    </div>
+  </footer>
+</body>
+</html>

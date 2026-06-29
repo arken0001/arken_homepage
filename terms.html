@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FFRENK1FQE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FFRENK1FQE');
+  </script>
+
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>서비스 이용약관 | ARKEN</title>
+  <meta name="description" content="주식회사 아켄(ARKEN Co., Ltd.)이 운영하는 arken.co.kr 및 관련 서비스의 이용에 관한 조건과 절차를 규정한 이용약관."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://arken.co.kr/terms"/>
+
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="서비스 이용약관 | ARKEN"/>
+  <meta property="og:description" content="주식회사 아켄의 서비스 이용약관"/>
+  <meta property="og:url" content="https://arken.co.kr/terms"/>
+  <meta property="og:locale" content="ko_KR"/>
+
+  <meta name="theme-color" content="#020b1a"/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+
+  <style>
+    :root {
+      --bg:      #020b1a;
+      --bg2:     #060f22;
+      --bg3:     #0a142e;
+      --blue:    #4a96cd;
+      --cyan:    #5bbdff;
+      --glow:    #7dd4ff;
+      --gold:    #e9a84a;
+      --text:    #ddeeff;
+      --muted:   #6889aa;
+      --border:  rgba(74,150,205,0.15);
+      --card:    rgba(6,15,34,0.92);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'Pretendard',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.7}
+    ::-webkit-scrollbar{width:3px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--blue);border-radius:2px}
+
+    .grid-bg{
+      position:fixed;inset:0;
+      background-image:linear-gradient(rgba(74,150,205,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(74,150,205,.05) 1px,transparent 1px);
+      background-size:56px 56px;pointer-events:none;z-index:-1;
+    }
+
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1rem 4rem;
+      background:rgba(2,11,26,0.88);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+    .nav-logo-text{
+      font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;
+      letter-spacing:.18em;
+      background:linear-gradient(90deg,var(--glow),var(--blue));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .nav-back{
+      padding:.5rem 1.4rem;border:1px solid var(--blue);
+      color:var(--cyan);font-size:.78rem;letter-spacing:.1em;
+      text-decoration:none;border-radius:2px;transition:all .25s;text-transform:uppercase;
+    }
+    .nav-back:hover{background:var(--blue);color:#fff}
+
+    .legal-wrap{max-width:860px;margin:0 auto;padding:8rem 2rem 4rem}
+    .legal-head{text-align:center;margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border)}
+    .legal-eyebrow{font-family:'Syne',sans-serif;font-weight:600;font-size:.68rem;letter-spacing:.35em;color:var(--cyan);text-transform:uppercase;margin-bottom:1rem}
+    .legal-title{font-family:'Syne',sans-serif;font-weight:700;font-size:2.2rem;letter-spacing:.02em;color:var(--text);margin-bottom:1rem}
+    .legal-effective{font-size:.85rem;color:var(--muted);letter-spacing:.05em}
+    .legal-body{font-size:.95rem;color:var(--text)}
+    .legal-body > p{margin:1rem 0;color:#c5d9ee}
+    .legal-body h2{
+      font-family:'Syne',sans-serif;font-weight:600;font-size:1.1rem;
+      color:var(--cyan);margin-top:2.8rem;margin-bottom:1rem;
+      padding-bottom:.6rem;border-bottom:1px solid var(--border);letter-spacing:.02em;
+    }
+    .legal-body ol{list-style:none;counter-reset:item;padding:0;margin:1rem 0}
+    .legal-body ol > li{
+      position:relative;padding-left:1.8rem;margin:.7rem 0;color:#c5d9ee;counter-increment:item;
+    }
+    .legal-body ol > li::before{
+      content:counter(item) ".";position:absolute;left:0;top:0;
+      font-weight:500;color:var(--blue);
+    }
+    .legal-body ul{list-style:none;padding:0;margin:1rem 0}
+    .legal-body ul li{
+      position:relative;padding-left:1.3rem;margin:.5rem 0;color:#c5d9ee;
+    }
+    .legal-body ul li::before{
+      content:"";position:absolute;left:0;top:.75em;
+      width:6px;height:6px;border-radius:50%;background:var(--blue);
+    }
+    .legal-body strong{color:var(--glow);font-weight:500}
+    .legal-body a{color:var(--cyan);text-decoration:none}
+    .legal-body a:hover{text-decoration:underline}
+    .legal-updated{
+      margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);
+      text-align:center;font-size:.78rem;color:var(--muted);letter-spacing:.05em;
+    }
+
+    footer{
+      background:var(--bg2);border-top:1px solid var(--border);
+      padding:1.8rem 4rem;
+      display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+    }
+    .ft-logo span{font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;letter-spacing:.2em;color:var(--blue)}
+    .ft-copy{font-size:.68rem;color:var(--muted)}
+    .ft-links{display:flex;gap:1.5rem;flex-wrap:wrap}
+    .ft-links a{font-size:.68rem;color:var(--muted);text-decoration:none;transition:color .2s;letter-spacing:.05em}
+    .ft-links a:hover{color:var(--cyan)}
+
+    @media(max-width:900px){
+      nav{padding:.9rem 1.25rem}
+      .nav-back{padding:.4rem 1rem;font-size:.68rem}
+      .legal-wrap{padding:7rem 1.25rem 3rem}
+      .legal-title{font-size:1.65rem}
+      .legal-body{font-size:.9rem}
+      .legal-body h2{font-size:1rem}
+      footer{padding:1.5rem 1.25rem;justify-content:center;text-align:center;flex-direction:column;gap:.9rem}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <nav aria-label="메인 내비게이션" role="navigation">
+    <a href="/" class="nav-logo" aria-label="ARKEN 홈으로">
+      <span class="nav-logo-text">ARKEN</span>
+    </a>
+    <a href="/" class="nav-back">홈으로</a>
+  </nav>
+
+  <main>
+    <article class="legal-wrap">
+      <header class="legal-head">
+        <p class="legal-eyebrow">Terms of Service</p>
+        <h1 class="legal-title">서비스 이용약관</h1>
+        <p class="legal-effective">시행일: 2026년 4월 20일</p>
+      </header>
+
+      <section class="legal-body">
+        <h2>제1조 (목적)</h2>
+        <p>본 약관은 ARKEN(이하 "회사")이 운영하는 웹사이트 arken.co.kr(이하 "사이트") 및 관련 서비스의 이용에 관한 조건과 절차, 회사와 이용자 간의 권리·의무 및 책임 사항, 기타 필요한 사항을 규정함을 목적으로 합니다.</p>
+
+        <h2>제2조 (용어의 정의)</h2>
+        <p>본 약관에서 사용하는 용어의 정의는 다음과 같습니다.</p>
+        <ul>
+          <li><strong>"사이트"</strong>란 회사가 운영하는 arken.co.kr 및 관련 하위 도메인을 말합니다.</li>
+          <li><strong>"이용자"</strong>란 사이트에 접속하여 회사가 제공하는 서비스를 이용하는 자를 말합니다.</li>
+          <li><strong>"콘텐츠"</strong>란 사이트에 게재되는 모든 글, 이미지, 영상, 데이터 등을 말합니다.</li>
+        </ul>
+
+        <h2>제3조 (약관의 효력 및 변경)</h2>
+        <ol>
+          <li>본 약관은 사이트에 게시함으로써 효력이 발생합니다.</li>
+          <li>회사는 필요한 경우 관련 법령을 위배하지 않는 범위에서 본 약관을 변경할 수 있으며, 변경 시 사이트를 통해 변경 내용과 시행일을 공지합니다.</li>
+          <li>이용자가 변경된 약관에 동의하지 않는 경우 서비스 이용을 중단할 수 있습니다.</li>
+        </ol>
+
+        <h2>제4조 (서비스의 제공 및 변경)</h2>
+        <ol>
+          <li>회사는 이용자에게 다음과 같은 서비스를 제공합니다.
+            <ul>
+              <li>회사 및 제품에 관한 정보 제공</li>
+              <li>문의 접수 및 응답</li>
+              <li>기타 회사가 추가로 제공하는 서비스</li>
+            </ul>
+          </li>
+          <li>회사는 서비스의 내용, 이용 방법, 이용 시간을 필요에 따라 변경할 수 있으며, 변경 시 사이트를 통해 공지합니다.</li>
+        </ol>
+
+        <h2>제5조 (서비스 이용 제한)</h2>
+        <p>이용자는 다음 행위를 하여서는 안 됩니다.</p>
+        <ul>
+          <li>사이트의 정상적인 운영을 방해하는 행위</li>
+          <li>타인의 정보를 도용하거나 허위 정보를 등록하는 행위</li>
+          <li>회사의 저작권 및 지적재산권을 침해하는 행위</li>
+          <li>법령에 위반되는 행위</li>
+          <li>기타 사회 통념상 부적절한 행위</li>
+        </ul>
+        <p>회사는 이용자가 본 조를 위반한 경우 서비스 이용을 제한하거나 관련 법령에 따라 조치할 수 있습니다.</p>
+
+        <h2>제6조 (저작권)</h2>
+        <ol>
+          <li>사이트에 게재된 모든 콘텐츠의 저작권은 회사 또는 원저작자에게 있습니다.</li>
+          <li>이용자는 회사의 사전 서면 동의 없이 사이트의 콘텐츠를 복제, 배포, 전송, 출판, 방송 등의 방법으로 이용하거나 제3자에게 이용하게 할 수 없습니다.</li>
+        </ol>
+
+        <h2>제7조 (면책 조항)</h2>
+        <ol>
+          <li>회사는 천재지변, 전쟁, 기간통신사업자의 서비스 중지, 해킹 등 회사의 통제를 벗어난 사유로 서비스를 제공할 수 없는 경우 책임이 면제됩니다.</li>
+          <li>회사는 이용자의 귀책 사유로 인한 서비스 이용 장애에 대해 책임을 지지 않습니다.</li>
+          <li>사이트에 게재된 정보의 정확성, 완전성에 대해 회사는 보증하지 않으며, 이용자는 스스로의 판단에 따라 정보를 이용해야 합니다.</li>
+        </ol>
+
+        <h2>제8조 (준거법 및 재판 관할)</h2>
+        <ol>
+          <li>본 약관의 해석 및 회사와 이용자 간 분쟁에 대해서는 대한민국 법령을 적용합니다.</li>
+          <li>서비스 이용과 관련하여 회사와 이용자 간에 분쟁이 발생한 경우, 민사소송법상의 관할 법원을 전속 관할 법원으로 합니다.</li>
+        </ol>
+
+        <h2>제9조 (문의)</h2>
+        <p>본 약관과 관련된 문의는 다음 연락처로 연락 주시기 바랍니다.</p>
+        <ul>
+          <li><strong>이메일</strong>: <a href="mailto:bhwoo@arken.co.kr">bhwoo@arken.co.kr</a></li>
+        </ul>
+
+        <p class="legal-updated">마지막 업데이트: 2026년 4월 20일</p>
+      </section>
+    </article>
+  </main>
+
+  <footer role="contentinfo">
+    <div class="ft-logo">
+      <span>ARKEN</span>
+    </div>
+    <span class="ft-copy">© 2025 ARKEN Co., Ltd. All rights reserved.</span>
+    <div class="ft-links">
+      <a href="/privacy">개인정보 처리방침</a>
+      <a href="/terms">서비스 이용약관</a>
+      <a href="http://komoshnik.kr" target="_blank" rel="noopener">KOMOSHNIK</a>
+      <a href="http://kosnova.kr" target="_blank" rel="noopener">KOSNOVA</a>
+      <a href="http://jackostore.co.kr" target="_blank" rel="noopener">JACKOSTORE</a>
+    </div>
+  </footer>
+</body>
+</html>

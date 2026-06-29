@@ -10,6 +10,14 @@
       "use": "@vercel/static"
     },
     {
+      "src": "privacy.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "terms.html",
+      "use": "@vercel/static"
+    },
+    {
       "src": "public/**",
       "use": "@vercel/static"
     }
@@ -58,6 +66,14 @@
     {
       "src": "/ai-news/(.*)",
       "dest": "/public/ai-news/$1"
+    },
+    {
+      "src": "/privacy/?",
+      "dest": "/privacy.html"
+    },
+    {
+      "src": "/terms/?",
+      "dest": "/terms.html"
     },
     {
       "src": "/(.*)",
