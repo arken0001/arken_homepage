@@ -159,7 +159,7 @@
     .download-inner h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; }
     .download-inner .sub { font-size: 1rem; opacity: 0.6; margin-bottom: 48px; }
     .qr-grid { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; }
-    .qr-app { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .qr-app { display: flex; flex-direction: column; align-items: center; gap: 16px; border: 2.5px solid var(--orange); border-radius: 20px; padding: 28px 32px; }
     .qr-app img.app-logo { width: 64px; height: 64px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .qr-app h4 { font-size: 1.1rem; font-weight: 700; }
     .qr-stores { display: flex; gap: 24px; }
@@ -171,7 +171,8 @@
     a.qr-box:hover { transform: translateY(-4px); }
     a.qr-box:hover .qr-label { opacity: 1; color: var(--orange); }
     .qr-img { width: 140px; height: 140px; background: white; border: 1px solid var(--glass-border); border-radius: 16px; padding: 10px; box-shadow: 0 8px 24px rgba(0,48,73,0.1); display: block; }
-    .qr-grid > .qr-app + .qr-app { border-left: 1.5px solid rgba(0,48,73,0.14); padding-left: 48px; }
+    .qr-web { display: block; width: 100%; margin-top: 6px; padding-top: 14px; border-top: 1px dashed rgba(247,127,0,0.45); font-size: 0.9rem; font-weight: 700; color: var(--orange); text-decoration: none; text-align: center; transition: opacity 0.2s; }
+    .qr-web:hover { opacity: 0.7; }
 
     /* FOOTER */
     footer { background: var(--navy); color: white; padding: 60px 2rem 32px; }
@@ -196,7 +197,6 @@
       .footer-top { grid-template-columns: 1fr; }
       .nav-links { display: none; }
       .qr-grid { flex-direction: column; align-items: center; }
-      .qr-grid > .qr-app + .qr-app { border-left: none; border-top: 1.5px solid rgba(0,48,73,0.14); padding-left: 0; padding-top: 40px; }
       .qr-stores { flex-direction: column; }
     }
   </style>
@@ -504,6 +504,7 @@
               <span class="qr-label">🍎 App Store</span>
             </a>
           </div>
+          <a class="qr-web" href="https://www.komoshnik.kr" target="_blank" rel="noopener">🌐 komoshnik.kr</a>
         </div>
         <div class="qr-app">
           <img class="app-logo" src="./KOSNOVA_1024.png" alt="KOSNOVA">
@@ -518,13 +519,9 @@
               <span class="qr-label">🍎 App Store</span>
             </a>
           </div>
+          <a class="qr-web" href="https://www.kosnova.kr" target="_blank" rel="noopener">🌐 kosnova.kr</a>
         </div>
       </div>
-      <p style="margin-top:32px;font-size:0.85rem;opacity:0.5;">
-        Также доступно как веб-приложение:
-        <a href="https://www.komoshnik.kr" style="color:var(--orange);">komoshnik.kr</a> ·
-        <a href="https://www.kosnova.kr" style="color:var(--orange);">kosnova.kr</a>
-      </p>
     </div>
   </section>
 
