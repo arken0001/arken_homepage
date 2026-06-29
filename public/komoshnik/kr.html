@@ -166,6 +166,10 @@
     .qr-placeholder { width: 140px; height: 140px; background: white; border: 2px dashed rgba(0,48,73,0.2); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--navy); opacity: 0.5; }
     .qr-placeholder .qr-icon { font-size: 2rem; margin-bottom: 4px; }
     .qr-label { font-size: 0.8rem; font-weight: 600; color: var(--navy); opacity: 0.7; }
+    a.qr-box { text-decoration: none; transition: transform 0.25s; }
+    a.qr-box:hover { transform: translateY(-4px); }
+    a.qr-box:hover .qr-label { opacity: 1; color: var(--orange); }
+    .qr-img { width: 140px; height: 140px; background: white; border: 1px solid var(--glass-border); border-radius: 16px; padding: 10px; box-shadow: 0 8px 24px rgba(0,48,73,0.1); display: block; }
 
     /* FOOTER */
     footer { background: var(--navy); color: white; padding: 60px 2rem 32px; }
@@ -487,28 +491,28 @@
           <img class="app-logo" src="./KOMOSHNIK_1024.png" alt="KOMOSHNIK">
           <h4>KOMOSHNIK</h4>
           <div class="qr-stores">
-            <div class="qr-box">
-              <div class="qr-placeholder"><div class="qr-icon">▶</div>QR코드<br>Google Play</div>
-              <span class="qr-label">Google Play</span>
-            </div>
-            <div class="qr-box">
-              <div class="qr-placeholder"><div class="qr-icon">🍎</div>QR코드<br>App Store</div>
-              <span class="qr-label">App Store</span>
-            </div>
+            <a class="qr-box" href="https://play.google.com/store/apps/details?id=com.komoshnik.komoshnik_app" target="_blank" rel="noopener">
+              <img class="qr-img" src="./qr_komoshnik_googleplay.png" alt="KOMOSHNIK Google Play QR코드">
+              <span class="qr-label">▶ Google Play</span>
+            </a>
+            <a class="qr-box" href="https://apps.apple.com/kr/app/komoshnik/id6761421471" target="_blank" rel="noopener">
+              <img class="qr-img" src="./qr_komoshnik_appstore.png" alt="KOMOSHNIK App Store QR코드">
+              <span class="qr-label">🍎 App Store</span>
+            </a>
           </div>
         </div>
         <div class="qr-app">
           <img class="app-logo" src="./KOSNOVA_1024.png" alt="KOSNOVA">
           <h4>KOSNOVA</h4>
           <div class="qr-stores">
-            <div class="qr-box">
-              <div class="qr-placeholder"><div class="qr-icon">▶</div>QR코드<br>Google Play</div>
-              <span class="qr-label">Google Play</span>
-            </div>
-            <div class="qr-box">
-              <div class="qr-placeholder"><div class="qr-icon">🍎</div>QR코드<br>App Store</div>
-              <span class="qr-label">App Store</span>
-            </div>
+            <a class="qr-box" href="https://play.google.com/store/apps/details?id=kr.kosnova.app" target="_blank" rel="noopener">
+              <img class="qr-img" src="./qr_kosnova_googleplay.png" alt="KOSNOVA Google Play QR코드">
+              <span class="qr-label">▶ Google Play</span>
+            </a>
+            <a class="qr-box" href="https://apps.apple.com/kr/app/kosnova/id6761421508" target="_blank" rel="noopener">
+              <img class="qr-img" src="./qr_kosnova_appstore.png" alt="KOSNOVA App Store QR코드">
+              <span class="qr-label">🍎 App Store</span>
+            </a>
           </div>
         </div>
       </div>
