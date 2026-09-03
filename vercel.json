@@ -6,6 +6,10 @@
       "use": "@vercel/node"
     },
     {
+      "src": "api/playground-download.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "index.html",
       "use": "@vercel/static"
     },
@@ -58,6 +62,18 @@
     {
       "src": "/ai-news/(.*)",
       "dest": "/public/ai-news/$1"
+    },
+    {
+      "src": "/playground/download/?",
+      "dest": "/api/playground-download.js"
+    },
+    {
+      "src": "/playground/?",
+      "dest": "/public/playground/index.html"
+    },
+    {
+      "src": "/playground/(.*)",
+      "dest": "/public/playground/$1"
     },
     {
       "src": "/privacy/?",
