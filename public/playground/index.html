@@ -132,6 +132,27 @@
     .detail-label { display: block; color: #708198; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
     .detail-value { display: block; margin-top: 7px; color: #dbe7f3; font-size: 14px; font-weight: 650; }
 
+    .pricing { margin-top: 44px; }
+    .pricing-title { margin: 0 0 6px; font-size: 24px; letter-spacing: -.02em; text-align: center; }
+    .pricing-sub { margin: 0 0 22px; color: var(--muted); font-size: 13px; text-align: center; }
+    .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .plan {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(145deg, rgba(17, 29, 47, .92), rgba(8, 14, 25, .96));
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+    }
+    .plan-name { margin: 0; font-size: 16px; font-weight: 800; }
+    .plan-price { margin: 8px 0 2px; color: var(--cyan); font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
+    .plan-price small { color: var(--muted); font-size: 12px; font-weight: 600; }
+    .plan-desc { margin: 8px 0 14px; color: #9fb0c2; font-size: 12px; line-height: 1.6; min-height: 38px; }
+    .plan ul { margin: 0; padding: 0; list-style: none; color: #c9d6e4; font-size: 12.5px; line-height: 2; }
+    .plan li::before { content: "✓"; margin-right: 8px; color: var(--cyan); font-weight: 800; }
+    .plan-note { margin-top: 16px; color: #708198; font-size: 11px; line-height: 1.6; }
+    @media (max-width: 720px) { .plans { grid-template-columns: 1fr; } }
+
     .notice {
       margin-top: 18px;
       padding: 14px 16px;
@@ -162,6 +183,8 @@
     .footer-links { display: flex; gap: 16px; }
     .footer-links a { text-decoration: none; }
     .footer-links a:hover { color: #b6c6d7; }
+    .biz-info { margin: 14px 0 0; color: #566579; font-size: 11px; line-height: 1.8; }
+    .biz-info a { color: #6d8095; }
 
     @media (max-width: 620px) {
       main { padding-top: 42px; }
@@ -216,8 +239,56 @@
         </div>
       </section>
 
+      <section class="pricing" aria-labelledby="pricing-title">
+        <h2 class="pricing-title" id="pricing-title">요금제</h2>
+        <p class="pricing-sub">모든 요금제는 월 단위 구독이며, 앱 안에서 카드로 결제하고 언제든 해지할 수 있습니다.</p>
+        <div class="plans">
+          <div class="plan">
+            <h3 class="plan-name">Basic</h3>
+            <p class="plan-price">49,000원<small> /월 (부가세 포함)</small></p>
+            <p class="plan-desc">카페 운영에 필요한 핵심 기능을 가볍게 시작하는 요금제</p>
+            <ul>
+              <li>카페글 품질 체크 1,500글</li>
+              <li>네이버 검색 순위 50회</li>
+              <li>노출 키워드 15개</li>
+              <li>카페 회원 수집 30,000명</li>
+              <li>PC 1대 이용</li>
+            </ul>
+          </div>
+          <div class="plan">
+            <h3 class="plan-name">Pro</h3>
+            <p class="plan-price">89,000원<small> /월 (부가세 포함)</small></p>
+            <p class="plan-desc">정기적인 카페 운영과 반복 분석에 맞춘 요금제</p>
+            <ul>
+              <li>카페글 품질 체크 6,000글</li>
+              <li>네이버 검색 순위 200회</li>
+              <li>노출 키워드 50개</li>
+              <li>카페 회원 수집 100,000명</li>
+              <li>PC 1대 이용</li>
+            </ul>
+          </div>
+          <div class="plan">
+            <h3 class="plan-name">Premium</h3>
+            <p class="plan-price">149,000원<small> /월 (부가세 포함)</small></p>
+            <p class="plan-desc">대량 수집과 여러 PC 운영을 위한 상위 요금제</p>
+            <ul>
+              <li>카페글 품질 체크 20,000글</li>
+              <li>네이버 검색 순위 800회</li>
+              <li>노출 키워드 200개</li>
+              <li>카페 회원 수집 450,000명</li>
+              <li>PC 2대 동시 이용</li>
+            </ul>
+          </div>
+        </div>
+        <p class="plan-note">
+          결제는 앱 내에서 토스페이먼츠를 통해 처리되며, 매월 같은 날짜에 자동 결제됩니다.
+          자동결제는 앱의 계정 메뉴에서 언제든 해지할 수 있고, 해지해도 이용 기간이 끝날 때까지는 계속 사용할 수 있습니다.
+          자세한 환불 기준은 <a href="/playground/refund.html">환불규정</a>을 확인해 주세요.
+        </p>
+      </section>
+
       <div class="notice">
-        <strong>시험 배포 안내</strong><br>
+        <strong>설치 안내</strong><br>
         현재 설치 파일에는 Windows 코드 서명이 적용되지 않아 보안 확인 안내가 표시될 수 있습니다.
       </div>
 
@@ -229,12 +300,19 @@
   </main>
 
   <footer>
-    <div class="wrap footer-row">
-      <span>© 2026 ARKEN Co., Ltd.</span>
-      <nav class="footer-links" aria-label="정책 안내">
-        <a href="/terms">이용약관</a>
-        <a href="/privacy">개인정보 처리방침</a>
-      </nav>
+    <div class="wrap">
+      <div class="footer-row">
+        <span>© 2026 ARKEN Co., Ltd.</span>
+        <nav class="footer-links" aria-label="정책 안내">
+          <a href="/terms">이용약관</a>
+          <a href="/privacy">개인정보 처리방침</a>
+          <a href="/playground/refund.html">환불규정</a>
+        </nav>
+      </div>
+      <p class="biz-info">
+        주식회사 아켄 · 대표 우병호 · 사업자등록번호 825-87-03407 · 통신판매업신고 2026-화성동탄-1826<br>
+        경기도 화성시 동탄대로 643, 센테라IT타워 715호 (우 18468) · 문의 <a href="mailto:bhwoo@arken.co.kr">bhwoo@arken.co.kr</a> · 010-4515-0345
+      </p>
     </div>
   </footer>
 
