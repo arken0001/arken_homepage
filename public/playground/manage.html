@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+  <title>Playground 회원 관리</title>
+  <link rel="stylesheet" href="/playground/portal.css"><script src="/playground/manage.js" defer></script>
+</head>
+<body><main class="wide">
+  <p class="brand">ARKEN · Playground 운영자</p><h1>회원 및 구매 관리</h1>
+  <p>직접 결제 회원과 크몽 구매 회원을 한 계정 체계에서 구분해 관리합니다.</p>
+  <p id="message" class="message" role="status" aria-live="polite">운영자 로그인이 필요합니다.</p>
+
+  <form id="login" class="panel">
+    <h2>운영자 로그인</h2><div class="grid">
+      <div><label for="email">이메일</label><input id="email" type="email" autocomplete="username" required maxlength="254"></div>
+      <div><label for="password">비밀번호</label><input id="password" type="password" autocomplete="current-password" required></div>
+    </div><button id="login-button" type="submit">로그인</button>
+  </form>
+
+  <section id="workspace" hidden>
+    <div class="toolbar panel"><div class="grow"><label for="search">회원 이메일 검색</label><input id="search" type="search" maxlength="200" placeholder="이메일 일부 입력"></div><button id="search-button" type="button">검색</button><button id="logout" class="secondary" type="button">로그아웃</button></div>
+    <section class="panel"><h2>회원 목록</h2><div class="table-wrap"><table><thead><tr><th>이메일</th><th>이름</th><th>이용권</th><th>구매 경로</th><th>유입 경로</th><th>이용 종료</th></tr></thead><tbody id="users"></tbody></table></div><p id="empty" class="muted" hidden>검색 결과가 없습니다.</p></section>
+
+    <section id="member" class="panel" hidden>
+      <h2>선택한 회원</h2><p id="member-summary"></p><button id="toggle-active" class="danger" type="button">계정 사용 중지</button>
+      <div class="panel"><h2>등록된 기기</h2><div class="table-wrap"><table><thead><tr><th>PC 이름</th><th>앱 버전</th><th>마지막 접속</th><th>이번 달 교체</th><th></th></tr></thead><tbody id="devices"></tbody></table></div><p id="devices-empty" class="muted" hidden>등록된 기기가 없습니다.</p></div>
+      <div class="grid">
+        <form id="source-form">
+          <h2>유입 경로</h2><p class="muted">검색·직접 영업 등 처음 알게 된 경로를 기록합니다. 실제 결제 경로와는 별도입니다.</p>
+          <label for="source">유입 경로</label><select id="source"><option value="unknown">확인 전</option><option value="search">검색</option><option value="sales">직접 영업</option><option value="other">기타</option></select>
+          <label for="source-note">확인 내용</label><textarea id="source-note" required minlength="3" maxlength="500" placeholder="확인한 내용을 입력해 주세요."></textarea>
+          <button type="submit">유입 경로 저장</button>
+        </form>
+        <form id="grant-form">
+          <h2>크몽 주문 등록</h2><p class="muted">크몽 주문 화면에서 결제 완료와 구매자를 확인한 후 등록합니다. 주문번호는 한 번만 사용할 수 있습니다.</p>
+          <label for="order-id">크몽 주문번호</label><input id="order-id" required maxlength="80" pattern="[A-Za-z0-9_-]+">
+          <div class="grid"><div><label for="plan">요금제</label><select id="plan"><option value="basic">Basic</option><option value="operation">Pro</option><option value="expansion">Premium</option></select></div><div><label for="months">이용 기간</label><select id="months"><option value="1">1개월</option><option value="2">2개월</option><option value="3">3개월</option><option value="6">6개월</option><option value="12">12개월</option></select></div></div>
+          <label for="amount">결제 금액</label><input id="amount" type="number" min="1" max="100000000" required inputmode="numeric">
+          <label for="grant-note">확인 내용</label><textarea id="grant-note" required minlength="3" maxlength="500" placeholder="크몽 결제 완료 확인 일시 등을 입력해 주세요."></textarea>
+          <button type="submit">주문 등록 및 이용권 부여</button>
+        </form>
+      </div>
+      <div class="panel"><h2>크몽 주문 내역</h2><div class="table-wrap"><table><thead><tr><th>주문번호</th><th>요금제</th><th>기간</th><th>금액</th><th>상태</th><th>이용 종료</th><th></th></tr></thead><tbody id="orders"></tbody></table></div><p id="orders-empty" class="muted" hidden>등록된 크몽 주문이 없습니다.</p></div>
+    </section>
+  </section>
+</main></body></html>

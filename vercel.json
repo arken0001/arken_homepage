@@ -10,6 +10,10 @@
       "use": "@vercel/node"
     },
     {
+      "src": "api/playground-gateway.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "index.html",
       "use": "@vercel/static"
     },
@@ -66,6 +70,28 @@
     {
       "src": "/playground/download/?",
       "dest": "/api/playground-download.js"
+    },
+    {
+      "src": "/api/playground-gateway",
+      "dest": "/api/playground-gateway.js"
+    },
+    {
+      "src": "/playground/checkout(?:\\.html)?/?",
+      "dest": "/public/playground/checkout.html",
+      "headers": {
+        "Cache-Control": "no-store",
+        "X-Robots-Tag": "noindex, nofollow",
+        "Referrer-Policy": "no-referrer"
+      }
+    },
+    {
+      "src": "/playground/manage(?:\\.html)?/?",
+      "dest": "/public/playground/manage.html",
+      "headers": {
+        "Cache-Control": "no-store",
+        "X-Robots-Tag": "noindex, nofollow",
+        "Referrer-Policy": "no-referrer"
+      }
     },
     {
       "src": "/playground/?",
