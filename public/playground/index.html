@@ -161,6 +161,7 @@
     .showcase-copy h3 { margin: 0 0 7px; font-size: 18px; }
     .showcase-copy p { margin: 0; color: #9fb0c2; font-size: 13px; line-height: 1.7; }
     .feature-showcase img { width: 100%; height: auto; display: block; border-top: 1px solid var(--line); background: #070d17; }
+    .main-screen-showcase { margin-top: 14px; }
     .intro-panel { padding: 34px; border: 1px solid var(--line); border-radius: 18px; background: rgba(12, 20, 34, .72); }
     .intro-copy { max-width: 680px; margin: 0 auto; color: #b8c5d4; font-size: 15px; line-height: 1.85; text-align: center; }
     .value-grid { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -290,6 +291,13 @@
             <div class="value-item"><strong>반복 업무 정리</strong><span>카페글과 회원 자료를 수집해 운영에 필요한 자료로 관리합니다.</span></div>
           </div>
         </div>
+        <figure class="feature-showcase main-screen-showcase">
+          <figcaption class="showcase-copy">
+            <h3>Playground 메인 화면</h3>
+            <p>로그인 후 왼쪽 메뉴에서 필요한 카페 운영 기능을 선택해 바로 시작할 수 있습니다.</p>
+          </figcaption>
+          <img src="/playground/playground-main.png" width="1729" height="910" loading="lazy" alt="Playground 메인 화면">
+        </figure>
       </section>
 
       <section class="content-section" id="features" aria-labelledby="features-title">
@@ -302,11 +310,14 @@
           </figcaption>
           <img src="/playground/playground-dashboard.png" width="1711" height="919" loading="lazy" alt="Playground 전체 카페 현황 화면">
         </figure>
-        <div class="feature-grid">
-          <article class="feature-card">
+        <figure class="feature-showcase">
+          <figcaption class="showcase-copy">
             <h3>카페글 품질 체크</h3>
-            <p>작성한 게시글이 네이버 검색에 정상적으로 노출되는지 확인하고 결과를 관리합니다.</p>
-          </article>
+            <p>게시글의 검색 노출 상태를 확인하고 정상 노출, 저품질 의심, 저품질 등의 결과를 한 화면에서 관리합니다.</p>
+          </figcaption>
+          <img src="/playground/playground-quality-check.png" width="1713" height="918" loading="lazy" alt="Playground 카페글 품질 체크 화면">
+        </figure>
+        <div class="feature-grid">
           <article class="feature-card">
             <h3>검색 순위·노출 키워드</h3>
             <p>키워드별 네이버 검색 순위와 카페글 노출 변화를 확인하고 관리할 키워드를 등록합니다.</p>
