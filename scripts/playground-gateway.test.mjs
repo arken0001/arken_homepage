@@ -143,7 +143,7 @@ test('page scripts reference existing elements and private pages are not adverti
     assert.deepEqual([...new Set(references.filter((id) => !ids.has(id)))], []);
     assert.match(html, /noindex/);
   }
-  const [index, guide, sitemap, mainImage, dashboardImage, qualityCheckImage, otherCafeImage, naverSearchImage, cafeExposureImage, rerankingImage, cafePostCollectionImage] = await Promise.all([
+  const [index, guide, sitemap, mainImage, dashboardImage, qualityCheckImage, otherCafeImage, naverSearchImage, cafeExposureImage, rerankingImage, cafePostCollectionImage, freeCafePostViewImage] = await Promise.all([
     readFile(new URL('../public/playground/index.html', import.meta.url), 'utf8'),
     readFile(new URL('../public/playground/guide.html', import.meta.url), 'utf8'),
     readFile(new URL('../public/sitemap.xml', import.meta.url), 'utf8'),
@@ -155,6 +155,7 @@ test('page scripts reference existing elements and private pages are not adverti
     readFile(new URL('../public/playground/playground-cafe-exposure-ranking.png', import.meta.url)),
     readFile(new URL('../public/playground/playground-reranking-keywords.png', import.meta.url)),
     readFile(new URL('../public/playground/playground-cafe-post-collection.png', import.meta.url)),
+    readFile(new URL('../public/playground/playground-free-cafe-post-view.png', import.meta.url)),
   ]);
   assert.equal(/href=["'][^"']*(checkout|manage)/i.test(index), false);
   assert.equal(/playground\/(checkout|manage)/i.test(sitemap), false);
@@ -179,6 +180,8 @@ test('page scripts reference existing elements and private pages are not adverti
   assert.match(index, /alt="Playground 리랭킹 키워드 추출 화면"/);
   assert.match(index, /src="\/playground\/playground-cafe-post-collection\.png"/);
   assert.match(index, /alt="Playground 카페글 수집하기 화면"/);
+  assert.match(index, /src="\/playground\/playground-free-cafe-post-view\.png"/);
+  assert.match(index, /alt="Playground 가입없이 카페글 보기 화면"/);
   assert.equal(mainImage.subarray(1, 4).toString('ascii'), 'PNG');
   assert.equal(dashboardImage.subarray(1, 4).toString('ascii'), 'PNG');
   assert.equal(qualityCheckImage.subarray(1, 4).toString('ascii'), 'PNG');
@@ -187,10 +190,12 @@ test('page scripts reference existing elements and private pages are not adverti
   assert.equal(cafeExposureImage.subarray(1, 4).toString('ascii'), 'PNG');
   assert.equal(rerankingImage.subarray(1, 4).toString('ascii'), 'PNG');
   assert.equal(cafePostCollectionImage.subarray(1, 4).toString('ascii'), 'PNG');
+  assert.equal(freeCafePostViewImage.subarray(1, 4).toString('ascii'), 'PNG');
   assert.ok(index.indexOf('playground-other-cafe-activity.png') < index.indexOf('playground-naver-search-ranking.png'));
   assert.ok(index.indexOf('playground-naver-search-ranking.png') < index.indexOf('playground-cafe-exposure-ranking.png'));
   assert.ok(index.indexOf('playground-cafe-exposure-ranking.png') < index.indexOf('playground-reranking-keywords.png'));
   assert.ok(index.indexOf('playground-reranking-keywords.png') < index.indexOf('playground-cafe-post-collection.png'));
+  assert.ok(index.indexOf('playground-cafe-post-collection.png') < index.indexOf('playground-free-cafe-post-view.png'));
   assert.ok(index.indexOf('id="pricing"') < index.indexOf('id="download"'));
   assert.ok(index.indexOf('id="download"') < index.indexOf('id="file-info"'));
   assert.equal([...index.matchAll(/id="download-button"/g)].length, 1);
