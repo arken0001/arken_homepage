@@ -143,8 +143,9 @@ test('page scripts reference existing elements and private pages are not adverti
     assert.deepEqual([...new Set(references.filter((id) => !ids.has(id)))], []);
     assert.match(html, /noindex/);
   }
-  const [index, sitemap] = await Promise.all([
+  const [index, guide, sitemap] = await Promise.all([
     readFile(new URL('../public/playground/index.html', import.meta.url), 'utf8'),
+    readFile(new URL('../public/playground/guide.html', import.meta.url), 'utf8'),
     readFile(new URL('../public/sitemap.xml', import.meta.url), 'utf8'),
   ]);
   assert.equal(/href=["'][^"']*(checkout|manage)/i.test(index), false);
@@ -153,6 +154,10 @@ test('page scripts reference existing elements and private pages are not adverti
   assert.match(index, /2026년 10월 1일부터 11월 30일까지/);
   assert.match(index, /2026-11-30T15:00:00Z/);
   assert.match(index, /launch_discount_status/);
+  assert.match(index, /href="\/playground\/guide\.html"/);
+  assert.match(guide, /Playground 사용법/);
+  assert.match(guide, /ID &amp; API 설정/);
+  assert.match(sitemap, /playground\/guide\.html/);
   assert.doesNotMatch(checkoutSource, /첫 2개월|출시 후 2개월|launch_discount_eligible/);
 });
 
@@ -346,17 +351,18 @@ function indexBrowser(nowIso, plansResponse) {
   return { view, byId };
 }
 
-test('index static prices never advertise the discount as the current price', () => {
+test('index static prices lead with the launch discount and strike regular prices', () => {
   const prices = [...indexHtml.matchAll(/class="plan-price-value">([^<]+)</g)].map((match) => match[1]);
-  assert.deepEqual(prices, ['49,000원', '89,000원', '149,000원']);
-  assert.equal([...indexHtml.matchAll(/class="plan-regular" hidden>/g)].length, 3);
+  assert.deepEqual(prices, ['24,500원', '44,500원', '74,500원']);
+  assert.equal([...indexHtml.matchAll(/class="plan-regular">/g)].length, 3);
+  assert.equal([...indexHtml.matchAll(/11월 30일까지 50% 할인/g)].length >= 3, true);
 });
 
 test('index shows fixed promotion windows by Korean time without server data', async () => {
   const regular = ['49,000원', '89,000원', '149,000원'];
   const launch = ['24,500원', '44,500원', '74,500원'];
   for (const [at, expected, visible] of [
-    ['2026-09-30T23:59:59+09:00', regular, false],
+    ['2026-09-30T23:59:59+09:00', launch, true],
     ['2026-10-01T00:00:00+09:00', launch, true],
     ['2026-11-30T23:59:59+09:00', launch, true],
     ['2026-12-01T00:00:00+09:00', regular, false],
@@ -367,7 +373,8 @@ test('index shows fixed promotion windows by Korean time without server data', a
     assert.equal(page.view().every((card) => card.regularVisible === visible), true, at);
   }
   const before = indexBrowser('2026-09-15T12:00:00+09:00');
-  assert.match(before.view()[0].discount, /24,500원/);
+  assert.equal(before.view()[0].price, '24,500원');
+  assert.match(before.view()[0].discount, /11월 30일까지 50% 할인/);
   const after = indexBrowser('2026-12-01T00:00:00+09:00');
   assert.match(after.byId['pricing-sub'].textContent, /종료/);
 });

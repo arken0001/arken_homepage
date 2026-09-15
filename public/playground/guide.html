@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Playground 사용법 | ARKEN</title>
+  <meta name="description" content="Playground 설치, 회원가입, 네이버 계정과 카페 등록, 주요 기능 이용 방법을 안내합니다.">
+  <link rel="canonical" href="https://arken.co.kr/playground/guide.html">
+  <meta name="theme-color" content="#050914">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    :root { color-scheme: dark; --bg:#050914; --panel:#0c1422; --line:#27364d; --text:#f3f7fb; --muted:#94a3b8; --cyan:#22d3ee; --warning:#fbbf24; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin:0; background:radial-gradient(circle at 50% -20%,rgba(34,211,238,.14),transparent 38%),var(--bg); color:var(--text); font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    a { color:inherit; }
+    .wrap { width:min(100% - 32px,880px); margin:0 auto; }
+    header { min-height:66px; display:flex; align-items:center; border-bottom:1px solid rgba(39,54,77,.7); }
+    .header-row { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { display:inline-flex; align-items:center; gap:10px; text-decoration:none; font-weight:800; letter-spacing:.08em; }
+    .brand-mark { width:30px; height:30px; display:grid; place-items:center; border:1px solid rgba(34,211,238,.45); border-radius:9px; background:rgba(34,211,238,.08); color:var(--cyan); font-size:13px; letter-spacing:0; }
+    nav { display:flex; gap:20px; color:#a9b8ca; font-size:13px; }
+    nav a { text-decoration:none; }
+    nav a:hover { color:var(--text); }
+    main { padding:64px 0 72px; }
+    .eyebrow { display:inline-block; margin-bottom:14px; color:#8be9f5; font-size:12px; font-weight:750; letter-spacing:.04em; }
+    h1 { margin:0; font-size:clamp(32px,6vw,46px); line-height:1.16; letter-spacing:-.04em; }
+    .lead { max-width:650px; margin:16px 0 0; color:#b4c1d1; font-size:16px; line-height:1.75; }
+    .quick-nav { margin:32px 0 0; padding:18px 20px; display:flex; flex-wrap:wrap; gap:10px; border:1px solid var(--line); border-radius:14px; background:rgba(12,20,34,.8); }
+    .quick-nav a { padding:8px 11px; border:1px solid rgba(39,54,77,.9); border-radius:8px; color:#c8d5e4; font-size:12px; text-decoration:none; }
+    .quick-nav a:hover { border-color:rgba(34,211,238,.45); color:#a5f3fc; }
+    .guide-section { padding-top:54px; scroll-margin-top:18px; }
+    .section-number { color:var(--cyan); font-size:12px; font-weight:800; }
+    h2 { margin:7px 0 18px; font-size:24px; letter-spacing:-.025em; }
+    .steps { display:grid; gap:12px; }
+    .step { display:grid; grid-template-columns:40px 1fr; gap:14px; padding:20px; border:1px solid var(--line); border-radius:13px; background:linear-gradient(145deg,rgba(17,29,47,.9),rgba(8,14,25,.96)); }
+    .step-no { width:34px; height:34px; display:grid; place-items:center; border-radius:50%; background:rgba(34,211,238,.1); color:var(--cyan); font-size:13px; font-weight:800; }
+    .step h3 { margin:2px 0 7px; font-size:16px; }
+    .step p { margin:0; color:#9fb0c2; font-size:13px; line-height:1.75; }
+    .tip { margin-top:14px; padding:15px 17px; border:1px solid rgba(251,191,36,.25); border-radius:10px; background:rgba(251,191,36,.055); color:#c7b98b; font-size:12px; line-height:1.7; }
+    .tip strong { color:#f4d77b; }
+    .feature-list { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .feature { padding:18px; border:1px solid var(--line); border-radius:12px; background:rgba(12,20,34,.72); }
+    .feature strong { display:block; margin-bottom:6px; font-size:14px; }
+    .feature span { color:#9fb0c2; font-size:12px; line-height:1.65; }
+    .actions { margin-top:44px; padding:26px; border:1px solid rgba(34,211,238,.28); border-radius:15px; background:rgba(34,211,238,.055); text-align:center; }
+    .actions h2 { margin:0 0 8px; }
+    .actions p { margin:0 0 18px; color:var(--muted); font-size:13px; }
+    .button { display:inline-flex; min-height:44px; padding:0 18px; align-items:center; justify-content:center; border:1px solid var(--cyan); border-radius:9px; background:#087e9d; color:white; font-size:14px; font-weight:750; text-decoration:none; }
+    footer { padding:24px 0 34px; border-top:1px solid rgba(39,54,77,.55); color:#697a90; font-size:12px; }
+    .footer-row { display:flex; justify-content:space-between; gap:16px; }
+    .footer-links { display:flex; gap:16px; }
+    @media (max-width:620px) {
+      header { padding:14px 0; }
+      .header-row { align-items:flex-start; flex-direction:column; }
+      nav { width:100%; gap:14px; overflow-x:auto; white-space:nowrap; }
+      main { padding-top:44px; }
+      .feature-list { grid-template-columns:1fr; }
+      .footer-row { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap header-row">
+      <a class="brand" href="/" aria-label="ARKEN 홈페이지로 이동"><span class="brand-mark">A</span><span>ARKEN</span></a>
+      <nav aria-label="Playground 메뉴">
+        <a href="/playground">소개</a>
+        <a href="/playground/#features">주요 기능</a>
+        <a href="/playground/guide.html">사용법</a>
+        <a href="/playground/#pricing">요금제</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <span class="eyebrow">PLAYGROUND GUIDE</span>
+      <h1>Playground 사용법</h1>
+      <p class="lead">앱 설치부터 회원가입, 네이버 계정과 카페 등록, 주요 기능 실행까지 처음 필요한 순서대로 안내합니다.</p>
+
+      <div class="quick-nav" aria-label="사용법 목차">
+        <a href="#install">설치</a><a href="#account">회원가입·로그인</a><a href="#settings">초기 설정</a><a href="#features">주요 기능</a><a href="#membership">요금제·결제</a>
+      </div>
+
+      <section class="guide-section" id="install">
+        <span class="section-number">01</span><h2>설치</h2>
+        <div class="steps">
+          <article class="step"><span class="step-no">1</span><div><h3>설치 파일 다운로드</h3><p>Playground 소개 페이지에서 <strong>Windows용 다운로드</strong>를 눌러 최신 설치 파일을 받습니다.</p></div></article>
+          <article class="step"><span class="step-no">2</span><div><h3>설치 파일 실행</h3><p>다운로드한 설치 파일을 실행하고 화면 안내에 따라 설치합니다. 설치가 끝나면 Playground를 실행합니다.</p></div></article>
+          <article class="step"><span class="step-no">3</span><div><h3>업데이트 확인</h3><p>이후 버전은 앱을 실행할 때 자동으로 확인됩니다. 업데이트 안내가 나오면 적용한 뒤 다시 실행합니다.</p></div></article>
+        </div>
+        <div class="tip"><strong>Windows 보안 안내</strong><br>현재 설치 파일에는 코드 서명이 적용되지 않아 보안 확인 화면이 표시될 수 있습니다. 파일 출처가 ARKEN 다운로드 페이지인지 확인한 뒤 진행해 주세요.</div>
+      </section>
+
+      <section class="guide-section" id="account">
+        <span class="section-number">02</span><h2>회원가입·로그인</h2>
+        <div class="steps">
+          <article class="step"><span class="step-no">1</span><div><h3>계정 만들기</h3><p>앱 첫 화면에서 <strong>회원가입</strong>을 선택하고 로그인에 사용할 이메일과 비밀번호를 등록합니다.</p></div></article>
+          <article class="step"><span class="step-no">2</span><div><h3>로그인</h3><p>가입한 계정으로 로그인합니다. 유료 이용권이 적용된 계정은 로그인한 PC가 이용 기기로 등록됩니다.</p></div></article>
+        </div>
+      </section>
+
+      <section class="guide-section" id="settings">
+        <span class="section-number">03</span><h2>초기 설정</h2>
+        <div class="steps">
+          <article class="step"><span class="step-no">1</span><div><h3>네이버 계정 등록</h3><p>상단의 <strong>설정</strong>에서 <strong>ID &amp; API 설정</strong>을 열고 카페 운영에 사용할 네이버 계정을 등록한 뒤 로그인합니다.</p></div></article>
+          <article class="step"><span class="step-no">2</span><div><h3>카페 등록</h3><p><strong>설정 → 카페 목록 관리</strong>에서 운영할 카페를 등록하고 사용할 네이버 계정을 연결합니다.</p></div></article>
+          <article class="step"><span class="step-no">3</span><div><h3>노출 키워드 등록</h3><p>순위 변화를 계속 확인하려면 <strong>설정 → 노출 키워드 관리</strong>에서 카페별 키워드를 등록합니다.</p></div></article>
+        </div>
+      </section>
+
+      <section class="guide-section" id="features">
+        <span class="section-number">04</span><h2>주요 기능 이용</h2>
+        <div class="feature-list">
+          <div class="feature"><strong>전체 카페 현황</strong><span>등록한 카페의 상태와 주요 수치를 한눈에 확인합니다.</span></div>
+          <div class="feature"><strong>카페글 품질 체크</strong><span>카페 주소와 게시판을 선택해 게시글의 검색 노출 상태를 확인합니다.</span></div>
+          <div class="feature"><strong>네이버 검색 순위</strong><span>검색어를 입력해 통합검색과 카페 영역의 노출 위치를 확인합니다.</span></div>
+          <div class="feature"><strong>카페글 노출 순위</strong><span>등록한 키워드를 기준으로 내 게시글의 순위 변화를 이어서 확인합니다.</span></div>
+          <div class="feature"><strong>카페글 수집하기</strong><span>카페와 게시판을 선택해 운영에 필요한 게시글을 수집합니다.</span></div>
+          <div class="feature"><strong>카페 회원 수집하기</strong><span>내 카페의 회원 목록을 수집하고 기간별 운영 자료로 관리합니다.</span></div>
+        </div>
+      </section>
+
+      <section class="guide-section" id="membership">
+        <span class="section-number">05</span><h2>요금제·결제</h2>
+        <div class="steps">
+          <article class="step"><span class="step-no">1</span><div><h3>요금제 확인</h3><p>앱 오른쪽 위 계정 메뉴에서 <strong>요금제 및 결제</strong>를 열어 현재 이용권과 요금제별 제공량을 확인합니다.</p></div></article>
+          <article class="step"><span class="step-no">2</span><div><h3>결제 요청</h3><p>앱에서 결제를 요청하면 별도 결제 페이지가 열립니다. 앱에서 사용하는 계정으로 로그인한 뒤 금액과 결제 방식을 확인하고 진행합니다.</p></div></article>
+          <article class="step"><span class="step-no">3</span><div><h3>이용권 확인</h3><p>결제가 완료되면 앱으로 돌아와 이용권 상태를 확인합니다. 크몽에서 구매한 이용권의 결제와 환불은 해당 크몽 주문에서 처리됩니다.</p></div></article>
+        </div>
+      </section>
+
+      <section class="actions" aria-labelledby="download-title">
+        <h2 id="download-title">Playground 시작하기</h2>
+        <p>Windows 10·11 64비트 환경에서 이용할 수 있습니다.</p>
+        <a class="button" href="/playground/download">Windows용 다운로드</a>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <span>© 2026 ARKEN Co., Ltd.</span>
+      <div class="footer-links"><a href="/playground">Playground 소개</a><a href="/terms">이용약관</a><a href="/privacy">개인정보 처리방침</a><a href="/playground/refund.html">환불규정</a></div>
+    </div>
+  </footer>
+</body>
+</html>
