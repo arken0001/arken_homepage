@@ -155,6 +155,9 @@ test('page scripts reference existing elements and private pages are not adverti
   assert.match(index, /2026-11-30T15:00:00Z/);
   assert.match(index, /launch_discount_status/);
   assert.match(index, /href="\/playground\/guide\.html"/);
+  assert.ok(index.indexOf('id="pricing"') < index.indexOf('id="download"'));
+  assert.ok(index.indexOf('id="download"') < index.indexOf('id="file-info"'));
+  assert.equal([...index.matchAll(/id="download-button"/g)].length, 1);
   assert.match(guide, /Playground 사용법/);
   assert.match(guide, /ID &amp; API 설정/);
   assert.match(sitemap, /playground\/guide\.html/);
