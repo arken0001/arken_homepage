@@ -143,13 +143,16 @@ test('page scripts reference existing elements and private pages are not adverti
     assert.deepEqual([...new Set(references.filter((id) => !ids.has(id)))], []);
     assert.match(html, /noindex/);
   }
-  const [index, guide, sitemap, mainImage, dashboardImage, qualityCheckImage] = await Promise.all([
+  const [index, guide, sitemap, mainImage, dashboardImage, qualityCheckImage, otherCafeImage, naverSearchImage, cafeExposureImage] = await Promise.all([
     readFile(new URL('../public/playground/index.html', import.meta.url), 'utf8'),
     readFile(new URL('../public/playground/guide.html', import.meta.url), 'utf8'),
     readFile(new URL('../public/sitemap.xml', import.meta.url), 'utf8'),
     readFile(new URL('../public/playground/playground-main.png', import.meta.url)),
     readFile(new URL('../public/playground/playground-dashboard.png', import.meta.url)),
     readFile(new URL('../public/playground/playground-quality-check.png', import.meta.url)),
+    readFile(new URL('../public/playground/playground-other-cafe-activity.png', import.meta.url)),
+    readFile(new URL('../public/playground/playground-naver-search-ranking.png', import.meta.url)),
+    readFile(new URL('../public/playground/playground-cafe-exposure-ranking.png', import.meta.url)),
   ]);
   assert.equal(/href=["'][^"']*(checkout|manage)/i.test(index), false);
   assert.equal(/playground\/(checkout|manage)/i.test(sitemap), false);
@@ -164,9 +167,20 @@ test('page scripts reference existing elements and private pages are not adverti
   assert.match(index, /alt="Playground 전체 카페 현황 화면"/);
   assert.match(index, /src="\/playground\/playground-quality-check\.png"/);
   assert.match(index, /alt="Playground 카페글 품질 체크 화면"/);
+  assert.match(index, /src="\/playground\/playground-other-cafe-activity\.png"/);
+  assert.match(index, /alt="Playground 타카페 활동 현황 화면"/);
+  assert.match(index, /src="\/playground\/playground-naver-search-ranking\.png"/);
+  assert.match(index, /alt="Playground 네이버 검색 순위 화면"/);
+  assert.match(index, /src="\/playground\/playground-cafe-exposure-ranking\.png"/);
+  assert.match(index, /alt="Playground 카페글 노출 순위 화면"/);
   assert.equal(mainImage.subarray(1, 4).toString('ascii'), 'PNG');
   assert.equal(dashboardImage.subarray(1, 4).toString('ascii'), 'PNG');
   assert.equal(qualityCheckImage.subarray(1, 4).toString('ascii'), 'PNG');
+  assert.equal(otherCafeImage.subarray(1, 4).toString('ascii'), 'PNG');
+  assert.equal(naverSearchImage.subarray(1, 4).toString('ascii'), 'PNG');
+  assert.equal(cafeExposureImage.subarray(1, 4).toString('ascii'), 'PNG');
+  assert.ok(index.indexOf('playground-other-cafe-activity.png') < index.indexOf('playground-naver-search-ranking.png'));
+  assert.ok(index.indexOf('playground-naver-search-ranking.png') < index.indexOf('playground-cafe-exposure-ranking.png'));
   assert.ok(index.indexOf('id="pricing"') < index.indexOf('id="download"'));
   assert.ok(index.indexOf('id="download"') < index.indexOf('id="file-info"'));
   assert.equal([...index.matchAll(/id="download-button"/g)].length, 1);

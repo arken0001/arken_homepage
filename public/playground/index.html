@@ -153,6 +153,7 @@
     .section-heading { margin: 0 0 8px; text-align: center; font-size: 24px; letter-spacing: -.03em; }
     .section-lead { max-width: 620px; margin: 0 auto 24px; color: var(--muted); text-align: center; font-size: 14px; line-height: 1.7; }
     .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .feature-grid-single { grid-template-columns: 1fr; }
     .feature-card { padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: rgba(12, 20, 34, .78); }
     .feature-card h3 { margin: 0 0 8px; font-size: 16px; }
     .feature-card p { margin: 0; color: #9fb0c2; font-size: 13px; line-height: 1.7; }
@@ -317,11 +318,28 @@
           </figcaption>
           <img src="/playground/playground-quality-check.png" width="1713" height="918" loading="lazy" alt="Playground 카페글 품질 체크 화면">
         </figure>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <h3>검색 순위·노출 키워드</h3>
-            <p>키워드별 네이버 검색 순위와 카페글 노출 변화를 확인하고 관리할 키워드를 등록합니다.</p>
-          </article>
+        <figure class="feature-showcase">
+          <figcaption class="showcase-copy">
+            <h3>타카페 활동 현황</h3>
+            <p>다른 카페의 등급, 회원 수, 게시글 수, 방문자 수와 주요 운영 정보를 검색하고 비교합니다.</p>
+          </figcaption>
+          <img src="/playground/playground-other-cafe-activity.png" width="1711" height="919" loading="lazy" alt="Playground 타카페 활동 현황 화면">
+        </figure>
+        <figure class="feature-showcase">
+          <figcaption class="showcase-copy">
+            <h3>네이버 검색 순위</h3>
+            <p>검색어가 네이버 통합검색과 카페탭에서 몇 번째로 노출되는지 확인하고 검색 결과를 비교합니다.</p>
+          </figcaption>
+          <img src="/playground/playground-naver-search-ranking.png" width="1715" height="917" loading="lazy" alt="Playground 네이버 검색 순위 화면">
+        </figure>
+        <figure class="feature-showcase">
+          <figcaption class="showcase-copy">
+            <h3>카페글 노출 순위</h3>
+            <p>등록한 키워드별 카페글 검색 순위를 날짜별로 확인하고 최근 순위 변화를 그래프로 비교합니다.</p>
+          </figcaption>
+          <img src="/playground/playground-cafe-exposure-ranking.png" width="1715" height="917" loading="lazy" alt="Playground 카페글 노출 순위 화면">
+        </figure>
+        <div class="feature-grid feature-grid-single">
           <article class="feature-card">
             <h3>카페글·회원 수집</h3>
             <p>카페에 올라온 글과 내 카페 회원 목록을 수집해 운영에 필요한 자료로 정리합니다.</p>
