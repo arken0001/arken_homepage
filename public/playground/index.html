@@ -163,8 +163,8 @@
     .plan-name { margin: 0 0 8px; font-size: 16px; font-weight: 800; }
     .plan-price { margin: 3px 0 2px; color: var(--cyan); font-size: 27px; font-weight: 800; letter-spacing: -.02em; }
     .plan-price small { color: var(--muted); font-size: 12px; font-weight: 600; }
-    .plan-regular { margin: 0; color: #8291a5; font-size: 15px; font-weight: 650; text-decoration: line-through; text-decoration-thickness: 1.5px; }
-    .plan-regular small { font-size: 11px; }
+    .plan-regular { margin: 0 0 2px; color: #c6d2e1; font-size: 17px; font-weight: 750; letter-spacing: -.01em; text-decoration: line-through; text-decoration-color: #fb7185; text-decoration-thickness: 2px; }
+    .plan-regular small { color: #a6b5c7; font-size: 12px; font-weight: 650; }
     .plan-discount { margin: 4px 0 0; color: var(--warning); font-size: 12px; font-weight: 800; }
     .plan-desc { margin: 8px 0 14px; color: #9fb0c2; font-size: 12px; line-height: 1.6; min-height: 38px; }
     .plan ul { margin: 0; padding: 0; list-style: none; color: #c9d6e4; font-size: 12.5px; line-height: 2; }
@@ -305,7 +305,7 @@
         <div class="plans">
           <div class="plan" data-plan-code="basic" data-price-krw="49000" data-launch-price-krw="24500">
             <h3 class="plan-name">Basic</h3>
-            <p class="plan-regular">49,000원<small> /월</small></p>
+            <p class="plan-regular">정상가 49,000원<small> /월</small></p>
             <p class="plan-discount">11월 30일까지 50% 할인</p>
             <p class="plan-price"><span class="plan-price-value">24,500원</span><small> /월 (부가세 포함)</small></p>
             <p class="plan-desc">카페 운영에 필요한 핵심 기능을 가볍게 시작하는 요금제</p>
@@ -319,7 +319,7 @@
           </div>
           <div class="plan" data-plan-code="operation" data-price-krw="89000" data-launch-price-krw="44500">
             <h3 class="plan-name">Pro</h3>
-            <p class="plan-regular">89,000원<small> /월</small></p>
+            <p class="plan-regular">정상가 89,000원<small> /월</small></p>
             <p class="plan-discount">11월 30일까지 50% 할인</p>
             <p class="plan-price"><span class="plan-price-value">44,500원</span><small> /월 (부가세 포함)</small></p>
             <p class="plan-desc">정기적인 카페 운영과 반복 분석에 맞춘 요금제</p>
@@ -333,7 +333,7 @@
           </div>
           <div class="plan" data-plan-code="expansion" data-price-krw="149000" data-launch-price-krw="74500">
             <h3 class="plan-name">Premium</h3>
-            <p class="plan-regular">149,000원<small> /월</small></p>
+            <p class="plan-regular">정상가 149,000원<small> /월</small></p>
             <p class="plan-discount">11월 30일까지 50% 할인</p>
             <p class="plan-price"><span class="plan-price-value">74,500원</span><small> /월 (부가세 포함)</small></p>
             <p class="plan-desc">대량 수집과 여러 PC 운영을 위한 상위 요금제</p>
@@ -420,7 +420,7 @@
         const price = card.querySelector('.plan-price-value');
         const discount = card.querySelector('.plan-discount');
         regular.hidden = !showPromotion;
-        regular.textContent = `${won(regularPrice)} /월`;
+        regular.textContent = `정상가 ${won(regularPrice)} /월`;
         price.textContent = won(showPromotion ? launchPrice : regularPrice);
         discount.textContent = status === 'ended'
           ? '판매 개시 할인 종료 · 정상가 적용'

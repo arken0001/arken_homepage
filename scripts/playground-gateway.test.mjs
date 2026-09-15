@@ -355,6 +355,7 @@ test('index static prices lead with the launch discount and strike regular price
   const prices = [...indexHtml.matchAll(/class="plan-price-value">([^<]+)</g)].map((match) => match[1]);
   assert.deepEqual(prices, ['24,500원', '44,500원', '74,500원']);
   assert.equal([...indexHtml.matchAll(/class="plan-regular">/g)].length, 3);
+  assert.equal([...indexHtml.matchAll(/class="plan-regular">정상가/g)].length, 3);
   assert.equal([...indexHtml.matchAll(/11월 30일까지 50% 할인/g)].length >= 3, true);
 });
 
