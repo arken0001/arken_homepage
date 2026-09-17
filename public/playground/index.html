@@ -4,573 +4,642 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Playground | 네이버 카페 운영 도구</title>
-  <meta name="description" content="여러 화면을 오가며 확인하던 네이버 카페 운영 자료를 한곳에서 확인하고 비교하는 Playground를 소개합니다.">
+  <meta name="description" content="내 글이 검색에 나오는지, 내 카페가 어디쯤인지 — 매일 손으로 확인하던 네이버 카페 운영 자료를 Playground 한 화면에서 확인합니다.">
   <link rel="canonical" href="https://arken.co.kr/playground">
   <meta property="og:title" content="Playground | 네이버 카페 운영 도구">
-  <meta property="og:description" content="카페 현황, 게시글 노출, 검색 순위와 회원 활동을 한곳에서 확인하세요.">
+  <meta property="og:description" content="카페글 노출, 검색 순위, 회원 활동, 카페 10만 곳 비교를 한 화면에서. Windows용 Playground.">
   <meta property="og:url" content="https://arken.co.kr/playground">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#050914">
+  <meta name="theme-color" content="#ffffff">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
   <style>
+    /* 밝고 깔끔한 업무용 — 2026-09-17 새로 그림. 바탕 흰색, 강조색은 로고 파랑 하나. */
     :root {
-      color-scheme: dark;
-      --bg: #050914;
-      --panel: #0c1422;
-      --panel-soft: #111d2f;
-      --line: #27364d;
-      --text: #f3f7fb;
-      --muted: #94a3b8;
-      --cyan: #22d3ee;
-      --cyan-strong: #2563eb;
-      --warning: #fbbf24;
-      --violet: #a78bfa;
-      --green: #34d399;
+      color-scheme: light;
+      --bg: #ffffff;
+      --band: #f5f7fa;
+      --ink: #0b1220;
+      --ink-2: #334155;
+      --muted: #5b6b7f;
+      --faint: #8a97a8;
+      --line: #e3e8ef;
+      --line-strong: #cbd5e1;
+      --accent: #2563eb;
+      --accent-ink: #1d4ed8;
+      --accent-soft: #eaf1ff;
+      --accent-line: #bfd3ff;
+      --good: #16a34a;
+      --warn: #b45309;
+      --warn-soft: #fff7e6;
+      --shadow: 0 24px 60px rgba(15, 23, 42, .10), 0 2px 6px rgba(15, 23, 42, .06);
+      --radius: 14px;
+      --wrap: 1120px;
     }
 
     * { box-sizing: border-box; }
-    html, body { min-height: 100%; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at 78% 4%, rgba(37, 99, 235, .16), transparent 28rem),
-        radial-gradient(circle at 12% 28%, rgba(34, 211, 238, .08), transparent 24rem),
-        var(--bg);
-      color: var(--text);
-      font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .2; background-image: linear-gradient(rgba(148, 163, 184, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, .045) 1px, transparent 1px); background-size: 72px 72px; mask-image: linear-gradient(to bottom, black, transparent 72%); }
-
-    a { color: inherit; }
-    .wrap { width: min(100% - 40px, 1180px); margin: 0 auto; }
-    header {
-      height: 72px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      background: rgba(5, 9, 20, .78);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(39, 54, 77, .7);
-    }
-    .header-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      font-weight: 800;
-      letter-spacing: .08em;
-    }
-    .brand-logo { width: 30px; height: 30px; border-radius: 9px; object-fit: cover; display: block; }
-    .brand-name { color: var(--text); font-size: 15px; letter-spacing: -.02em; }
-    .brand-mark {
-      width: 30px;
-      height: 30px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(34, 211, 238, .45);
-      border-radius: 9px;
-      background: rgba(34, 211, 238, .08);
-      color: var(--cyan);
-      font-size: 13px;
-      letter-spacing: 0;
-    }
-    .site-nav { display: flex; align-items: center; gap: 24px; color: #a9b8ca; font-size: 13px; }
-    .site-nav a { text-decoration: none; }
-    .site-nav a:hover { color: var(--text); }
-
-    main { padding: 38px 0 88px; }
-    .hero {
-      min-height: 590px;
-      padding: 64px 70px;
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(320px, .82fr) minmax(420px, 1.18fr);
-      align-items: center;
-      gap: 64px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: #071222 url('/playground/brand/playground-hero-background.png') center / cover no-repeat;
-      text-align: left;
-    }
-    .hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(2, 9, 22, .94) 0%, rgba(2, 9, 22, .66) 52%, rgba(2, 9, 22, .2) 100%); }
-    .hero-copy { position: relative; z-index: 1; width: 100%; max-width: 510px; }
-    .hero-logo { width: 58px; height: 58px; margin: 0 0 22px; display: block; border-radius: 15px; object-fit: cover; box-shadow: 0 12px 30px rgba(37, 99, 235, .25); }
-    .hero-copy h1 { max-width: 470px; margin-top: 18px; font-size: clamp(36px, 5vw, 62px); }
-    .hero-copy .lead { margin: 0; max-width: 480px; }
-    .hero-copy .hero-actions { justify-content: flex-start; }
-    .hero-art { position: relative; z-index: 1; overflow: hidden; border: 1px solid rgba(148, 163, 184, .35); border-radius: 16px; background: #020711; box-shadow: 0 30px 90px rgba(0, 0, 0, .45); transform: perspective(1200px) rotateY(-4deg) rotateX(1deg); }
-    .hero-art img { width: 100%; height: auto; display: block; }
-    .download-card {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--panel);
-      overflow: hidden;
-    }
-    .card-main { padding: 54px 56px 42px; text-align: center; }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 10px;
-      border: 1px solid rgba(34, 211, 238, .28);
-      border-radius: 999px;
-      background: rgba(34, 211, 238, .08);
-      color: #9aebf5;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .eyebrow::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 12px rgba(34, 211, 238, .9);
-    }
-    h1 { margin: 20px 0 10px; font-size: clamp(32px, 6vw, 48px); line-height: 1.12; letter-spacing: -.04em; }
-    .lead { margin: 0 auto; max-width: 550px; color: #b4c1d1; font-size: 16px; line-height: 1.75; }
-    .download-button {
-      width: min(100%, 340px);
-      min-height: 54px;
-      margin: 30px auto 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: 1px solid #22d3ee;
-      border-radius: 10px;
-      background: var(--cyan-strong);
-      color: white;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
       font-size: 16px;
-      font-weight: 750;
-      text-decoration: none;
-      transition: background-color .16s ease, filter .16s ease;
-    }
-    .download-button:hover { background: #1d4ed8; filter: brightness(1.08); }
-    .download-button:focus-visible { outline: 3px solid rgba(34, 211, 238, .35); outline-offset: 3px; }
-    .download-icon { font-size: 20px; line-height: 1; }
-    .file-info { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
-    .hero-actions { margin-top: 30px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
-    .hero-action { min-height: 44px; padding: 0 18px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--cyan); border-radius: 9px; background: var(--cyan-strong); color: white; font-size: 14px; font-weight: 750; text-decoration: none; transition: background-color .16s ease; }
-    .hero-action:hover { background: #1d4ed8; }
-    .hero-action.secondary { border-color: var(--line); background: transparent; color: #c5d2df; }
-    .hero-action.secondary:hover { background: var(--panel-soft); }
-
-    .details {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--line);
-      background: rgba(4, 9, 17, .45);
-    }
-    .detail { padding: 20px 18px; text-align: center; }
-    .detail + .detail { border-left: 1px solid var(--line); }
-    .detail-label { display: block; color: #708198; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
-    .detail-value { display: block; margin-top: 7px; color: #dbe7f3; font-size: 14px; font-weight: 650; }
-
-    .trust-strip { margin: 22px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid rgba(39, 54, 77, .8); border-radius: 16px; background: rgba(12, 20, 34, .72); }
-    .trust-item { padding: 20px 18px; text-align: center; }
-    .trust-item + .trust-item { border-left: 1px solid rgba(39, 54, 77, .8); }
-    .trust-item strong { display: block; color: #f8fbff; font-size: 22px; letter-spacing: -.04em; }
-    .trust-item span { display: block; margin-top: 5px; color: #8192a8; font-size: 11px; }
-    .content-section { margin-top: 118px; scroll-margin-top: 96px; }
-    .section-heading { margin: 0 0 10px; text-align: center; font-size: clamp(26px, 3vw, 34px); letter-spacing: -.04em; }
-    .section-lead { max-width: 620px; margin: 0 auto 24px; color: var(--muted); text-align: center; font-size: 14px; line-height: 1.7; }
-    .content-section[id] .section-heading { text-align: left; }
-    .content-section[id] .section-lead { margin-left: 0; text-align: left; }
-    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-    .feature-grid-single { grid-template-columns: 1fr; }
-    .feature-card { padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: rgba(12, 20, 34, .78); }
-    .feature-card h3 { margin: 0 0 8px; font-size: 16px; }
-    .feature-card p { margin: 0; color: #9fb0c2; font-size: 13px; line-height: 1.7; }
-    .feature-list { margin-top: 30px; padding: 24px; border: 1px solid rgba(39, 54, 77, .82); border-radius: 24px; background: rgba(7, 13, 25, .72); box-shadow: 0 26px 90px rgba(0, 0, 0, .2); }
-    .feature-list::before { content: "PLAYGROUND MODULES  /  10 WORKFLOWS"; display: block; margin: 2px 4px 22px; color: #71839a; font-size: 11px; font-weight: 800; letter-spacing: .14em; }
-    .feature-showcase { margin: 0 0 20px; overflow: hidden; display: grid; grid-template-columns: minmax(270px, .68fr) minmax(0, 1.32fr); align-items: stretch; min-height: 292px; border: 1px solid rgba(39, 54, 77, .9); border-radius: 18px; background: linear-gradient(110deg, rgba(12, 20, 34, .98), rgba(7, 14, 26, .84)); }
-    .feature-showcase:nth-of-type(even) { grid-template-columns: minmax(0, 1.32fr) minmax(270px, .68fr); }
-    .feature-showcase:nth-of-type(even) .showcase-copy { order: 2; }
-    .feature-showcase:nth-of-type(even) img { order: 1; border-left: 0; border-right: 1px solid var(--line); }
-    .showcase-copy { padding: 34px 30px; display: flex; flex-direction: column; justify-content: center; }
-    .showcase-copy::before { content: "01"; width: fit-content; margin-bottom: 42px; color: var(--cyan); font-size: 12px; font-weight: 850; letter-spacing: .14em; }
-    .feature-showcase:nth-of-type(2) .showcase-copy::before { content: "02"; color: var(--violet); }
-    .feature-showcase:nth-of-type(3) .showcase-copy::before { content: "03"; color: var(--green); }
-    .feature-showcase:nth-of-type(4) .showcase-copy::before { content: "04"; color: #fbbf24; }
-    .feature-showcase:nth-of-type(5) .showcase-copy::before { content: "05"; color: #fb7185; }
-    .feature-showcase:nth-of-type(6) .showcase-copy::before { content: "06"; color: var(--cyan); }
-    .feature-showcase:nth-of-type(7) .showcase-copy::before { content: "07"; color: var(--violet); }
-    .feature-showcase:nth-of-type(8) .showcase-copy::before { content: "08"; color: var(--green); }
-    .feature-showcase:nth-of-type(9) .showcase-copy::before { content: "09"; color: #fbbf24; }
-    .feature-showcase:nth-of-type(10) .showcase-copy::before { content: "10"; color: #fb7185; }
-    .showcase-copy h3 { margin: 0 0 7px; font-size: 18px; }
-    .showcase-copy p { margin: 0; color: #9fb0c2; font-size: 13px; line-height: 1.7; }
-    .feature-showcase img { width: 100%; height: 100%; min-height: 292px; object-fit: cover; display: block; border-left: 1px solid var(--line); background: #070d17; }
-    .main-screen-showcase { margin-top: 24px; grid-template-columns: minmax(260px, .5fr) minmax(0, 1.5fr); min-height: 350px; }
-    .main-screen-showcase .showcase-copy { padding: 34px 30px; }
-    .main-screen-showcase .showcase-copy::before { content: "YOUR CONTROL ROOM"; margin-bottom: 52px; color: #7dd3fc; }
-    .main-screen-showcase img { min-height: 350px; }
-    .intro-panel { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr); gap: 48px; padding: 44px; border: 1px solid rgba(39, 54, 77, .9); border-radius: 22px; background: linear-gradient(135deg, rgba(12, 20, 34, .92), rgba(7, 14, 26, .76)); box-shadow: 0 20px 70px rgba(0, 0, 0, .16); }
-    .intro-copy { max-width: 680px; margin: 0; color: #b8c5d4; font-size: 15px; line-height: 1.85; text-align: left; }
-    .intro-copy::before { content: "ONE VIEW. BETTER DECISIONS."; display: block; margin-bottom: 22px; color: var(--cyan); font-size: 11px; font-weight: 800; letter-spacing: .14em; }
-    .value-grid { margin-top: 0; display: grid; grid-template-columns: 1fr; gap: 12px; }
-    .value-item { position: relative; padding: 18px 18px 18px 72px; border: 1px solid rgba(39, 54, 77, .7); border-radius: 12px; background: rgba(4, 9, 17, .62); overflow: hidden; }
-    .value-item::after { content: ""; position: absolute; inset: auto 0 0; height: 2px; background: var(--value-color); opacity: .8; }
-    .value-icon { position: absolute; top: 18px; left: 18px; width: 38px; height: 38px; margin-bottom: 0; display: grid; place-items: center; border: 1px solid color-mix(in srgb, var(--value-color) 55%, transparent); border-radius: 11px; background: color-mix(in srgb, var(--value-color) 16%, transparent); color: var(--value-color); font-size: 21px; font-weight: 800; line-height: 1; }
-    .value-item strong { display: block; margin-bottom: 7px; color: #edf7ff; font-size: 14px; }
-    .value-item span { color: #8fa0b4; font-size: 12px; line-height: 1.65; }
-    .value-item:nth-child(1) { --value-color: #38bdf8; }
-    .value-item:nth-child(2) { --value-color: #a78bfa; }
-    .value-item:nth-child(3) { --value-color: #34d399; }
-    .workflow-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; counter-reset: workflow; }
-    .workflow-grid .value-item { counter-increment: workflow; padding: 54px 18px 18px; }
-    .workflow-grid .value-item::before { content: "0" counter(workflow); position: absolute; top: 18px; left: 18px; color: #64748b; font-size: 12px; font-weight: 800; letter-spacing: .1em; }
-    .guide-link { margin-top: 24px; padding: 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border: 1px solid rgba(34, 211, 238, .25); border-radius: 16px; background: linear-gradient(100deg, rgba(34, 211, 238, .1), rgba(37, 99, 235, .06)); }
-    .guide-link strong { display: block; margin-bottom: 5px; }
-    .guide-link span { color: #9fb0c2; font-size: 13px; line-height: 1.6; }
-    .guide-link a { flex: 0 0 auto; padding: 10px 14px; border: 1px solid rgba(34, 211, 238, .45); border-radius: 9px; color: #a5f3fc; font-size: 13px; font-weight: 750; text-decoration: none; }
-
-    .pricing { margin-top: 118px; padding: 48px; scroll-margin-top: 96px; border: 1px solid rgba(39, 54, 77, .86); border-radius: 24px; background: linear-gradient(135deg, rgba(12, 20, 34, .86), rgba(5, 9, 20, .65)); }
-    .pricing-title { margin: 0 0 6px; font-size: 34px; letter-spacing: -.04em; text-align: left; }
-    .pricing-sub { margin: 0 0 28px; color: var(--muted); font-size: 13px; text-align: left; }
-    .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: stretch; }
-    .plan {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: linear-gradient(150deg, rgba(12, 20, 34, .98), rgba(7, 14, 26, .98));
-      padding: 28px 24px;
-      display: flex;
-      flex-direction: column;
-    }
-    .plan-name { margin: 0 0 8px; font-size: 16px; font-weight: 800; }
-    .plan-featured { border-color: rgba(34, 211, 238, .75); box-shadow: 0 18px 50px rgba(34, 211, 238, .1); transform: translateY(-8px); }
-    .plan-badge { margin: -8px 0 12px; color: #a5f3fc; font-size: 11px; font-weight: 800; }
-    .plan-price { margin: 3px 0 2px; color: var(--cyan); font-size: 27px; font-weight: 800; letter-spacing: -.02em; }
-    .plan-price small { color: var(--muted); font-size: 12px; font-weight: 600; }
-    .plan-regular { margin: 0 0 2px; color: #c6d2e1; font-size: 17px; font-weight: 750; letter-spacing: -.01em; text-decoration: line-through; text-decoration-color: #fb7185; text-decoration-thickness: 2px; }
-    .plan-regular small { color: #a6b5c7; font-size: 12px; font-weight: 650; }
-    .plan-discount { margin: 4px 0 0; color: var(--warning); font-size: 12px; font-weight: 800; }
-    .plan-desc { margin: 8px 0 14px; color: #9fb0c2; font-size: 12px; line-height: 1.6; min-height: 38px; }
-    .plan ul { margin: 0; padding: 0; list-style: none; color: #c9d6e4; font-size: 12.5px; line-height: 2; }
-    .plan li::before { content: "✓"; margin-right: 8px; color: var(--cyan); font-weight: 800; }
-    .plan-note { margin-top: 16px; color: #708198; font-size: 11px; line-height: 1.6; }
-    @media (max-width: 720px) { .plans { grid-template-columns: 1fr; } }
-
-    .download-section { margin-top: 118px; scroll-margin-top: 96px; }
-    .download-section .card-main { padding-top: 42px; }
-    .download-title { margin: 0; font-size: 26px; letter-spacing: -.03em; }
-    .download-copy { margin: 10px auto 0; max-width: 550px; color: #aebccd; font-size: 14px; line-height: 1.7; }
-
-    .notice {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border: 1px solid rgba(251, 191, 36, .24);
-      border-radius: 10px;
-      background: rgba(251, 191, 36, .055);
-      color: #c7b98b;
-      font-size: 12px;
       line-height: 1.65;
+      font-weight: 500;
+      -webkit-font-smoothing: antialiased;
+      word-break: keep-all;
     }
-    .notice strong { color: #f4d77b; }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; display: block; }
+    h1, h2, h3 { margin: 0; letter-spacing: -.03em; line-height: 1.2; text-wrap: balance; }
+    p { margin: 0; }
+    .wrap { width: min(100% - 40px, var(--wrap)); margin: 0 auto; }
+    .num { font-variant-numeric: tabular-nums; }
 
-    .help {
-      margin-top: 30px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
+    /* 머리 */
+    .top {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(255, 255, 255, .86);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
     }
-    .help a { color: #93e8f3; text-underline-offset: 3px; }
-    footer {
-      padding: 24px 0 34px;
-      border-top: 1px solid rgba(39, 54, 77, .55);
-      color: #697a90;
-      font-size: 12px;
+    .top-row { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; letter-spacing: -.02em; font-size: 16px; }
+    .brand img { width: 28px; height: 28px; border-radius: 8px; }
+    .brand small { font-weight: 600; color: var(--faint); font-size: 12px; margin-left: 2px; }
+    .nav { display: flex; align-items: center; gap: 26px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+    .nav a { text-decoration: none; }
+    .nav a:hover { color: var(--accent); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 42px; padding: 0 18px; border-radius: 10px;
+      font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap;
+      border: 1px solid transparent; transition: background-color .15s ease, border-color .15s ease, color .15s ease;
     }
-    .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .footer-links { display: flex; gap: 16px; }
-    .footer-links a { text-decoration: none; }
-    .footer-links a:hover { color: #b6c6d7; }
-    .biz-info { margin: 14px 0 0; color: #566579; font-size: 11px; line-height: 1.8; }
-    .biz-info a { color: #6d8095; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-ink); }
+    .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+    .btn-ghost:hover { background: var(--band); }
+    .btn:focus-visible { outline: 3px solid var(--accent-line); outline-offset: 2px; }
+    .btn-lg { min-height: 52px; padding: 0 24px; font-size: 16px; }
 
+    /* 첫 화면 */
+    .hero { padding-block: 72px 40px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-size: 13px; font-weight: 700; letter-spacing: .01em; }
+    .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); }
+    .hero h1 { margin-top: 16px; font-size: clamp(34px, 4.6vw, 54px); font-weight: 800; }
+    .hero .lead { margin-top: 18px; max-width: 34em; color: var(--muted); font-size: 17px; line-height: 1.7; }
+    .hero .actions { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .hero .fine { margin-top: 14px; color: var(--faint); font-size: 13px; }
+    .hero .fine b { color: var(--ink-2); font-weight: 600; }
+
+    /* 앱 화면 틀 — 창 모양. 캡처가 어두운 화면이라 밝은 바탕 위에서 제품 사진처럼 보인다 */
+    .shot { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); background: #0f172a; box-shadow: var(--shadow); overflow: hidden; }
+    .shot-bar { height: 30px; display: flex; align-items: center; gap: 6px; padding: 0 12px; background: #f8fafc; border-bottom: 1px solid var(--line); }
+    .shot-bar i { width: 10px; height: 10px; border-radius: 50%; background: #d7dee8; }
+    .shot-bar span { margin-left: 8px; color: var(--faint); font-size: 11px; font-weight: 600; }
+    .shot img { width: 100%; }
+
+    /* 숫자 띠 */
+    .facts { margin-top: 40px; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .fact { padding: 22px 8px 22px 0; }
+    .fact + .fact { padding-left: 24px; border-left: 1px solid var(--line); }
+    .fact strong { display: block; font-size: 24px; font-weight: 800; letter-spacing: -.03em; }
+    .fact span { display: block; margin-top: 3px; color: var(--muted); font-size: 13px; }
+
+    /* 구역 공통 */
+    section.block { padding-block: 96px; scroll-margin-top: 80px; }
+    section.band { background: var(--band); }
+    .sec-head { max-width: 40em; }
+    .sec-head h2 { margin-top: 12px; font-size: clamp(26px, 3.2vw, 36px); font-weight: 800; }
+    .sec-head p { margin-top: 14px; color: var(--muted); font-size: 16px; }
+
+    /* 왜 필요한가 */
+    .pains { margin-top: 40px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .pain { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: center; padding: 20px 22px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); }
+    .pain .from { color: var(--muted); font-size: 14px; }
+    .pain .arrow { color: var(--accent); font-weight: 800; }
+    .pain .to { font-size: 14px; font-weight: 700; }
+    .pain .to a { text-decoration: none; color: var(--accent); }
+    .pain .to a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .who { margin-top: 56px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .who div { padding-top: 16px; border-top: 2px solid var(--ink); }
+    .who h3 { font-size: 16px; font-weight: 800; }
+    .who p { margin-top: 8px; color: var(--muted); font-size: 14px; }
+    .who small { display: block; margin-top: 10px; color: var(--accent); font-size: 13px; font-weight: 700; }
+
+    /* 기능 */
+    .features { margin-top: 56px; display: grid; gap: 64px; }
+    .feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: center; }
+    /* 짝수 줄은 그림이 왼쪽 — 칸 너비도 같이 뒤집어야 그림 크기가 줄마다 같다 */
+    .feature:nth-child(even) { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .feature:nth-child(even) .feature-copy { order: 2; }
+    .feature h3 { display: flex; align-items: center; gap: 8px; font-size: 22px; font-weight: 800; }
+    .hot { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: .02em; vertical-align: middle; }
+    .feature .pain-line { margin-top: 12px; padding-left: 12px; border-left: 3px solid var(--line-strong); color: var(--muted); font-size: 14px; }
+    .feature .what { margin-top: 14px; max-width: 32em; font-size: 15px; color: var(--ink-2); }
+    .feature .note { margin-top: 12px; color: var(--faint); font-size: 13px; }
+    .feature .note::before { content: "※ "; }
+    .promise { margin-top: 64px; padding: 24px 28px; border: 1px solid var(--accent-line); border-radius: var(--radius); background: var(--accent-soft); display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .promise p { max-width: 44em; font-size: 15px; color: var(--ink-2); }
+    .promise p b { color: var(--ink); }
+    .promise .more { color: var(--muted); font-size: 13px; }
+
+    /* 발굴 화면 그림이 없을 때 대신 보여 주는 예시 표 */
+    .kw-demo { padding: 22px; background: #fff; }
+    .kw-demo table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .kw-demo th { text-align: left; color: var(--faint); font-weight: 600; font-size: 12px; padding: 0 8px 10px; border-bottom: 1px solid var(--line); }
+    .kw-demo td { padding: 10px 8px; border-bottom: 1px solid var(--line); }
+    .kw-demo .ok { color: var(--good); font-weight: 700; }
+    .kw-demo .cap { margin-top: 10px; color: var(--faint); font-size: 11px; }
+
+    /* 자료 */
+    .data-grid { margin-top: 48px; display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; align-items: start; }
+    .stats { display: grid; gap: 8px; }
+    .stat { padding: 20px 0; border-top: 1px solid var(--line-strong); }
+    .stat strong { display: block; font-size: 30px; font-weight: 800; letter-spacing: -.03em; }
+    .stat span { display: block; margin-top: 4px; color: var(--muted); font-size: 14px; }
+    .data-list { margin: 20px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; color: var(--ink-2); font-size: 14px; }
+    .data-list li { padding-left: 18px; position: relative; }
+    .data-list li::before { content: ""; position: absolute; left: 0; top: .6em; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); }
+
+    /* 요금제 */
+    .plans { margin-top: 40px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+    .plan { display: flex; flex-direction: column; padding: 28px 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+    .plan-featured { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .plan-name { font-size: 18px; font-weight: 800; }
+    .plan-badge { margin-top: 6px; color: var(--accent); font-size: 12px; font-weight: 800; }
+    .plan-regular { margin-top: 18px; color: var(--faint); font-size: 14px; text-decoration: line-through; }
+    .plan-price { margin-top: 2px; font-size: 32px; font-weight: 800; letter-spacing: -.03em; }
+    .plan-price small { color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: 0; }
+    .plan-discount { margin-top: 4px; color: var(--warn); font-size: 13px; font-weight: 700; }
+    .plan-desc { margin-top: 14px; color: var(--muted); font-size: 14px; min-height: 3.3em; }
+    .plan ul { margin: 18px 0 0; padding: 18px 0 0; border-top: 1px solid var(--line); list-style: none; font-size: 14px; color: var(--ink-2); display: grid; gap: 8px; }
+    .plan li::before { content: "✓"; margin-right: 8px; color: var(--accent); font-weight: 800; }
+    .plan ul { margin-bottom: 24px; }
+    .plan .btn { margin-top: auto; }
+    .limits { margin-top: 40px; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+    .limits table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; }
+    .limits th, .limits td { padding: 12px 16px; text-align: right; border-bottom: 1px solid var(--line); }
+    .limits th:first-child, .limits td:first-child { text-align: left; color: var(--ink-2); font-weight: 600; }
+    .limits thead th { background: var(--band); color: var(--muted); font-weight: 700; font-size: 13px; }
+    .limits thead th.featured { color: var(--accent); }
+    .limits tbody tr:last-child td { border-bottom: 0; }
+    .plan-note { margin-top: 20px; color: var(--muted); font-size: 13px; max-width: 70em; }
+    .plan-note a { color: var(--accent); text-underline-offset: 3px; }
+
+    /* 시작하기 */
+    .steps { margin: 40px 0 0; padding: 0; list-style: none; counter-reset: step; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .steps li { counter-increment: step; padding: 20px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); }
+    .steps li::before { content: counter(step); display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--ink); color: #fff; font-size: 13px; font-weight: 800; }
+    .steps strong { display: block; margin-top: 14px; font-size: 15px; font-weight: 800; }
+    .steps span { display: block; margin-top: 6px; color: var(--muted); font-size: 13px; }
+    .steps-cta { margin-top: 24px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+
+    /* 자주 묻는 질문 */
+    .faq { margin-top: 32px; border-top: 1px solid var(--line); }
+    .faq details { border-bottom: 1px solid var(--line); }
+    .faq summary { list-style: none; cursor: pointer; padding: 20px 40px 20px 0; position: relative; font-size: 16px; font-weight: 700; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; position: absolute; right: 4px; top: 16px; color: var(--faint); font-size: 22px; font-weight: 500; }
+    .faq details[open] summary::after { content: "−"; }
+    .faq .a { padding: 0 0 20px; max-width: 44em; color: var(--muted); font-size: 15px; }
+
+    /* 다운로드 */
+    .download { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px; align-items: center; padding: 44px 48px; border: 1px solid var(--line); border-radius: 20px; background: var(--band); }
+    .download h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; }
+    .download p { margin-top: 12px; color: var(--muted); font-size: 15px; }
+    .download .cta { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+    .download .file-info { color: var(--faint); font-size: 13px; }
+    .download-details { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 24px; font-size: 13px; }
+    .download-details div { padding-top: 10px; border-top: 1px solid var(--line-strong); }
+    .download-details b { display: block; color: var(--faint); font-weight: 600; font-size: 12px; }
+    .notice { margin-top: 18px; padding: 14px 18px; border: 1px solid #f3dfb0; border-radius: 10px; background: var(--warn-soft); color: var(--warn); font-size: 13px; }
+    .help { margin-top: 28px; color: var(--muted); font-size: 14px; }
+    .help a { color: var(--accent); text-underline-offset: 3px; }
+
+    /* 바닥 */
+    footer { margin-top: 40px; padding-block: 28px 40px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+    .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .footer-links { display: flex; gap: 18px; }
+    .footer-links a { text-decoration: none; color: var(--muted); }
+    .footer-links a:hover { color: var(--ink); }
+    .biz { margin-top: 14px; font-size: 12px; line-height: 1.8; }
+    .biz a { color: var(--muted); }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; gap: 36px; padding-top: 48px; }
+      .feature, .feature:nth-child(even) { grid-template-columns: 1fr; gap: 20px; }
+      .feature:nth-child(even) .feature-copy { order: 0; }
+      .data-grid, .download { grid-template-columns: 1fr; }
+      .plans, .who { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .facts { grid-template-columns: repeat(2, 1fr); }
+      .fact:nth-child(3) { padding-left: 0; border-left: 0; }
+      .fact:nth-child(n+3) { border-top: 1px solid var(--line); }
+    }
     @media (max-width: 620px) {
-      header { height: auto; padding: 14px 0; }
-      .header-row { align-items: flex-start; flex-direction: column; }
-      .site-nav { width: 100%; gap: 14px; overflow-x: auto; white-space: nowrap; }
-      main { padding-top: 42px; }
-      .hero { min-height: 520px; padding: 40px 22px; grid-template-columns: 1fr; gap: 28px; text-align: center; }
-      .hero::before { background: rgba(2, 9, 22, .68); }
-      .hero-copy { flex-basis: auto; max-width: none; }
-      .hero-copy h1 { margin-left: auto; margin-right: auto; }
-      .hero-copy .lead { margin-left: auto; margin-right: auto; }
-      .hero-copy .hero-actions { justify-content: center; }
-      .hero-logo { width: 56px; height: 56px; margin-left: auto; margin-right: auto; }
-      .hero-art { max-width: 640px; width: 100%; transform: none; }
-      .card-main { padding: 38px 22px 30px; }
-      .lead { font-size: 14px; }
-      .details { grid-template-columns: 1fr; }
-      .detail { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; text-align: left; }
-      .detail + .detail { border-left: 0; border-top: 1px solid var(--line); }
-      .detail-value { margin-top: 0; }
-      .feature-grid { grid-template-columns: 1fr; }
-      .feature-showcase { display: block; }
-      .feature-showcase img { height: auto; min-height: 0; border-top: 1px solid var(--line); border-left: 0; }
-      .feature-list { padding: 14px; border-radius: 18px; }
-      .feature-showcase:nth-of-type(even) { display: flex; flex-direction: column; }
-      .feature-showcase:nth-of-type(even) .showcase-copy, .feature-showcase:nth-of-type(even) img { order: initial; }
-      .feature-showcase:nth-of-type(even) img { border-right: 0; }
-      .intro-panel { grid-template-columns: 1fr; gap: 28px; padding: 24px 18px; }
-      .pricing { padding: 30px 18px; border-radius: 18px; }
-      .value-grid { grid-template-columns: 1fr; }
-      .workflow-grid { grid-template-columns: 1fr; }
-      .guide-link { align-items: flex-start; flex-direction: column; }
-      .footer-row { align-items: flex-start; flex-direction: column; }
+      section.block { padding-block: 64px; }
+      .nav { display: none; }
+      .pains { grid-template-columns: 1fr; }
+      .pain { grid-template-columns: 1fr; gap: 6px; }
+      .pain .arrow { display: none; }
+      .steps { grid-template-columns: 1fr; }
+      .download { padding: 28px 22px; }
+      .download-details { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap header-row">
+  <header class="top">
+    <div class="wrap top-row">
       <a class="brand" href="/" aria-label="ARKEN 홈페이지로 이동">
-        <img class="brand-logo" src="/playground/brand/playground-logo-horizontal.png" alt="">
-        <span class="brand-name">Playground</span>
+        <img src="/playground/brand/playground-logo-horizontal.png" alt="">
+        Playground <small>by ARKEN</small>
       </a>
-      <nav class="site-nav" aria-label="Playground 메뉴">
-        <a href="#about">소개</a>
+      <nav class="nav" aria-label="Playground 메뉴">
+        <a href="#about">왜 필요한가</a>
         <a href="#features">주요 기능</a>
-        <a href="/playground/guide.html">사용법</a>
         <a href="#pricing">요금제</a>
-        <a href="#download">다운로드</a>
+        <a href="#start">시작하기</a>
+        <a href="/playground/guide.html">사용법</a>
       </nav>
+      <a class="btn btn-primary" href="#download">Windows용 다운로드</a>
     </div>
   </header>
 
   <main>
-    <div class="wrap">
-      <section class="hero" aria-labelledby="page-title">
-        <div class="hero-copy">
-          <img class="hero-logo" src="/playground/brand/playground-logo-horizontal.png" alt="Playground">
-          <span class="eyebrow">ARKEN PLAYGROUND</span>
-          <h1 id="page-title">카페 운영, 이제<br>한 화면에서 판단하세요</h1>
-          <p class="lead">현황 비교부터 게시글 품질, 검색 순위, 회원 활동까지<br>반복되는 운영 업무를 한곳에서 확인합니다.</p>
-          <div class="hero-actions">
-            <a class="hero-action" href="#download">Playground 시작하기</a>
-            <a class="hero-action secondary" href="#features">주요 기능 보기</a>
-          </div>
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <span class="eyebrow">네이버 카페 운영 도구 · Windows</span>
+        <h1 id="page-title">카페 운영, 이제<br>한 화면에서 판단하세요</h1>
+        <p class="lead">내 글이 검색에 나오는지, 내 카페가 전체에서 어디쯤인지 — 매일 손으로 확인하던 일을 Playground가 대신합니다.</p>
+        <div class="actions">
+          <a class="btn btn-primary btn-lg" href="#download">Windows용 다운로드</a>
+          <a class="btn btn-ghost btn-lg" href="#pricing">요금제 보기</a>
         </div>
-        <div class="hero-art" aria-label="Playground 카페 운영 대시보드 미리보기">
-          <img src="/playground/playground-main.png?v=20260916" width="1729" height="910" fetchpriority="high" alt="Playground 카페 운영 대시보드">
-        </div>
-      </section>
-
-      <div class="trust-strip" aria-label="Playground 주요 범위">
-        <div class="trust-item"><strong>10만+</strong><span>카페 검색 범위</span></div>
-        <div class="trust-item"><strong>매일</strong><span>검색 순위 기록</span></div>
-        <div class="trust-item"><strong>10개</strong><span>카페 운영 기능</span></div>
-        <div class="trust-item"><strong>Windows</strong><span>데스크톱 운영 도구</span></div>
+        <p class="fine"><b>Windows 10·11</b> · 설치 후 자동 업데이트</p>
       </div>
+      <figure class="shot">
+        <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Playground</span></div>
+        <img src="/playground/playground-main.png?v=20260917" width="1920" height="1080" fetchpriority="high" alt="Playground 메인 화면 — 등록한 카페의 상태를 한 화면에 보여 준다">
+      </figure>
+    </section>
 
-      <section class="content-section" id="about" aria-labelledby="about-title">
-        <h2 class="section-heading" id="about-title">Playground 소개</h2>
-        <p class="section-lead">매일 따로 확인하던 운영 자료를 모아, 지금 먼저 봐야 할 카페와 게시글을 찾습니다.</p>
-        <div class="intro-panel">
-          <p class="intro-copy">Playground는 감으로 카페를 관리하지 않도록 운영 데이터를 한곳에 모아 보여줍니다. 여러 카페의 상태를 비교하고, 게시글 노출과 검색 순위를 기록하며, 필요한 글과 회원 자료를 같은 앱에서 확인할 수 있습니다.</p>
-          <div class="value-grid">
-            <div class="value-item"><div class="value-icon" aria-hidden="true">◎</div><strong>카페 상태 비교</strong><span>여러 카페의 활동 수치와 변화를 한 화면에서 확인합니다.</span></div>
-            <div class="value-item"><div class="value-icon" aria-hidden="true">↗</div><strong>노출 변화 기록</strong><span>게시글 품질과 검색 순위를 기준으로 먼저 볼 대상을 찾습니다.</span></div>
-            <div class="value-item"><div class="value-icon" aria-hidden="true">▦</div><strong>운영 자료 정리</strong><span>게시글과 회원 자료를 수집해 필요한 업무에 활용합니다.</span></div>
-          </div>
-        </div>
-        <figure class="feature-showcase main-screen-showcase">
-          <figcaption class="showcase-copy">
-            <h3>Playground 메인 화면</h3>
-            <p>로그인 후 왼쪽 메뉴에서 필요한 카페 운영 기능을 선택해 바로 시작할 수 있습니다.</p>
-          </figcaption>
-          <img src="/playground/playground-main.png?v=20260916" width="1729" height="910" loading="lazy" alt="Playground 메인 화면">
-        </figure>
-      </section>
+    <div class="wrap">
+      <div class="facts" aria-label="Playground 한눈에">
+        <div class="fact"><strong class="num">10만 곳+</strong><span>비교할 수 있는 네이버 카페</span></div>
+        <div class="fact"><strong class="num">10가지</strong><span>카페 운영 기능</span></div>
+        <div class="fact"><strong>3단계</strong><span>요금제 Basic · Pro · Premium</span></div>
+        <div class="fact"><strong>Windows</strong><span>10·11 · 64비트</span></div>
+      </div>
+    </div>
 
-      <section class="content-section" aria-labelledby="flow-title">
-        <h2 class="section-heading" id="flow-title">카페 운영 흐름을 한곳에서</h2>
-        <p class="section-lead">확인할 곳을 찾고, 변화를 비교하고, 필요한 자료를 바로 정리합니다.</p>
-        <div class="workflow-grid">
-          <div class="value-item"><strong>1. 카페 등록</strong><span>관리할 카페와 확인할 게시판을 등록합니다.</span></div>
-          <div class="value-item"><strong>2. 현황 확인</strong><span>활동 수치와 등급 변화를 비교합니다.</span></div>
-          <div class="value-item"><strong>3. 노출 점검</strong><span>게시글 품질과 검색 순위 변화를 확인합니다.</span></div>
+    <section class="block band" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">왜 필요한가</span>
+          <h2 id="about-title">매일 이런 일을 손으로 하고 계셨다면</h2>
+          <p>네이버는 글이 검색에서 빠져도, 등급이 왜 안 오르는지도 알려 주지 않습니다. 그래서 운영자는 매일 같은 확인을 반복합니다. Playground는 그 확인을 대신하고, 결과를 숫자로 남깁니다.</p>
         </div>
-      </section>
-
-      <section class="content-section" id="features" aria-labelledby="features-title">
-        <h2 class="section-heading" id="features-title">주요 기능</h2>
-        <p class="section-lead">카페 운영에 필요한 기능을 네 가지 업무로 나누어 확인할 수 있습니다.</p>
-        <div class="feature-list">
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>카페 상태 비교</h3>
-            <p>운영 중인 여러 카페의 활동 수치와 등급 변화를 한눈에 파악할 수 있습니다.</p>
-          </figcaption>
-          <img src="/playground/playground-dashboard.png" width="1711" height="919" loading="lazy" alt="Playground 전체 카페 현황 화면">
-        </figure>
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>카페글 품질 체크</h3>
-            <p>운영 중인 카페의 게시글 노출 상태를 빠르게 점검하고, 계정·게시판·카페 단위의 전체 노출 현황을 파악할 수 있습니다.</p>
-          </figcaption>
-          <img src="/playground/playground-quality-check.png" width="1713" height="918" loading="lazy" alt="Playground 카페글 품질 체크 화면">
-        </figure>
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>타 카페 활동 현황</h3>
-            <p>활동 중인 약 10만 개 이상의 카페를 검색어·카테고리·등급·주제·지역별로 검색하고, 점수·게시글 수·회원 수 등 원하는 기준으로 정렬해 비교할 수 있습니다. 카페 상세 정보와 누적 활동 정보, 운영자 정보도 확인할 수 있습니다.</p>
-          </figcaption>
-          <img src="/playground/playground-other-cafe-activity.png" width="1711" height="919" loading="lazy" alt="Playground 타카페 활동 현황 화면">
-        </figure>
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>네이버 검색 순위</h3>
-            <p>네이버 통합검색과 카페탭에서 키워드별 내 카페와 블로그의 노출 위치를 빠르게 확인할 수 있습니다.</p>
-          </figcaption>
-          <img src="/playground/playground-naver-search-ranking.png" width="1715" height="917" loading="lazy" alt="Playground 네이버 검색 순위 화면">
-        </figure>
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>카페글 노출 순위 확인</h3>
-            <p>운영 중인 카페의 게시글이 키워드별로 어떤 순위에 노출되는지 확인할 수 있습니다. 매일 순위를 확인해 누적 변화 데이터를 시각적으로 보여줍니다.</p>
-          </figcaption>
-          <img src="/playground/playground-cafe-exposure-ranking.png" width="1715" height="917" loading="lazy" alt="Playground 카페글 노출 순위 화면">
-        </figure>
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>리랭킹 키워드 추출</h3>
-            <p>노출하고자 하는 메인 키워드의 연관 키워드 중 네이버 통합검색 상위 3개 섹션에 노출될 가능성이 있는 키워드만 추출합니다. 해당 키워드를 활용해 글을 발행하면 메인 키워드의 상위 노출 전략을 세우는 데 도움을 줍니다.</p>
-          </figcaption>
-          <img src="/playground/playground-reranking-keywords.png" width="1920" height="1029" loading="lazy" alt="Playground 리랭킹 키워드 추출 화면">
-        </figure>
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>카페글 수집하기</h3>
-            <p>타 카페의 게시글을 일괄적으로 수집합니다. 가입하지 않은 카페의 게시글도 우회 방식으로 가능한 범위까지 수집을 진행합니다.</p>
-          </figcaption>
-          <img src="/playground/playground-cafe-post-collection.png" width="1918" height="1025" loading="lazy" alt="Playground 카페글 수집하기 화면">
-        </figure>
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>가입없이 카페글 보기</h3>
-            <p>해당 카페에 가입하지 않아도 공개된 정보를 활용해 게시글을 확인할 수 있도록 도와줍니다. 게시글 설정과 노출 상태에 따라 확인되지 않는 경우도 있습니다.</p>
-          </figcaption>
-          <img src="/playground/playground-free-cafe-post-view.png" width="1919" height="1031" loading="lazy" alt="Playground 가입없이 카페글 보기 화면">
-        </figure>
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>카페 회원 수집하기</h3>
-            <p>운영 중인 카페의 회원을 빠르게 수집해 회원들의 활동성을 파악할 수 있습니다.</p>
-          </figcaption>
-          <img src="/playground/playground-cafe-member-collection.png" width="1918" height="1028" loading="lazy" alt="Playground 카페 회원 수집하기 화면">
-        </figure>
-        <figure class="feature-showcase">
-          <figcaption class="showcase-copy">
-            <h3>카페 운영 가이드북</h3>
-            <p>카페를 운영하며 쌓은 팁과 정보를 모아 전자책으로 정리한 자료입니다. 운영에 도움을 드리며, 새로운 내용은 지속적으로 업데이트됩니다.</p>
-          </figcaption>
-          <img src="/playground/playground-cafe-operation-guidebook.png" width="1918" height="1027" loading="lazy" alt="Playground 카페 운영 가이드북 화면">
-        </figure>
+        <div class="pains">
+          <div class="pain"><span class="from">쓴 글이 검색에 나오는지 하나씩 검색해 본다</span><span class="arrow" aria-hidden="true">→</span><span class="to"><a href="#f-quality">카페글 품질 체크</a>가 글 단위로 확인</span></div>
+          <div class="pain"><span class="from">오늘 본 순위를 메모장에 적어 둔다</span><span class="arrow" aria-hidden="true">→</span><span class="to"><a href="#f-exposure">카페글 노출 순위</a>가 매일 기록</span></div>
+          <div class="pain"><span class="from">다른 카페 등급을 눈으로 비교한다</span><span class="arrow" aria-hidden="true">→</span><span class="to"><a href="#f-tracker">타카페 활동 현황</a>이 10만 곳과 비교</span></div>
+          <div class="pain"><span class="from">회원 수만 보고 카페 상태를 판단한다</span><span class="arrow" aria-hidden="true">→</span><span class="to"><a href="#f-members">카페 회원 수집하기</a>가 활동 회원을 구분</span></div>
         </div>
-        <div class="guide-link">
+        <div class="who" aria-label="이런 분께">
           <div>
-            <strong>처음 사용하시나요?</strong>
-            <span>설치부터 계정 등록, 카페 설정과 주요 기능 실행 순서를 확인하세요.</span>
+            <h3>내 카페를 직접 운영하는 분</h3>
+            <p>사업·매장 홍보용 카페 한두 곳을 운영하면서, 글은 꾸준히 쓰는데 효과를 모르는 분.</p>
+            <small>먼저 쓰는 기능: 카페글 품질 체크 · 전체 카페 현황</small>
           </div>
-          <a href="/playground/guide.html">사용법 보기</a>
+          <div>
+            <h3>여러 카페에 글을 올리는 담당자</h3>
+            <p>글이 수백 개라 노출을 손으로 확인할 수 없고, 어느 카페가 살아 있는 카페인지 판단할 자료가 없는 분.</p>
+            <small>먼저 쓰는 기능: 품질 체크 대량 확인 · 타카페 활동 현황</small>
+          </div>
+          <div>
+            <h3>카페를 새로 키우거나 인수하려는 분</h3>
+            <p>어떤 주제가 비어 있는지, 등급을 올리려면 얼마나 활동해야 하는지 감으로 정하고 있는 분.</p>
+            <small>먼저 쓰는 기능: 타카페 활동 현황 · 카페 운영 가이드북</small>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="pricing" id="pricing" aria-labelledby="pricing-title">
-        <h2 class="pricing-title" id="pricing-title">요금제</h2>
-        <p class="pricing-sub" id="pricing-sub">운영 규모에 맞는 요금제를 선택하고, 카페 현황과 분석 기능을 바로 시작하세요.</p>
+    <section class="block" id="features" aria-labelledby="features-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">주요 기능</span>
+          <h2 id="features-title">카페 운영에 필요한 10가지</h2>
+          <p>앱 왼쪽 메뉴에 있는 순서 그대로입니다. 각 기능이 어떤 고생을 덜어 주는지 함께 적었습니다.</p>
+        </div>
+
+        <div class="features">
+          <article class="feature" id="f-dashboard">
+            <div class="feature-copy">
+              <h3>전체 카페 현황</h3>
+              <p class="pain-line">카페가 여럿이면 등급·회원 수·글 수를 카페마다 들어가 봐야 했습니다.</p>
+              <p class="what">등록해 둔 내 카페의 상태를 한 화면에 모아 보여 줍니다. 아침에 한 번 보고 오늘 무엇부터 할지 정합니다.</p>
+            </div>
+            <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>전체 카페 현황</span></div><img src="/playground/playground-dashboard.png" width="1920" height="1080" loading="lazy" alt="Playground 전체 카페 현황 화면"></figure>
+          </article>
+
+          <article class="feature" id="f-quality">
+            <div class="feature-copy">
+              <h3>카페글 품질 체크 <span class="hot">인기</span></h3>
+              <p class="pain-line">네이버는 글이 검색에서 빠져도 알려 주지 않습니다.</p>
+              <p class="what">쓴 글이 네이버 검색에 제대로 나오는지 글 단위로 확인합니다. 검색에서 빠지는 원인은 카페·게시판·글쓴이 계정 세 단위로 나뉘는데, 어디를 봐야 하는지 알 수 있습니다.</p>
+              <p class="note">제목이 10자 미만인 글은 확인 대상에서 빠지고 사용량에도 세지 않습니다.</p>
+            </div>
+            <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>카페글 품질 체크</span></div><img src="/playground/playground-quality-check.png" width="1920" height="1080" loading="lazy" alt="Playground 카페글 품질 체크 화면"></figure>
+          </article>
+
+          <article class="feature" id="f-tracker">
+            <div class="feature-copy">
+              <h3>타카페 활동 현황 <span class="hot">인기</span></h3>
+              <p class="pain-line">내 카페 등급이 전체에서 어디쯤인지 비교할 자료가 없었습니다.</p>
+              <p class="what">네이버 카페 10만 곳의 등급·점수·활동 자료를 받아 두고 검색·필터·비교합니다. 생태계 화면에서는 주제별 시장 지도, 등급이 올라가는 기준, 지역×주제, 신생 카페의 성장과 위험 신호를 한눈에 봅니다.</p>
+              <p class="note">요금제에 따라 볼 수 있는 자료 기간이 다릅니다 (4일 · 14일 · 30일).</p>
+            </div>
+            <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>타카페 활동 현황</span></div><img src="/playground/playground-other-cafe-activity.png" width="1920" height="1080" loading="lazy" alt="Playground 타카페 활동 현황 화면"></figure>
+          </article>
+
+          <article class="feature" id="f-search">
+            <div class="feature-copy">
+              <h3>네이버 검색 순위</h3>
+              <p class="pain-line">검색 결과는 사람·시간마다 다르게 보이고, 통합검색과 카페탭이 다릅니다.</p>
+              <p class="what">키워드로 검색했을 때 내 카페와 글이 어느 자리에 나오는지 확인합니다. 「대충 위쪽」이 아니라 자리 번호로 말할 수 있습니다.</p>
+            </div>
+            <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>네이버 검색 순위</span></div><img src="/playground/playground-naver-search-ranking.png" width="1920" height="1080" loading="lazy" alt="Playground 네이버 검색 순위 화면"></figure>
+          </article>
+
+          <article class="feature" id="f-exposure">
+            <div class="feature-copy">
+              <h3>카페글 노출 순위</h3>
+              <p class="pain-line">한 번 본 순위는 금방 바뀝니다. 기록해야 어떤 행동이 효과 있었는지 알 수 있습니다.</p>
+              <p class="what">내 글이 키워드별로 검색에서 몇 위인지 이어서 지켜보고, 변화를 그래프로 보여 줍니다.</p>
+            </div>
+            <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>카페글 노출 순위</span></div><img src="/playground/playground-cafe-exposure-ranking.png" width="1920" height="1080" loading="lazy" alt="Playground 카페글 노출 순위 화면"></figure>
+          </article>
+
+          <article class="feature" id="f-keywords">
+            <div class="feature-copy">
+              <h3>노출 연관 키워드 발굴</h3>
+              <p class="pain-line">메인 키워드는 경쟁이 세서 바로 올라가지 않습니다.</p>
+              <p class="what">카페 글이 이미 노출되는 연관 키워드를 찾아 줍니다. 그 키워드로 글을 먼저 올리고, 그 힘으로 메인 키워드에 자리를 잡는 순서를 세울 수 있습니다.</p>
+              <p class="note">순위를 올려 주는 기능이 아니라, 어떤 키워드부터 쓸지 찾아 주는 기능입니다.</p>
+            </div>
+            <figure class="shot">
+              <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>노출 연관 키워드 발굴</span></div>
+              <img src="/playground/playground-reranking-keywords.png" width="1920" height="1080" loading="lazy" alt="Playground 노출 연관 키워드 발굴 화면" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+              <div class="kw-demo" hidden>
+                <table>
+                  <thead><tr><th>연관 키워드</th><th>글 칸 위치</th><th>카페 글</th><th>판정</th></tr></thead>
+                  <tbody>
+                    <tr><td>아기 분유 교체 시기</td><td class="num">2위</td><td class="num">3개</td><td class="ok">✓ 노출 가능</td></tr>
+                    <tr><td>분유 먹고 토할 때</td><td class="num">1위</td><td class="num">2개</td><td class="ok">✓ 노출 가능</td></tr>
+                    <tr><td>분유 추천 순위</td><td class="num">5위</td><td class="num">0개</td><td>—</td></tr>
+                  </tbody>
+                </table>
+                <p class="cap">예시 화면입니다. 광고·AI 칸을 뺀 상위 3칸 안 첫 글 칸에 카페 글이 2개 이상이면 「노출 가능」으로 봅니다.</p>
+              </div>
+            </figure>
+          </article>
+
+          <article class="feature" id="f-posts">
+            <div class="feature-copy">
+              <h3>카페글 수집하기</h3>
+              <p class="pain-line">잘 되는 카페의 글 제목·주제를 참고하려면 일일이 복사했습니다.</p>
+              <p class="what">카페에 올라온 글 목록과 본문을 모읍니다. 글감과 주제를 분석하는 자료가 됩니다.</p>
+            </div>
+            <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>카페글 수집하기</span></div><img src="/playground/playground-cafe-post-collection.png" width="1920" height="1080" loading="lazy" alt="Playground 카페글 수집하기 화면"></figure>
+          </article>
+
+          <article class="feature" id="f-freeview">
+            <div class="feature-copy">
+              <h3>가입없이 카페글 보기</h3>
+              <p class="pain-line">글 하나 확인하려고 카페마다 가입할 수는 없습니다.</p>
+              <p class="what">글 링크를 넣으면 네이버 검색에서 찾아 들어가 본문을 보여 줍니다.</p>
+              <p class="note">검색에 노출된 글만 볼 수 있습니다. 검색에서 빠진 글은 볼 수 없습니다.</p>
+            </div>
+            <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>가입없이 카페글 보기</span></div><img src="/playground/playground-free-cafe-post-view.png" width="1920" height="1080" loading="lazy" alt="Playground 가입없이 카페글 보기 화면"></figure>
+          </article>
+
+          <article class="feature" id="f-members">
+            <div class="feature-copy">
+              <h3>카페 회원 수집하기</h3>
+              <p class="pain-line">회원 수보다 누가 활동하는지가 카페의 힘입니다.</p>
+              <p class="what">내가 관리하는 카페의 회원 목록을 모아 활동 회원과 잠자는 회원을 구분합니다.</p>
+            </div>
+            <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>카페 회원 수집하기</span></div><img src="/playground/playground-cafe-member-collection.png" width="1920" height="1080" loading="lazy" alt="Playground 카페 회원 수집하기 화면"></figure>
+          </article>
+
+          <article class="feature" id="f-guidebook">
+            <div class="feature-copy">
+              <h3>카페 운영 가이드북</h3>
+              <p class="pain-line">카페 운영 노하우는 매니저들 사이에서만 오가고, 검색으로는 안 나옵니다.</p>
+              <p class="what">매니저들이 주고받은 운영 이야기를 주제별로 정리한 책을 앱 안에서 읽습니다. 새 내용은 계속 더해집니다.</p>
+            </div>
+            <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>카페 운영 가이드북</span></div><img src="/playground/playground-cafe-operation-guidebook.png" width="1920" height="1080" loading="lazy" alt="Playground 카페 운영 가이드북 화면"></figure>
+          </article>
+        </div>
+
+        <div class="promise">
+          <p><b>Playground는 확인하고 분석하는 도구입니다.</b> 순위를 조작하거나, 글·댓글을 자동으로 쓰거나, 방문자를 만들어 내지 않습니다.</p>
+          <span class="more">그 밖에: 카페 운영 대행 상담 · 기능 제안하기</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="block band" id="data" aria-labelledby="data-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">자료로 말합니다</span>
+          <h2 id="data-title">네이버 카페 10만 곳 위에서 내 카페를 봅니다</h2>
+          <p>「이 주제는 카페가 적은데 회원은 많다」「가지 등급이 되려면 회원 중앙값이 얼마다」를 감이 아니라 숫자로 확인합니다.</p>
+        </div>
+        <div class="data-grid">
+          <div>
+            <div class="stats">
+              <div class="stat"><strong class="num">104,000+</strong><span>등급·점수·활동을 받아 둔 카페</span></div>
+              <div class="stat"><strong class="num">13묶음</strong><span>주제별 시장 지도 — 세부 주제로 펼쳐 볼 수 있음</span></div>
+              <div class="stat"><strong>등급별 기준</strong><span>회원·방문·글 수 중앙값으로 보는 등급 사다리</span></div>
+            </div>
+            <ul class="data-list">
+              <li>지역 × 주제 교차표</li>
+              <li>신생 카페의 성장·위험 신호 (세부 주제별)</li>
+              <li>카페 소개·설립일·가입 방식까지 정보 버튼 하나로</li>
+            </ul>
+          </div>
+          <figure class="shot"><div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>타카페 활동 현황 — 생태계</span></div><img src="/playground/playground-ecosystem.png" width="1920" height="1080" loading="lazy" alt="카페 생태계 화면 — 주제별 시장 지도와 등급 기준"></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="pricing" aria-labelledby="pricing-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">요금제</span>
+          <h2 id="pricing-title">운영 규모에 맞게 고르세요</h2>
+          <p id="pricing-sub">운영 규모에 맞는 요금제를 선택하고, 카페 현황과 분석 기능을 바로 시작하세요.</p>
+        </div>
         <div class="plans">
           <div class="plan" data-plan-code="basic" data-price-krw="49000" data-launch-price-krw="24500">
             <h3 class="plan-name">Basic</h3>
-            <p class="plan-regular">정상가 49,000원<small> /월</small></p>
+            <p class="plan-regular">정상가 49,000원 /월</p>
+            <p class="plan-price num"><span class="plan-price-value">24,500원</span><small> /월 · 부가세 포함</small></p>
             <p class="plan-discount">11월 30일까지 50% 할인</p>
-            <p class="plan-price"><span class="plan-price-value">24,500원</span><small> /월 (부가세 포함)</small></p>
-            <p class="plan-desc">카페 한두 곳의 현황과 게시글을 직접 확인하는 운영자에게 적합합니다.</p>
+            <p class="plan-desc">카페 한두 곳의 현황과 게시글을 직접 확인하는 운영자에게 맞습니다.</p>
             <ul>
               <li>카페글 품질 체크 1,500글</li>
               <li>네이버 검색 순위 50회</li>
-              <li>노출 키워드 15개</li>
               <li>카페 회원 수집 30,000명</li>
-              <li>PC 1대 이용</li>
+              <li>PC 1대</li>
             </ul>
+            <a class="btn btn-ghost" href="#download">Basic으로 시작</a>
           </div>
           <div class="plan plan-featured" data-plan-code="operation" data-price-krw="89000" data-launch-price-krw="44500">
             <h3 class="plan-name">Pro</h3>
             <p class="plan-badge">정기 운영에 추천</p>
-            <p class="plan-regular">정상가 89,000원<small> /월</small></p>
+            <p class="plan-regular">정상가 89,000원 /월</p>
+            <p class="plan-price num"><span class="plan-price-value">44,500원</span><small> /월 · 부가세 포함</small></p>
             <p class="plan-discount">11월 30일까지 50% 할인</p>
-            <p class="plan-price"><span class="plan-price-value">44,500원</span><small> /월 (부가세 포함)</small></p>
-            <p class="plan-desc">여러 카페를 정기적으로 확인하고 검색 순위를 관리하는 운영자에게 적합합니다.</p>
+            <p class="plan-desc">여러 카페를 정기적으로 확인하고 검색 순위를 관리하는 운영자에게 맞습니다.</p>
             <ul>
               <li>카페글 품질 체크 6,000글</li>
               <li>네이버 검색 순위 200회</li>
-              <li>노출 키워드 50개</li>
               <li>카페 회원 수집 100,000명</li>
-              <li>PC 1대 이용</li>
+              <li>PC 1대</li>
             </ul>
+            <a class="btn btn-primary" href="#download">Pro로 시작</a>
           </div>
           <div class="plan" data-plan-code="expansion" data-price-krw="149000" data-launch-price-krw="74500">
             <h3 class="plan-name">Premium</h3>
-            <p class="plan-regular">정상가 149,000원<small> /월</small></p>
+            <p class="plan-regular">정상가 149,000원 /월</p>
+            <p class="plan-price num"><span class="plan-price-value">74,500원</span><small> /월 · 부가세 포함</small></p>
             <p class="plan-discount">11월 30일까지 50% 할인</p>
-            <p class="plan-price"><span class="plan-price-value">74,500원</span><small> /월 (부가세 포함)</small></p>
-            <p class="plan-desc">대량 자료를 수집하고 여러 PC에서 운영하는 팀에 적합합니다.</p>
+            <p class="plan-desc">대량 자료를 모으고 두 PC에서 운영하는 팀에 맞습니다.</p>
             <ul>
               <li>카페글 품질 체크 20,000글</li>
               <li>네이버 검색 순위 800회</li>
-              <li>노출 키워드 200개</li>
               <li>카페 회원 수집 450,000명</li>
-              <li>PC 2대 동시 이용</li>
+              <li>PC 2대 동시</li>
             </ul>
+            <a class="btn btn-ghost" href="#download">Premium으로 시작</a>
           </div>
+        </div>
+
+        <div class="limits" aria-label="요금제별 전체 한도">
+          <table>
+            <thead>
+              <tr><th>한 달 한도</th><th>Basic</th><th class="featured">Pro</th><th>Premium</th></tr>
+            </thead>
+            <tbody class="num">
+              <tr><td>카페글 품질 체크</td><td>1,500글</td><td>6,000글</td><td>20,000글</td></tr>
+              <tr><td>네이버 검색 순위</td><td>50회</td><td>200회</td><td>800회</td></tr>
+              <tr><td>카페글 노출 순위 (키워드)</td><td>15개</td><td>50개</td><td>200개</td></tr>
+              <tr><td>노출 연관 키워드 발굴</td><td>20회</td><td>80회</td><td>300회</td></tr>
+              <tr><td>카페 회원 수집하기</td><td>30,000명</td><td>100,000명</td><td>450,000명</td></tr>
+              <tr><td>카페글 수집하기 (목록)</td><td>2,000글</td><td>7,000글</td><td>30,000글</td></tr>
+              <tr><td>가입없이 카페글 보기</td><td>100글</td><td>500글</td><td>2,000글</td></tr>
+              <tr><td>타카페 활동 자료 기간</td><td>4일</td><td>14일</td><td>30일</td></tr>
+              <tr><td>PC 대수</td><td>1대</td><td>1대</td><td>2대</td></tr>
+            </tbody>
+          </table>
         </div>
         <p class="plan-note">
-          결제는 Playground 앱에서 결제를 요청한 경우에만 별도 결제 페이지에서 진행됩니다.
-          크몽에서 구매한 이용권의 결제·연장·환불은 해당 크몽 주문을 통해 처리됩니다.
-          사용자별 가입일과 관계없이 2026년 12월 1일 결제분부터 정상 이용료가 적용됩니다.
+          이용 중에 연장하면 남은 기간 뒤에 이어 붙어 남은 날이 사라지지 않습니다.
+          결제는 Playground 앱에서 요금제를 고르면 열리는 결제 페이지에서 진행합니다.
+          크몽에서 구매한 이용권은 초대코드로 적용되며, 연장·환불은 해당 크몽 주문을 통해 처리됩니다.
+          가입일과 관계없이 2026년 12월 1일 결제분부터 정상 이용료가 적용됩니다.
           자세한 환불 기준은 <a href="/playground/refund.html">환불규정</a>을 확인해 주세요.
         </p>
-      </section>
+      </div>
+    </section>
 
-      <section class="download-section" id="download" aria-labelledby="download-title">
-        <div class="download-card">
-          <div class="card-main">
-            <h2 class="download-title" id="download-title">내 카페 운영에 맞는지 직접 확인해보세요</h2>
-            <p class="download-copy">Windows용 Playground를 설치하면 카페 등록부터 주요 운영 기능까지 바로 확인할 수 있습니다.</p>
-            <a class="download-button" href="/playground/download" id="download-button">
-              <span class="download-icon" aria-hidden="true">↓</span>
-              <span>Windows용 다운로드</span>
-            </a>
+    <section class="block band" id="start" aria-labelledby="start-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">처음 시작하기</span>
+          <h2 id="start-title">설치부터 첫 확인까지 5단계</h2>
+          <p>처음 켤 때는 앱이 필요한 부품을 준비하느라 2~3분 걸릴 수 있습니다.</p>
+        </div>
+        <ol class="steps">
+          <li><strong>설치</strong><span>아래에서 설치 파일을 받아 실행합니다. 이후 새 판은 앱이 알아서 받습니다.</span></li>
+          <li><strong>회원가입</strong><span>이메일로 가입합니다. 초대코드가 있으면 이때 넣습니다.</span></li>
+          <li><strong>네이버 계정 등록</strong><span>설정에서 네이버 아이디를 등록하고 로그인합니다. 로그인은 내 PC의 크롬 창에서 직접 합니다.</span></li>
+          <li><strong>카페 등록</strong><span>관리할 카페 주소를 넣으면 기본 정보와 게시판을 불러옵니다.</span></li>
+          <li><strong>키워드 등록</strong><span>지켜볼 키워드를 넣으면 검색 순위와 노출 순위를 기록하기 시작합니다.</span></li>
+        </ol>
+        <div class="steps-cta">
+          <a class="btn btn-ghost" href="/playground/guide.html">자세한 사용법 보기</a>
+          <span>화면마다 무엇을 누르면 되는지 그림과 함께 설명합니다.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">자주 묻는 질문</span>
+          <h2 id="faq-title">사기 전에 궁금한 것</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>설치할 때 Windows 보안 경고가 떠요.</summary>
+            <p class="a">아직 코드 서명을 받기 전이라 Windows가 확인 창을 띄웁니다. 「추가 정보 → 실행」을 누르면 설치가 이어집니다.</p>
+          </details>
+          <details>
+            <summary>내 네이버 계정은 안전한가요?</summary>
+            <p class="a">네이버 로그인은 내 PC에서 열리는 크롬 창에서 직접 합니다. 비밀번호는 잠가서 내 PC에만 보관하고, 서버로 보내지 않습니다.</p>
+          </details>
+          <details>
+            <summary>검색에 안 나오는 글도 「가입없이 카페글 보기」로 볼 수 있나요?</summary>
+            <p class="a">없습니다. 이 기능은 네이버 검색을 거쳐 들어가기 때문에, 검색에 노출된 글만 볼 수 있습니다.</p>
+          </details>
+          <details>
+            <summary>카페글 품질 체크는 어떤 글을 세나요?</summary>
+            <p class="a">제목이 10자 이상인 글만 확인하고 사용량에 셉니다. 짧은 제목의 글은 확인 대상에서 빠집니다.</p>
+          </details>
+          <details>
+            <summary>PC를 바꾸면 어떻게 하나요?</summary>
+            <p class="a">앱 설정에서 등록된 기기를 옮깁니다. Basic·Pro는 PC 1대, Premium은 2대에서 동시에 쓸 수 있습니다.</p>
+          </details>
+          <details>
+            <summary>이용 중에 연장하면 남은 날이 사라지나요?</summary>
+            <p class="a">아니요. 결제든 초대코드든 남은 기간 뒤에 이어 붙습니다. 다른 요금제로 바꾸면 그 요금제로 바뀌고, 남은 날도 새 요금제로 이용합니다.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="download" aria-labelledby="download-title" style="padding-top: 0;">
+      <div class="wrap">
+        <div class="download">
+          <div>
+            <h2 id="download-title">내 카페 운영에 맞는지 직접 확인해 보세요</h2>
+            <p>설치하면 카페 등록부터 주요 기능까지 바로 써 볼 수 있습니다. 이용권은 앱 안에서 고릅니다.</p>
+            <div class="download-details" aria-label="설치 정보">
+              <div><b>운영체제</b>Windows 10·11</div>
+              <div><b>시스템</b>64비트</div>
+              <div><b>업데이트</b>실행 시 자동 확인</div>
+            </div>
+          </div>
+          <div class="cta">
+            <a class="btn btn-primary btn-lg" href="/playground/download" id="download-button">↓ Windows용 다운로드</a>
             <p class="file-info" id="file-info" aria-live="polite">최신 버전 정보를 확인하고 있습니다.</p>
           </div>
-          <div class="details" aria-label="설치 정보">
-            <div class="detail"><span class="detail-label">운영체제</span><span class="detail-value">Windows 10·11</span></div>
-            <div class="detail"><span class="detail-label">시스템</span><span class="detail-value">64비트</span></div>
-            <div class="detail"><span class="detail-label">업데이트</span><span class="detail-value">실행 시 자동 확인</span></div>
-          </div>
         </div>
-      </section>
-
-      <div class="notice">
-        <strong>설치 안내</strong><br>
-        현재 설치 파일에는 Windows 코드 서명이 적용되지 않아 보안 확인 안내가 표시될 수 있습니다.
+        <div class="notice">
+          <strong>설치 안내</strong> — 현재 설치 파일에는 Windows 코드 서명이 적용되지 않아 보안 확인 안내가 표시될 수 있습니다.
+        </div>
+        <p class="help">다운로드 또는 설치 문의 <a href="mailto:bhwoo@arken.co.kr">bhwoo@arken.co.kr</a></p>
       </div>
-
-      <p class="help">
-        다운로드 또는 설치 문의<br>
-        <a href="mailto:bhwoo@arken.co.kr">bhwoo@arken.co.kr</a>
-      </p>
-    </div>
+    </section>
   </main>
 
   <footer>
@@ -584,7 +653,7 @@
           <a href="/playground/refund.html">환불규정</a>
         </nav>
       </div>
-      <p class="biz-info">
+      <p class="biz">
         주식회사 아켄 · 대표 우병호 · 사업자등록번호 825-87-03407 · 통신판매업신고 2026-화성동탄-1826<br>
         경기도 화성시 동탄대로 643, 센테라IT타워 715호 (우 18468) · 문의 <a href="mailto:bhwoo@arken.co.kr">bhwoo@arken.co.kr</a> · 010-4515-0345
       </p>
