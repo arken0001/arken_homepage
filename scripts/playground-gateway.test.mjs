@@ -132,7 +132,7 @@ test('billing and private upstream stay disabled', async () => {
   assert.equal(plans.statusCode, 503);
 });
 
-test('page scripts reference existing elements and private pages are not advertised', async () => {
+test('page scripts reference existing elements and the admin page is not advertised', async () => {
   for (const name of ['checkout', 'manage']) {
     const [html, script] = await Promise.all([
       readFile(new URL(`../public/playground/${name}.html`, import.meta.url), 'utf8'),
@@ -159,15 +159,16 @@ test('page scripts reference existing elements and private pages are not adverti
     readFile(new URL('../public/playground/playground-cafe-member-collection.png', import.meta.url)),
     readFile(new URL('../public/playground/playground-cafe-operation-guidebook.png', import.meta.url)),
   ]);
-  assert.equal(/href=["'][^"']*(checkout|manage)/i.test(index), false);
+  assert.match(index, /href=["'][^"']*checkout\.html\?plan=/i);
+  assert.equal(/href=["'][^"']*manage/i.test(index), false);
   assert.equal(/playground\/(checkout|manage)/i.test(sitemap), false);
   assert.doesNotMatch(index, /첫 2개월|출시 후 2개월/);
   assert.match(index, /2026년 10월 1일부터 11월 30일까지/);
   assert.match(index, /2026-11-30T15:00:00Z/);
   assert.match(index, /launch_discount_status/);
   assert.match(index, /href="\/playground\/guide\.html"/);
-  assert.match(index, /src="\/playground\/playground-main\.png"/);
-  assert.match(index, /alt="Playground 메인 화면"/);
+  assert.match(index, /src="\/playground\/playground-main\.png(?:\?[^"']*)?"/);
+  assert.match(index, /alt="Playground 메인 화면[^"']*"/);
   assert.match(index, /src="\/playground\/playground-dashboard\.png"/);
   assert.match(index, /alt="Playground 전체 카페 현황 화면"/);
   assert.match(index, /src="\/playground\/playground-quality-check\.png"/);
@@ -179,7 +180,7 @@ test('page scripts reference existing elements and private pages are not adverti
   assert.match(index, /src="\/playground\/playground-cafe-exposure-ranking\.png"/);
   assert.match(index, /alt="Playground 카페글 노출 순위 화면"/);
   assert.match(index, /src="\/playground\/playground-reranking-keywords\.png"/);
-  assert.match(index, /alt="Playground 리랭킹 키워드 추출 화면"/);
+  assert.match(index, /alt="Playground 노출 연관 키워드 발굴 화면"/);
   assert.match(index, /src="\/playground\/playground-cafe-post-collection\.png"/);
   assert.match(index, /alt="Playground 카페글 수집하기 화면"/);
   assert.match(index, /src="\/playground\/playground-free-cafe-post-view\.png"/);

@@ -3,28 +3,54 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#ffffff">
   <title>Playground 결제</title>
-  <link rel="stylesheet" href="/playground/portal.css"><script src="/playground/checkout.js" defer></script>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="/playground/checkout.css?v=20260918-3"><script src="/playground/checkout.js?v=20260918-2" defer></script>
 </head>
-<body><main>
-  <p class="brand">ARKEN · Playground</p><h1>회원제 결제</h1>
-  <p>앱에서 사용 중인 Playground 계정으로 로그인해 주세요. 결제한 계정에 이용권이 적용됩니다.</p>
-  <p id="message" class="message" role="status" aria-live="polite">결제 정보를 불러오는 중…</p>
-  <form id="login" hidden><h2>결제 계정 확인</h2>
-    <label for="email">이메일</label><input id="email" type="email" autocomplete="username" required maxlength="254">
-    <label for="password">비밀번호</label><input id="password" type="password" autocomplete="current-password" required>
-    <button id="login-button" class="full" type="submit">로그인</button>
-  </form>
-  <section id="order" hidden>
-    <p>결제 계정: <strong id="account"></strong></p><button id="logout" class="secondary small" type="button">다른 계정으로 로그인</button>
-    <label for="plan">요금제</label><select id="plan"></select><p id="description"></p>
-    <p><s id="regular"></s><strong id="price" class="price"></strong></p><p id="discount"></p>
-    <label for="mode">결제 방식</label><select id="mode"><option value="once">1개월 결제 · 자동 갱신 없음</option></select><p id="renewal"></p>
-    <label class="consent"><input type="checkbox" id="agree">결제 계정, 금액, 이용 기간과 <a href="/terms" target="_blank" rel="noopener noreferrer">이용약관</a>·<a href="/privacy" target="_blank" rel="noopener noreferrer">개인정보 처리방침</a>·<a href="/playground/refund.html" target="_blank" rel="noopener noreferrer">환불규정</a>을 확인했습니다.</label>
-    <label id="billing-consent" class="consent" hidden><input type="checkbox" id="billing-agree">매월 자동결제와 2026년 12월 1일 결제분부터 정상 이용료가 적용되는 것에 동의합니다.</label>
-    <button id="pay" class="full" type="button" disabled>결제 준비 중…</button>
-  </section>
-  <button id="retry" class="full" type="button" hidden>결제 결과 다시 확인</button>
-  <p id="complete" class="success" hidden>결제가 완료되었습니다. Playground 앱으로 돌아가 이용권 상태를 확인해 주세요.</p>
-  <footer><a href="/playground/index.html">Playground 소개·다운로드</a></footer>
-</main></body></html>
+<body class="checkout-page">
+  <header class="site-header">
+    <a class="brand" href="/playground/index.html" aria-label="Playground 소개페이지로 이동">
+      <img src="/playground/brand/playground-logo-horizontal.png" alt="">
+      Playground <small>by ARKEN</small>
+    </a>
+    <a class="header-link" href="/playground/index.html#pricing">요금제 다시 보기</a>
+  </header>
+  <main class="checkout-shell">
+    <section class="checkout-hero" aria-labelledby="checkout-title">
+      <div class="hero-copy">
+        <span class="eyebrow">PLAYGROUND MEMBERSHIP</span>
+        <h1 id="checkout-title">카페 운영을 위한<br>이용권을 선택하세요</h1>
+        <p>앱에서 사용하는 Playground 계정으로 로그인하면 선택한 요금제가 해당 계정에 적용됩니다.</p>
+      </div>
+      <div class="checkout-steps" aria-label="결제 순서">
+        <div class="checkout-step"><strong>01</strong><span>계정 확인</span></div>
+        <div class="checkout-step"><strong>02</strong><span>요금제 선택</span></div>
+        <div class="checkout-step"><strong>03</strong><span>결제 완료</span></div>
+      </div>
+    </section>
+    <section class="checkout-card" aria-label="결제 정보">
+      <p id="message" class="message" role="status" aria-live="polite">결제 정보를 불러오는 중…</p>
+      <form id="login" hidden><h2>결제 계정 확인</h2>
+        <p>Playground 앱에서 사용하는 계정으로 로그인해 주세요.</p>
+        <label for="email">이메일</label><input id="email" type="email" autocomplete="username" required maxlength="254">
+        <label for="password">비밀번호</label><input id="password" type="password" autocomplete="current-password" required>
+        <button id="login-button" class="full" type="submit">로그인</button>
+      </form>
+      <section id="order" hidden>
+        <p>결제 계정: <strong id="account"></strong></p><button id="logout" class="secondary small" type="button">다른 계정으로 로그인</button>
+        <label for="plan">요금제</label><select id="plan"></select><p id="description"></p>
+        <p><s id="regular"></s><strong id="price" class="price"></strong></p><p id="discount"></p>
+        <label for="mode">결제 방식</label><select id="mode"><option value="once">1개월 결제 · 자동 갱신 없음</option></select><p id="renewal"></p>
+        <label class="consent"><input type="checkbox" id="agree">결제 계정, 금액, 이용 기간과 <a href="/terms" target="_blank" rel="noopener noreferrer">이용약관</a>·<a href="/privacy" target="_blank" rel="noopener noreferrer">개인정보 처리방침</a>·<a href="/playground/refund.html" target="_blank" rel="noopener noreferrer">환불규정</a>을 확인했습니다.</label>
+        <label id="billing-consent" class="consent" hidden><input type="checkbox" id="billing-agree">매월 자동결제와 2026년 12월 1일 결제분부터 정상 이용료가 적용되는 것에 동의합니다.</label>
+        <button id="pay" class="full" type="button" disabled>결제 준비 중…</button>
+      </section>
+      <button id="retry" class="full" type="button" hidden>결제 결과 다시 확인</button>
+      <p id="complete" class="success" hidden>결제가 완료되었습니다. Playground 앱으로 돌아가 이용권 상태를 확인해 주세요.</p>
+    </section>
+    <aside class="checkout-help"><strong>결제 전에 확인하세요</strong>결제 후 이용권은 로그인한 Playground 계정에 적용됩니다. Electron 앱에서 결제한 경우 결제 완료 후 앱으로 돌아오면 이용권 상태가 자동으로 새로고침됩니다.</aside>
+    <footer><a href="/playground/index.html">Playground 소개·다운로드로 돌아가기</a></footer>
+  </main>
+</body></html>
