@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Playground 사용법 | ARKEN</title>
-  <meta name="description" content="Playground 설치, 회원가입, 네이버 계정·카페·키워드 등록, 기능별 사용법, 사용량·요금제·초대코드, 문제가 생겼을 때 대처법을 순서대로 안내합니다.">
+  <title>N카페매니저 사용법 | ARKEN</title>
+  <meta name="description" content="N카페매니저 설치, 회원가입, 네이버 계정·카페·키워드 등록, 기능별 사용법, 사용량·요금제·초대코드, 문제가 생겼을 때 대처법을 순서대로 안내합니다.">
   <link rel="canonical" href="https://arken.co.kr/playground/guide.html">
   <meta name="theme-color" content="#ffffff">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -186,15 +186,16 @@
 <body>
   <header class="top">
     <div class="wrap top-row">
-      <a class="brand" href="/" aria-label="ARKEN 홈페이지로 이동">
-        <img src="/playground/brand/playground-logo-horizontal.png" alt="">
-        Playground <small>by ARKEN</small>
+      <a class="brand" href="/playground/" aria-label="N카페매니저 소개페이지로 이동">
+        <img src="/playground/brand/ncafe-manager-mark.svg" alt="">
+        N카페매니저 <small>by ARKEN</small>
       </a>
-      <nav class="nav" aria-label="Playground 메뉴">
+      <nav class="nav" aria-label="N카페매니저 메뉴">
         <a href="/playground#about">왜 필요한가</a>
         <a href="/playground#features">주요 기능</a>
-        <a href="/playground#pricing">요금제</a>
-        <a class="on" href="/playground/guide.html">사용법</a>
+        <a href="/playground/checkout.html">요금 안내·결제</a>
+        <a class="on" href="/playground/guide.html">다운로드·사용법</a>
+        <a href="https://cafe-jogamdo.vercel.app/">N카페조감도 소개</a>
       </nav>
       <a class="btn btn-primary" href="/playground#download">Windows용 다운로드</a>
     </div>
@@ -203,7 +204,7 @@
   <main>
     <section class="wrap hero">
       <span class="eyebrow">사용법</span>
-      <h1>처음 켜는 날부터 그대로 따라 하는 Playground 설명서</h1>
+      <h1>처음 켜는 날부터 그대로 따라 하는 N카페매니저 설명서</h1>
       <p class="lead">설치부터 첫 확인까지 순서대로, 기능마다 「언제 쓰나 · 이렇게 하세요 · 결과 읽는 법 · 알아 두세요」로 정리했습니다.</p>
       <div class="quick" aria-label="빠른 시작 5단계">
         <a href="#install"><b>1단계</b><span>설치</span><small>받고 실행, 처음 2~3분</small></a>
@@ -229,14 +230,14 @@
         <div class="sub">
           <a href="#f-dashboard">전체 카페 현황</a>
           <a href="#f-quality">카페글 품질 체크</a>
-          <a href="#f-tracker">타카페 활동 현황</a>
+
           <a href="#f-search">네이버 검색 순위</a>
           <a href="#f-exposure">카페글 노출 순위</a>
           <a href="#f-keywords">노출 연관 키워드 발굴</a>
           <a href="#f-posts">카페글 수집하기</a>
           <a href="#f-freeview">가입없이 카페글 보기</a>
           <a href="#f-members">카페 회원 수집하기</a>
-          <a href="#f-guidebook">카페 운영 가이드북</a>
+
           <a href="#f-etc">대행 상담·기능 제안</a>
         </div>
         <a href="#plan">5. 사용량·요금제·초대코드</a>
@@ -254,7 +255,7 @@
           <ol class="steps">
             <li><b>설치 파일 받기</b><p><a href="/playground#download">소개 페이지</a>의 <span class="ui">Windows용 다운로드</span>를 누릅니다. 파일 이름은 <code>Playground-버전-Setup.exe</code>입니다.</p></li>
             <li><b>보안 경고가 뜨면 「추가 정보 → 실행」</b><p>아직 코드 서명을 받기 전이라 Windows가 「알 수 없는 게시자」 창을 띄웁니다. <span class="ui">추가 정보</span>를 누른 뒤 <span class="ui">실행</span>을 누르면 이어집니다. 파일을 받은 곳이 arken.co.kr 인지만 확인해 주세요.</p></li>
-            <li><b>설치하고 실행</b><p>설치 위치를 바꿀 필요는 없습니다. 끝나면 바탕화면과 시작 메뉴에 <b>Playground</b>가 생깁니다.</p></li>
+            <li><b>설치하고 실행</b><p>설치 위치를 바꿀 필요는 없습니다. 끝나면 바탕화면과 시작 메뉴에 <b>N카페매니저</b>가 생깁니다.</p></li>
             <li><b>처음 켤 때는 2~3분 기다리기</b><p>앱이 필요한 부품을 준비하느라 첫 실행만 오래 걸립니다. 「서버 시작 대기 중」 글자가 보이면 정상입니다. 두 번째부터는 몇 초면 뜹니다.</p></li>
           </ol>
           <figure class="fig">
@@ -269,7 +270,7 @@
         <section class="ch" id="account">
           <span class="ch-no">2장</span>
           <h2>회원가입·로그인</h2>
-          <p class="intro">Playground 계정은 이메일 하나로 만듭니다. 크몽 등에서 받은 초대코드가 있으면 가입할 때 넣고, 없으면 가입 뒤 요금제를 고릅니다.</p>
+          <p class="intro">N카페매니저 계정은 이메일 하나로 만듭니다. 크몽 등에서 받은 초대코드가 있으면 가입할 때 넣고, 없으면 가입 뒤 요금제를 고릅니다.</p>
           <ol class="steps">
             <li><b>첫 화면에서 「회원가입」 선택</b><p>이메일과 비밀번호를 넣습니다. 이메일이 로그인 아이디가 됩니다.</p></li>
             <li><b>메일로 온 6자리 숫자 넣기</b><p>가입한 이메일로 인증번호가 옵니다. 메일이 안 보이면 스팸함을 보고, 「인증번호 다시 보내기」를 누르세요.</p></li>
@@ -365,17 +366,6 @@
             <figure class="fig"><img src="/playground/playground-quality-check.png?v=20260921-bdd2495" width="1920" height="1080" loading="lazy" alt="카페글 품질 체크 화면"><figcaption>품질 체크 결과. 숫자 칸 아래 「처방 브리핑」이 어디를 봐야 하는지 알려 줍니다.</figcaption></figure>
           </article>
 
-          <article class="feat" id="f-tracker">
-            <div class="feat-head"><h3>타카페 활동 현황</h3><span class="when">내 카페가 전체에서 어디쯤인지, 같은 주제 카페들이 어떤지 볼 때</span></div>
-            <div class="feat-body">
-              <div><h4>이렇게 하세요</h4><ol><li>들어가면 왼쪽 메뉴가 저절로 접혀 표가 넓게 보입니다. 처음엔 자료를 받느라 몇 초 걸립니다.</li><li>왼쪽에서 등급·키워드·지역으로 거르고, 위 「검색」에 카페 이름을 넣어 찾습니다.</li><li>표 머리글(점수·회원·전체글…)을 누르면 정렬됩니다.</li><li>줄 앞의 <span class="ui">i</span>(정보) 단추는 카페 소개·설립일·가입 방식을, 활동 단추는 기간별 활동표를 엽니다.</li><li>왼쪽 위 <span class="ui">생태계</span>를 누르면 시장 전체 그림으로 넘어갑니다.</li></ol></div>
-              <div><h4>결과 읽는 법</h4><ul><li><b>등급·점수</b>: 네이버 등급(씨앗~숲)과 활동 점수. 「대표」는 네이버 대표카페.</li><li><b>회원·전체글·총방문자수</b>: 규모. 「앱 설치수」는 카페앱 설치 수.</li><li><b>가입 방식·가입 조건</b>: 바로 가입인지 승인제인지.</li><li><b>생태계 화면</b>: 주제별 시장 지도(오른쪽일수록 카페 많음, 위일수록 회원 많음 → 왼쪽 위가 「빈 시장」), 등급 올라가는 기준(등급마다 회원 중앙값), 지역별 주제, 급성장·위험 신호.</li></ul></div>
-              <div class="feat-note">요금제에 따라 볼 수 있는 자료 기간이 다릅니다 (Basic 4일 · Pro 14일 · Premium 30일). 자료는 새 판이 나오면 앱이 알아서 받습니다 — 화면 위 「자료 기준일」로 확인하세요.</div>
-            </div>
-            <figure class="fig"><img src="/playground/playground-other-cafe-activity.png?v=20260921-bdd2495" width="1920" height="1080" loading="lazy" alt="타카페 활동 현황 목록"><figcaption>타카페 활동 현황 — 카페 10만 곳 목록.</figcaption></figure>
-            <figure class="fig"><img src="/playground/playground-ecosystem.png" width="1920" height="1080" loading="lazy" alt="카페 생태계 화면"><figcaption>생태계 화면 — 주제별 시장 지도와 등급 기준.</figcaption></figure>
-          </article>
-
           <article class="feat" id="f-search">
             <div class="feat-head"><h3>네이버 검색 순위</h3><span class="when">「이 키워드로 검색하면 우리가 몇 번째에 나오지?」를 지금 바로 확인할 때</span></div>
             <div class="feat-body">
@@ -436,15 +426,6 @@
             <figure class="fig"><img src="/playground/playground-cafe-member-collection.png?v=20260921-bdd2495" width="1920" height="1080" loading="lazy" alt="카페 회원 수집하기 화면"><figcaption>카페 회원 수집하기.</figcaption></figure>
           </article>
 
-          <article class="feat" id="f-guidebook">
-            <div class="feat-head"><h3>카페 운영 가이드북</h3><span class="when">검색으로는 안 나오는 운영 노하우를 읽을 때</span></div>
-            <div class="feat-body">
-              <div><h4>이렇게 하세요</h4><ol><li>왼쪽 목차에서 장·절을 고릅니다.</li><li>오른쪽에 책처럼 펼쳐집니다. 위 띠에 지금 읽는 자리와 쪽수가 보입니다.</li></ol></div>
-              <div><h4>결과 읽는 법</h4><ul><li>장마다 끝에 「실행 체크리스트」가 있습니다. 순서대로 해 보세요.</li><li>새 내용은 계속 더해집니다. 제목 아래 「v8 · 갱신일」로 확인하세요.</li></ul></div>
-            </div>
-            <figure class="fig"><img src="/playground/playground-cafe-operation-guidebook.png?v=20260921-bdd2495" width="1920" height="1080" loading="lazy" alt="카페 운영 가이드북 화면"><figcaption>카페 운영 가이드북.</figcaption></figure>
-          </article>
-
           <article class="feat" id="f-etc">
             <div class="feat-head"><h3>카페 운영 대행 상담 · 기능 제안하기</h3><span class="when">직접 운영할 시간이 없을 때 · 필요한 기능이 있을 때</span></div>
             <div class="feat-body">
@@ -487,7 +468,6 @@
                 <tr><td>카페 회원 수집하기</td><td>30,000명</td><td>100,000명</td><td>450,000명</td></tr>
                 <tr><td>카페글 수집하기 (목록)</td><td>2,000글</td><td>7,000글</td><td>30,000글</td></tr>
                 <tr><td>가입없이 카페글 보기</td><td>100글</td><td>500글</td><td>2,000글</td></tr>
-                <tr><td>타카페 활동 자료 기간</td><td>4일</td><td>14일</td><td>30일</td></tr>
                 <tr><td>PC 대수</td><td>1대</td><td>1대</td><td>2대</td></tr>
               </tbody>
             </table>
@@ -504,7 +484,7 @@
           <h3>카드로 결제하기</h3>
           <ol class="steps">
             <li><b>요금제 화면에서 원하는 요금제의 단추 누르기</b><p>브라우저에 결제 페이지가 열립니다.</p></li>
-            <li><b>앱과 같은 Playground 계정으로 로그인</b><p>결제한 계정에 이용권이 들어가므로, 반드시 앱에서 쓰는 이메일로 로그인하세요.</p></li>
+            <li><b>앱과 같은 N카페매니저 계정으로 로그인</b><p>결제한 계정에 이용권이 들어가므로, 반드시 앱에서 쓰는 이메일로 로그인하세요.</p></li>
             <li><b>결제 뒤 앱으로 돌아오기</b><p>앱이 이용권 상태를 다시 읽습니다. 안 바뀌면 <span class="ui">이용권 상태 새로고침</span>을 누르세요.</p></li>
           </ol>
           <div class="note">크몽에서 산 이용권은 초대코드로 적용됩니다. 연장·환불은 해당 크몽 주문에서 처리됩니다.</div>
@@ -538,7 +518,6 @@
                 <tr><td>사용량을 다 썼습니다</td><td>이번 달 한도에 닿았습니다.</td><td>창의 <span class="ui">요금제 업그레이드</span>로 상위 요금제로 바꾸거나, 다음 달 채워지는 날까지 기다립니다.</td></tr>
                 <tr><td>검색에서 찾지 못했습니다 (가입없이 보기)</td><td>그 글이 검색에 노출되지 않았습니다. 카페·게시판·글쓴이 계정 셋 중 하나가 걸린 것입니다.</td><td>이 기능으로는 볼 수 없습니다. 품질 체크로 어느 단위가 걸렸는지 확인하세요.</td></tr>
                 <tr><td>다른 PC에서 사용 중입니다</td><td>이용권의 PC 대수를 넘었습니다.</td><td>창의 <span class="ui">이 PC로 옮기기</span>를 누릅니다. 이번 달 교체 횟수를 다 썼으면 운영자에게 문의합니다.</td></tr>
-                <tr><td>타카페 자료가 옛날 날짜로 보임</td><td>새 판을 아직 못 받았거나, 자료 자체가 그 날짜까지입니다.</td><td>앱을 다시 켜면 새 판을 확인합니다. 화면 위 「자료 기준일」이 곧 자료의 날짜입니다.</td></tr>
                 <tr><td>화면이 작게 보이거나 오른쪽이 비어 있음</td><td>창 크기 기억이 어긋난 것입니다.</td><td>앱을 완전히 닫고 다시 켭니다.</td></tr>
               </tbody>
             </table>
@@ -568,15 +547,19 @@
   </main>
 
   <footer>
-    <div class="wrap footer-row">
-      <span>© 2026 ARKEN Co., Ltd.</span>
+      <div class="wrap footer-row">
+        <span>© 2026 ARKEN Co., Ltd.</span>
       <nav class="footer-links" aria-label="정책 안내">
-        <a href="/playground">Playground 소개</a>
+        <a href="/playground">N카페매니저 소개</a>
         <a href="/terms">이용약관</a>
         <a href="/privacy">개인정보 처리방침</a>
         <a href="/playground/refund.html">환불규정</a>
-      </nav>
-    </div>
+        </nav>
+      </div>
+      <div class="wrap" style="margin-top:12px; line-height:1.8;">
+        주식회사 아켄 · 대표자 우병호 · 사업자등록번호 825-87-03407<br>
+        경기도 화성시 동탄대로 643 센테라IT타워 715호 · 010-7561-0346 · bhwoo@arken.co.kr
+      </div>
   </footer>
 
   <script>
